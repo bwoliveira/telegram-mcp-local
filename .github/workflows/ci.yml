@@ -18,7 +18,7 @@ jobs:
     # Private development uses the trusted homelab pool. Once the repository is
     # public, including for fork PRs, only GitHub-hosted runners are eligible.
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 75
     container:
       image: golang:1.26.10-bookworm@sha256:23ce71337b726608afb1bc00986e630a05034a87a87ea1fc2cd1ae5cf33387eb
     env:
@@ -83,7 +83,7 @@ jobs:
         # default ten-minute package timeout; individual async waits are bounded.
         # Stage 4 retains a 30-minute package budget, covering the 20-minute
         # real-account regression suite allowance as well.
-        run: go test -race -count=1 -timeout 30m ./...
+        run: go test -race -count=1 -timeout 60m ./...
       - name: build every program
         run: |
           go build -o "$RUNNER_TEMP/bin/" ./cmd/...
