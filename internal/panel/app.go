@@ -1,0 +1,182 @@
+package panel
+
+import (
+	"encoding/json"
+	"net/http"
+	"net/url"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/bwoliveira/telegram-mcp-local/internal/i18n"
+)
+
+// Host is the desktop app around the panel: the settings and actions that
+// only exist inside it. The command line has none, and leaves it nil.
+type Host interface {
+	Settings() HostSettings
+	SetAutostart(on bool) error
+	SetCloseToTray(on bool) error
+	// SetLanguage shows the app in another language (a code of
+	// i18n.Languages, or empty to follow the system's) and keeps it.
+	SetLanguage(code string) error
+	// SetPort moves the MCP to another port and keeps it there.
+	SetPort(port int) error
+	OpenURL(url string) error
+	OpenDataFolder() error
+	Update() UpdateState
+	CheckUpdate()
+	InstallUpdate() error
+	// Quit closes the app for good, as the page asks once the person confirmed.
+	Quit()
+	// ShowWindow brings the app's window up, at path when one is given.
+	ShowWindow(path string)
+	// EraseEverything logs out of Telegram, deletes the data folder and quits.
+	EraseEverything() error
+}
+
+// HostSettings is what the Configurações page shows of the app.
+type HostSettings struct {
+	Autostart   bool
+	CloseToTray bool
+	// Language is the chosen language, empty when it follows the system's.
+	Language string
+	// CanHide is false where there is no tray to hide into (GNOME without
+	// the AppIndicator extension): closing the window then minimises it.
+	CanHide bool
+	// PortLocked is set when TELEGRAM_MCP_PORT fixes the port.
+	PortLocked bool
+	DataDir    string
+	Version    string
+}
+
+// UpdateState is where the app's update stands.
+type UpdateState struct {
+	// State is idle, checking, current, available, downloading, ready,
+	// manual (a package to install by hand) or error.
+	State     string    `json:"state"`
+	Current   string    `json:"current"`
+	Latest    string    `json:"latest,omitempty"`
+	Page      string    `json:"page,omitempty"`
+	Progress  int       `json:"progress,omitempty"`
+	Error     string    `json:"error,omitempty"`
+	CheckedAt time.Time `json:"checked_at,omitempty"`
+}
+
+func (p *Panel) registerApp(mux *http.ServeMux) {
+	mux.HandleFunc("POST /configuracoes/porta", p.form(p.savePort))
+	mux.HandleFunc("POST /configuracoes/encerrar", p.quit)
+	mux.HandleFunc("POST /configuracoes/apagar", p.erase)
+	mux.HandleFunc("POST /api/configuracoes", p.api(p.apiSettings))
+	mux.HandleFunc("POST /api/abrir", p.api(p.apiOpen))
+	mux.HandleFunc("POST /api/app/open", p.api(p.apiOpenApp))
+	mux.HandleFunc("POST /api/abrir-pasta", p.api(func(*http.Request) (any, error) { return map[string]bool{"ok": true}, p.Host.OpenDataFolder() }))
+	mux.HandleFunc("GET /api/atualizacao", p.api(func(*http.Request) (any, error) { return p.Host.Update(), nil }))
+	mux.HandleFunc("POST /api/atualizacao/verificar", p.api(func(*http.Request) (any, error) { p.Host.CheckUpdate(); return p.Host.Update(), nil }))
+	mux.HandleFunc("POST /api/atualizacao/instalar", p.api(func(*http.Request) (any, error) {
+		if err := p.Host.InstallUpdate(); err != nil {
+			return nil, err
+		}
+		return p.Host.Update(), nil
+	}))
+}
+
+func portOf(endpoint string) int {
+	u, err := url.Parse(endpoint)
+	if err != nil {
+		return 0
+	}
+	n, _ := strconv.Atoi(u.Port())
+	return n
+}
+
+func (p *Panel) savePort(r *http.Request) (string, error) {
+	if p.Host.Settings().PortLocked {
+		return "/configuracoes", userError{i18n.T("a porta está definida pela variável de ambiente TELEGRAM_MCP_PORT")}
+	}
+	port, err := strconv.Atoi(strings.TrimSpace(r.FormValue("port")))
+	if err != nil || port < 1024 || port > 65535 {
+		return "/configuracoes", userError{i18n.T("a porta precisa ser um número de 1024 a 65535")}
+	}
+	back := "/configuracoes"
+	if r.FormValue("from") != "" && strings.HasPrefix(r.FormValue("from"), "/") {
+		back = r.FormValue("from")
+	}
+	if portOf(p.endpoint()) == port && p.MCPProblem() == nil {
+		return back, nil
+	}
+	if err := p.Host.SetPort(port); err != nil {
+		return back, userError{err.Error()}
+	}
+	return "/configuracoes?porta=1&ok=" + url.QueryEscape(i18n.Tf("O MCP agora responde em %s.", p.endpoint())), nil
+}
+
+func (p *Panel) apiSettings(r *http.Request) (any, error) {
+	var body struct {
+		Autostart   *bool   `json:"autostart"`
+		CloseToTray *bool   `json:"close_to_tray"`
+		Language    *string `json:"language"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		return nil, userError{i18n.T("pedido inválido")}
+	}
+	if body.Autostart != nil {
+		if err := p.Host.SetAutostart(*body.Autostart); err != nil {
+			return nil, err
+		}
+	}
+	if body.CloseToTray != nil {
+		if err := p.Host.SetCloseToTray(*body.CloseToTray); err != nil {
+			return nil, err
+		}
+	}
+	if body.Language != nil {
+		if err := p.setLanguage(*body.Language); err != nil {
+			return nil, err
+		}
+	}
+	return p.Host.Settings(), nil
+}
+
+// apiOpen opens a link in the system's browser: the app's window shows only
+// the panel.
+func (p *Panel) apiOpen(r *http.Request) (any, error) {
+	var body struct {
+		URL string `json:"url"`
+	}
+	_ = json.NewDecoder(r.Body).Decode(&body)
+	u, err := url.Parse(body.URL)
+	if err != nil || (u.Scheme != "http" && u.Scheme != "https") || u.Host == "" {
+		return nil, userError{i18n.T("endereço inválido")}
+	}
+	return map[string]bool{"ok": true}, p.Host.OpenURL(u.String())
+}
+
+func (p *Panel) quit(w http.ResponseWriter, r *http.Request) {
+	if !sameOrigin(r) {
+		http.Error(w, "forbidden", http.StatusForbidden)
+		return
+	}
+	p.Host.Quit()
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	_ = p.pages.ExecuteTemplate(w, "encerrado", layout{Title: i18n.N("Encerrando"), App: true})
+}
+
+func (p *Panel) erase(w http.ResponseWriter, r *http.Request) {
+	if !sameOrigin(r) {
+		http.Error(w, "forbidden", http.StatusForbidden)
+		return
+	}
+	// The word to type is the one the page shows, in the person's language;
+	// the Portuguese one is accepted too.
+	if confirm := strings.TrimSpace(r.FormValue("confirm")); confirm != "apagar" && !strings.EqualFold(confirm, i18n.T("apagar")) {
+		http.Redirect(w, r, "/configuracoes?erro="+url.QueryEscape(i18n.T("para apagar, digite apagar na caixa de confirmação")), http.StatusSeeOther)
+		return
+	}
+	if err := p.Host.EraseEverything(); err != nil {
+		http.Redirect(w, r, "/configuracoes?erro="+url.QueryEscape(err.Error()), http.StatusSeeOther)
+		return
+	}
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	_ = p.pages.ExecuteTemplate(w, "apagado", layout{Title: i18n.N("Dados apagados"), App: true})
+}

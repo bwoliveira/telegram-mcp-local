@@ -1,0 +1,185 @@
+package main
+
+import (
+	"context"
+	"errors"
+	"html"
+	"os"
+	"runtime"
+	"time"
+
+	"github.com/wailsapp/wails/v3/pkg/application"
+
+	"github.com/bwoliveira/telegram-mcp-local/internal/appconfig"
+	"github.com/bwoliveira/telegram-mcp-local/internal/daemon"
+	"github.com/bwoliveira/telegram-mcp-local/internal/i18n"
+	"github.com/bwoliveira/telegram-mcp-local/internal/panel"
+	"github.com/bwoliveira/telegram-mcp-local/internal/platform"
+)
+
+// The app is the panel's Host: what the Configurações page changes.
+var _ panel.Host = (*App)(nil)
+
+func (a *App) Settings() panel.HostSettings {
+	c := a.config()
+	return panel.HostSettings{
+		Autostart:   c.Autostart,
+		CloseToTray: c.CloseToTray,
+		Language:    c.Language,
+		CanHide:     a.canHide,
+		PortLocked:  a.portLocked,
+		DataDir:     a.dataDir,
+		Version:     version,
+	}
+}
+
+// SetAutostart registers the app to open at login, in the tray, or stops it.
+func (a *App) SetAutostart(on bool) error {
+	if err := platform.SetAutostart(on, autostartExecutable()); err != nil {
+		return err
+	}
+	if err := a.updateConfig(func(c *appconfig.Config) { c.Autostart = on }); err != nil {
+		return err
+	}
+	a.tray.setAutostart(on)
+	return nil
+}
+
+func (a *App) SetCloseToTray(on bool) error {
+	return a.updateConfig(func(c *appconfig.Config) { c.CloseToTray = on })
+}
+
+// SetLanguage keeps the language in config.json and shows it at once: the
+// panel on its next page, the menus now.
+func (a *App) SetLanguage(code string) error {
+	if err := a.updateConfig(func(c *appconfig.Config) { c.Language = code }); err != nil {
+		return err
+	}
+	i18n.Set(code)
+	a.tray.relabel()
+	return nil
+}
+
+// SetPort moves the MCP and writes the port into config.json, where the
+// bridge finds it.
+func (a *App) SetPort(port int) error {
+	if a.portLocked {
+		return errors.New(i18n.T("a porta está definida pela variável de ambiente TELEGRAM_MCP_PORT"))
+	}
+	d := a.current()
+	if d == nil {
+		return errors.New(i18n.T("o Telegram MCP ainda está iniciando"))
+	}
+	if err := d.SetPort(port); err != nil {
+		var inUse daemon.ErrPortInUse
+		if errors.As(err, &inUse) {
+			return errors.New(i18n.Tf("a porta %d já está em uso por outro programa", port))
+		}
+		return err
+	}
+	return a.updateConfig(func(c *appconfig.Config) { c.Port = port })
+}
+
+func (a *App) OpenURL(url string) error { return a.wails.Browser.OpenURL(url) }
+
+func (a *App) OpenDataFolder() error {
+	if err := os.MkdirAll(a.dataDir, 0o700); err != nil {
+		return err
+	}
+	return platform.Open(a.dataDir)
+}
+
+func (a *App) Update() panel.UpdateState { return a.updates.state() }
+
+func (a *App) CheckUpdate() { a.updates.check() }
+
+func (a *App) InstallUpdate() error { return a.updates.install() }
+
+// ShowWindow brings the window up for an agent, at path when one is given.
+func (a *App) ShowWindow(path string) { go a.showWindow(path) }
+
+// Quit closes the app for good, once the person confirmed it on the page.
+func (a *App) Quit() {
+	go func() {
+		// Let the page answer before the window goes.
+		time.Sleep(300 * time.Millisecond)
+		a.quit()
+	}()
+}
+
+// EraseEverything logs this computer out of Telegram, stops the gateway,
+// deletes the data folder and the login item, and quits.
+func (a *App) EraseEverything() error {
+	d := a.current()
+	if d != nil {
+		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+		err := d.Engine().LogOut(ctx)
+		cancel()
+		if err != nil {
+			a.logger.Warn("Telegram logout failed; erasing anyway", "error", err)
+		}
+	}
+	_ = a.SetAutostart(false)
+	go func() {
+		// Let the page say it is done before the window goes.
+		time.Sleep(1500 * time.Millisecond)
+		a.shutdown()
+		// The log goes too, closed first: Windows cannot delete an open file,
+		// and there the log lives inside the data folder.
+		a.logFile.Close()
+		for _, dir := range []string{a.dataDir, a.logDir} {
+			if err := os.RemoveAll(dir); err != nil {
+				appLogger(os.Stderr).Warn("app data could not be erased", "path", dir, "error", err)
+			}
+		}
+		a.quit()
+	}()
+	return nil
+}
+
+// setMenu is the application menu, at the top of the screen on macOS.
+// Windows and Linux would draw it inside the window, where the panel's own
+// navigation already is.
+func (a *App) setMenu() {
+	if runtime.GOOS != "darwin" {
+		return
+	}
+	menu := a.wails.NewMenu()
+	app := menu.AddSubmenu(platform.AppName)
+	app.AddRole(application.About)
+	app.AddSeparator()
+	a.appMenu.settings = app.Add("").SetAccelerator("CmdOrCtrl+,").OnClick(func(*application.Context) { go a.showWindow("/configuracoes") })
+	app.AddSeparator()
+	app.AddRole(application.Hide)
+	app.AddRole(application.HideOthers)
+	app.AddRole(application.UnHide)
+	app.AddSeparator()
+	// ⌘Q closes the window, as the app keeps working in the menu bar;
+	// quitting it is a choice made on purpose, and confirmed.
+	a.appMenu.close = app.Add("").SetAccelerator("CmdOrCtrl+q").OnClick(func(*application.Context) { go a.closeWindow() })
+	a.appMenu.quit = app.Add("").OnClick(func(*application.Context) { a.confirmQuit() })
+	a.relabelMenu()
+	menu.AddRole(application.EditMenu)
+	menu.AddRole(application.WindowMenu)
+	a.wails.Menu.SetApplicationMenu(menu)
+}
+
+// appMenu holds the application menu's own items, to word them again.
+type appMenu struct {
+	settings, close, quit *application.MenuItem
+}
+
+// relabelMenu sets the application menu's own labels in the language in use;
+// the roles (Hide, Edit, Window…) keep the labels Wails gives them. The
+// tray's relabel calls it.
+func (a *App) relabelMenu() {
+	m := a.appMenu
+	if m.settings == nil {
+		return
+	}
+	m.settings.SetLabel(i18n.T("Configurações…"))
+	m.close.SetLabel(i18n.T("Fechar a janela"))
+	m.quit.SetLabel(i18n.Tf("Encerrar o %s…", platform.AppName))
+}
+
+func htmlEscape(s string) string { return html.EscapeString(s) }

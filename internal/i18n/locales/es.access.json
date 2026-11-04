@@ -1,0 +1,18 @@
+{
+  "Acesso ao painel": "Acceso al panel",
+  "Painel local": "Panel local",
+  "Abra o painel pelo computador do serviço": "Abra el panel desde el equipo del servicio",
+  "Este painel só abre com uma sessão do navegador, criada por um link de uso único que o próprio computador onde o Telegram MCP roda gera para você.": "Este panel solo abre con una sesión del navegador, creada por un enlace de un solo uso que el propio equipo donde corre Telegram MCP genera para usted.",
+  "No computador do serviço": "En el equipo del servicio",
+  "Abra um terminal nesse computador e execute:": "Abra una terminal en ese equipo y ejecute:",
+  "O navegador abre o painel já autorizado.": "El navegador abre el panel ya autorizado.",
+  "Em outro computador, por SSH": "Desde otro equipo, por SSH",
+  "No servidor, pelo SSH, peça o link sem abrir um navegador:": "En el servidor, por SSH, pida el enlace sin abrir un navegador:",
+  "No seu computador, abra um túnel SSH para a mesma porta local:": "En su equipo, abra un túnel SSH al mismo puerto local:",
+  "Abra no seu navegador o link impresso no passo 1, com o túnel aberto.": "Con el túnel abierto, abra en su navegador el enlace impreso en el paso 1.",
+  "O link vale por um minuto e uma única vez. Se expirar, execute o passo 1 de novo.": "El enlace vale un minuto y una sola vez. Si caduca, repita el paso 1.",
+  "Por que é preciso autorizar?": "¿Por qué hace falta autorizar?",
+  "O painel mostra suas conversas e pode agir na sua conta do Telegram. Qualquer site aberto neste computador consegue chamar endereços locais, então o painel só confia em quem já tem acesso ao computador do serviço: quem consegue executar o comando ali.": "El panel muestra sus conversaciones y puede actuar en su cuenta de Telegram. Cualquier sitio abierto en este equipo puede llamar a direcciones locales, así que el panel solo confía en quien ya tiene acceso al equipo del servicio: quien puede ejecutar el comando allí.",
+  "O link de uso único troca-se por um cookie de sessão e some da barra de endereços. Ele nunca aparece nesta página nem em logs.": "El enlace de un solo uso se cambia por una cookie de sesión y desaparece de la barra de direcciones. Nunca aparece en esta página ni en los registros.",
+  "Esta página não pede senha nem token: não cole o token do MCP em sites nem no navegador.": "Esta página no pide contraseña ni token: no pegue el token del MCP en sitios ni en el navegador."
+}

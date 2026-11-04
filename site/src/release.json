@@ -1,0 +1,92 @@
+{
+  "_comment": "Release data baked into /download/ in release mode (site/DESIGN.md §2.4). version (vX.Y.Z) and date (YYYY-MM-DD) stay empty until Stage 6; -version and -date override them. Asset names match scripts/release.sh and scripts/build-linux.sh; {version} is the version without the leading v. If Stage 4 renames a file, change it only here.",
+  "version": "",
+  "date": "",
+  "groups": [
+    {
+      "id": "macos",
+      "files": [
+        {
+          "id": "dmg",
+          "label": "dl.file.dmg",
+          "name": "Telegram-MCP.dmg"
+        }
+      ]
+    },
+    {
+      "id": "windows",
+      "files": [
+        {
+          "id": "setup",
+          "label": "dl.file.setup",
+          "name": "Telegram-MCP-Setup.exe"
+        }
+      ]
+    },
+    {
+      "id": "linux",
+      "files": [
+        {
+          "id": "appimage-x86_64",
+          "label": "dl.file.appimage_x86_64",
+          "name": "Telegram-MCP-x86_64.AppImage"
+        },
+        {
+          "id": "appimage-aarch64",
+          "label": "dl.file.appimage_aarch64",
+          "name": "Telegram-MCP-aarch64.AppImage"
+        },
+        {
+          "id": "deb-amd64",
+          "label": "dl.file.deb_amd64",
+          "name": "telegram-mcp_{version}_amd64.deb"
+        },
+        {
+          "id": "deb-arm64",
+          "label": "dl.file.deb_arm64",
+          "name": "telegram-mcp_{version}_arm64.deb"
+        }
+      ]
+    },
+    {
+      "id": "cli",
+      "files": [
+        {
+          "id": "cli-linux-amd64",
+          "label": "dl.file.cli_linux_amd64",
+          "name": "telegram-mcp_linux_amd64.tar.gz"
+        },
+        {
+          "id": "cli-linux-arm64",
+          "label": "dl.file.cli_linux_arm64",
+          "name": "telegram-mcp_linux_arm64.tar.gz"
+        },
+        {
+          "id": "cli-darwin-arm64",
+          "label": "dl.file.cli_darwin_arm64",
+          "name": "telegram-mcp_darwin_arm64.tar.gz"
+        },
+        {
+          "id": "cli-darwin-amd64",
+          "label": "dl.file.cli_darwin_amd64",
+          "name": "telegram-mcp_darwin_amd64.tar.gz"
+        },
+        {
+          "id": "cli-windows-amd64",
+          "label": "dl.file.cli_windows_amd64",
+          "name": "telegram-mcp_windows_amd64.zip"
+        }
+      ]
+    },
+    {
+      "id": "checksums",
+      "files": [
+        {
+          "id": "checksums",
+          "label": "dl.file.checksums",
+          "name": "checksums.txt"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,533 @@
+{
+  "packages": {
+    "gcc-14-base": [
+      {
+        "copyright_sha256": "20390f8a6f3b1e4d7cb45dd8652dabb259bbef688cbad839bcdb0b9ba7252f79",
+        "decision": "allowed",
+        "reason": "This input maps gcc-14-base only to usr/share/doc/libatomic1/copyright, not a GCC compiler or executable. That file's runtime-library paragraph explicitly lists libatomic under GPL-3+ with GCC Runtime Library Exception 3.1; the compiler GPL paragraphs are retained legal notices, not shipped compiler code.",
+        "version": "14.2.0-19"
+      }
+    ],
+    "gir1.2-freedesktop": [
+      {
+        "copyright_sha256": "d3db74633bd67379bf28321c6b53e247af7d9839795ac4118aeb3c0bd5696c78",
+        "decision": "forbidden",
+        "reason": "Files: * is GPL-2+, with no LGPL/permissive override for gir/DBus-1.0.gir, gir/Vulkan-1.0.gir, the other hand-written gir/*.gir files or gir/cairo-1.0.gir.in compiled into the shipped freedesktop typelibs (confirmed by gir/meson.build). The LGPL-2+ override for girepository/*.c and *.h covers the GIRepository API instead and cannot be extended to these separate metadata sources, so this package is forbidden under the fail-closed policy.",
+        "version": "1.84.0-1"
+      }
+    ],
+    "gir1.2-gdkpixbuf-2.0": [
+      {
+        "copyright_sha256": "2b914b2304e7474aaa8108307b9e95c3f8345e0a4153c7bfa0ca9c48813cb406",
+        "decision": "allowed",
+        "reason": "Files: * is LGPL-2+ and LGPL-2.1+ and CC0-1.0, covering the shipped gdk-pixbuf library, image loaders and its API typelibs. GPL-2+ is restricted to tests/*, gdk-pixbuf/test-gdk-pixbuf.c and thumbnailer/*, none of which is among the shipped implementation files.",
+        "version": "2.42.12+dfsg-4+deb13u1"
+      }
+    ],
+    "gir1.2-girepository-2.0": [
+      {
+        "copyright_sha256": "d3db74633bd67379bf28321c6b53e247af7d9839795ac4118aeb3c0bd5696c78",
+        "decision": "allowed",
+        "reason": "Files: girepository/*.c and girepository/*.h is LGPL-2+, covering the API declarations used to generate GIRepository-2.0.typelib (confirmed by gir/meson.build). The default GPL-2+ scanner/tooling and test paragraphs are not code incorporated into this typelib.",
+        "version": "1.84.0-1"
+      }
+    ],
+    "gir1.2-glib-2.0": [
+      {
+        "copyright_sha256": "b9fe78c8a0720c051c9ac8e8c6f25663b54f228e501d24fc0ba89c66cec7f7c1",
+        "decision": "allowed",
+        "reason": "Files: * is LGPL-2.1+, covering the shipped GLib/GObject/GModule/GIO libraries and their API typelibs; runtime exceptions such as gio/xdgmime/xdgmime* also provide LGPL alternatives. GPL-2+ applies to glib/gen-unicode-tables.pl, glib/tests/gen-case*-txt.py, po/po2tbl.sed.in and tools/glib-gettextize.in, not compiled library implementation or the shipped typelibs.",
+        "version": "2.84.4-3~deb13u5"
+      }
+    ],
+    "gir1.2-javascriptcoregtk-4.1": [
+      {
+        "copyright_sha256": "7686662a207e5e99308311916a0385a9d3f6cd2bd753721ecf88a9dbe906ca72",
+        "decision": "allowed",
+        "reason": "Files: * is BSD-2-clause with the extensive Source/WebCore, Source/JavaScriptCore, Source/WTF and Source/WebKit overrides under LGPL-2/LGPL-2+/LGPL-2.1+ or permissive terms, covering the shipped libraries, API typelibs, WebKitNetworkProcess, WebKitWebProcess and injected bundle. GPL-marked JSDateMath/DateMath and GIFImageReader files offer LGPL/MPL alternatives, XPathGrammar and ANGLE generated parser paragraphs explicitly carry Bison exceptions, and the GPL-3+ ANGLE flex-bison skeleton tooling is not shipped as runtime implementation.",
+        "version": "2.54.0-1~deb13u3"
+      }
+    ],
+    "gir1.2-secret-1": [
+      {
+        "copyright_sha256": "37876a66bd0e61debb79c395009cbbeeda792f5a6cb36facd6ed5a8ac047880e",
+        "decision": "allowed",
+        "reason": "Files: * is LGPL-2.1+, covering libsecret-1.so.0 and Secret-1.typelib. The sole GPL-2+ override is libsecret/mock/hkdf.py, a Python mock/test helper not compiled into the shipped library or typelib.",
+        "version": "0.21.7-1"
+      }
+    ],
+    "gir1.2-webkit2-4.1": [
+      {
+        "copyright_sha256": "7686662a207e5e99308311916a0385a9d3f6cd2bd753721ecf88a9dbe906ca72",
+        "decision": "allowed",
+        "reason": "Files: * is BSD-2-clause with the extensive Source/WebCore, Source/JavaScriptCore, Source/WTF and Source/WebKit overrides under LGPL-2/LGPL-2+/LGPL-2.1+ or permissive terms, covering the shipped libraries, API typelibs, WebKitNetworkProcess, WebKitWebProcess and injected bundle. GPL-marked JSDateMath/DateMath and GIFImageReader files offer LGPL/MPL alternatives, XPathGrammar and ANGLE generated parser paragraphs explicitly carry Bison exceptions, and the GPL-3+ ANGLE flex-bison skeleton tooling is not shipped as runtime implementation.",
+        "version": "2.54.0-1~deb13u3"
+      }
+    ],
+    "libatomic1": [
+      {
+        "copyright_sha256": "20390f8a6f3b1e4d7cb45dd8652dabb259bbef688cbad839bcdb0b9ba7252f79",
+        "decision": "allowed",
+        "reason": "The runtime-library licensing paragraph explicitly lists libatomic under GPL-3+ with the GCC Runtime Library Exception 3.1, permitting combination with independent non-GPL modules produced by an eligible compilation process. The compiler's unexcepted GPL paragraphs do not govern this shipped runtime library.",
+        "version": "14.2.0-19"
+      }
+    ],
+    "libavahi-client3": [
+      {
+        "copyright_sha256": "66849d0ab7cbf0d770e40e00276ed8d264ed8974c0e064fb12814c0f80430c5d",
+        "decision": "allowed",
+        "reason": "The main-portion/library licensing paragraph licenses Avahi under LGPL version 2 or later, covering libavahi-client.so.3 and libavahi-common.so.3. GPL paragraphs concern man/xmltoman.{css,dtd,xsl} and common Autoconf/Doxygen build files (acx_pthread.m4 also has an Autoconf exception), not the shipped library implementation.",
+        "version": "0.8-16"
+      }
+    ],
+    "libavahi-common3": [
+      {
+        "copyright_sha256": "66849d0ab7cbf0d770e40e00276ed8d264ed8974c0e064fb12814c0f80430c5d",
+        "decision": "allowed",
+        "reason": "The main-portion/library licensing paragraph licenses Avahi under LGPL version 2 or later, covering libavahi-client.so.3 and libavahi-common.so.3. GPL paragraphs concern man/xmltoman.{css,dtd,xsl} and common Autoconf/Doxygen build files (acx_pthread.m4 also has an Autoconf exception), not the shipped library implementation.",
+        "version": "0.8-16"
+      }
+    ],
+    "libblkid1": [
+      {
+        "copyright_sha256": "56b67e2eb8bac5a15d91e261d558d73f1f029113cced229753138194997366b6",
+        "decision": "allowed",
+        "reason": "Files: libblkid/* and libblkid/src/* (including partitions, superblocks and topology) are explicitly LGPL-2.1+, covering libblkid.so.1, with shared support-file paragraphs providing LGPL or public-domain terms. The default GPL-2+ command-line code and GPL-only lib/ismounted.c, lib/logindefs.c and lib/plymouth-ctrl.c are not the libblkid library implementation.",
+        "version": "2.41.5-0+deb13u1"
+      },
+      {
+        "copyright_sha256": "3492fb92cb56cf517d9a899828b4f989038421a38736e49e5525ffbd33196eab",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 util-linux 2.39.3: Files: libblkid/* and libblkid/src/* (partitions, superblocks, topology) and Files: libmount/* and libmount/src/* are explicitly LGPL-2.1+. Both libraries link only libcommon.la; in the exact 2.39.3 source (orig tarball sha256 7b6605e4...dfed0f) every libcommon_la_SOURCES file in lib/Makemodule.am carries an LGPL, public-domain, BSD, MIT or permissive header (lib/crc32.c is Gary S. Brown's unrestricted CRC code), and the GPL-headed lib/caputils.c, exec_shell.c, pager.c, plymouth-ctrl.c, shells.c and ismounted.c are only test or command-line programs. The default Files: * GPL-2+ and GPL-2/GPL-3+ overrides name schedutils, disk-utils and sys-utils programs, not this library.",
+        "version": "2.39.3-9ubuntu6.6"
+      }
+    ],
+    "libcolord2": [
+      {
+        "copyright_sha256": "ef303b9a14eccf720e0f1b422776fc0548c374191f88e78e92fe5b66c00b85de",
+        "decision": "allowed",
+        "reason": "Files: lib/colord/* is explicitly LGPL-2.1+, covering libcolord.so.2 rather than the default GPL-2+ program code. The separate GPL-2+ lib/colorhug/* library, daemon/tooling, documentation stylesheet and Debian packaging are not the shipped libcolord library.",
+        "version": "1.4.7-3"
+      }
+    ],
+    "libdbus-1-3": [
+      {
+        "copyright_sha256": "f5fd0bfcceb21f4c23a517368abcbfe8a4c1cfb3b521757b50fae4898840fe35",
+        "decision": "allowed",
+        "reason": "Files: * offers GPL-2+ or AFL-2.1, together with Expat and Tcl-BSDish, and the accompanying Comment explicitly identifies the effective choice as GPL-2+ or AFL-2.1; libdbus-1.so.3 can use the AFL-2.1 alternative. GPL-2+-only overrides apply to the enumerated tools/dbus-* and tools/test-tool/tool-common files, not the shipped library.",
+        "version": "1.16.2-2"
+      },
+      {
+        "copyright_sha256": "20d4fee565b0a0910670b8202c15f040ed5dd488a685a3008eb04b65d987f89c",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 dbus 1.14: Files: * offers GPL-2+ or AFL-2.1, together with Expat and Tcl-BSDish, and the copyright Comment states the effective license of the majority of the package, including the shared library, is GPL-2+ or AFL-2.1; libdbus-1.so.3 uses the AFL-2.1 alternative. GPL-2+-only overrides name doc/dbus-test-tool.1.xml.in and tools/dbus-* and tool-common sources, not the shipped library.",
+        "version": "1.14.10-4ubuntu4.1"
+      }
+    ],
+    "libdw1t64": [
+      {
+        "copyright_sha256": "657e078ed1e718b57ca839cdc38bb93196a0009488bea43cd0f429e7531530fa",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 elfutils 0.190, newly bundled because Ubuntu's libgstreamer-1.0.so.0 needs libdw.so.1: Files: backends/*, config/*, debuginfod/*, lib* and version.h is LGPL-3+ or GPL-2+, its Comment naming lib, libelf, libebl, libdw and libdwfl; DEP-5 lib* covers libdw/, libdwfl/, libdwelf/, libebl/ and libcpu/ compiled into libdw.so.1, libelf/dl-hash.h is LGPL-2.1+, and libcpu/i386_parse.* is GPL-3+ with the Bison exception. The default Files: * GPL-3+ covers the src/ tools (readelf, eu-*) and tests, and debian/po/* are packaging translations; none is shipped.",
+        "version": "0.190-1.1ubuntu0.1"
+      }
+    ],
+    "libelf1t64": [
+      {
+        "copyright_sha256": "657e078ed1e718b57ca839cdc38bb93196a0009488bea43cd0f429e7531530fa",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 elfutils 0.190, newly bundled as libdw.so.1's dependency libelf.so.1: Files: backends/*, config/*, debuginfod/*, lib* and version.h is LGPL-3+ or GPL-2+, its Comment naming lib, libelf, libebl, libdw and libdwfl; DEP-5 lib* covers libdw/, libdwfl/, libdwelf/, libebl/ and libcpu/ and libelf/ compiled into libelf.so.1 and libdw.so.1, libelf/dl-hash.h is LGPL-2.1+, and libcpu/i386_parse.* is GPL-3+ with the Bison exception. The default Files: * GPL-3+ covers the src/ tools (readelf, eu-*) and tests, and debian/po/* are packaging translations; none is shipped.",
+        "version": "0.190-1.1ubuntu0.1"
+      }
+    ],
+    "libenchant-2-2": [
+      {
+        "copyright_sha256": "1152f367c859e70ece08ab39169b2b2e599490d7e047e12ef1ca60af3457f919",
+        "decision": "allowed",
+        "reason": "Files: * and src/lib.c are LGPL-2.1+, with enumerated lib/*.c and lib/*.h support files under LGPL-2.0+ or LGPL-3.0+, covering libenchant-2.so.2. GPL-3.0+ entries concern build-aux snippets, Makefile/m4 build machinery and test headers, while GPL-2.0+ providers/applespell_checker.mm is a separate macOS provider absent from this Linux payload.",
+        "version": "2.8.2+dfsg1-3"
+      },
+      {
+        "copyright_sha256": "1eb67527e9f1250178522b816961cd7ce09042f38697b60c1865132abdcecb1a",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 enchant-2 2.3.3: Files: * and src/lib.c are LGPL-2.1+, with lib/*.c and lib/*.h support files under LGPL-2.0+ or LGPL-3.0+, covering libenchant-2.so.2. GPL-3.0+ entries concern build-aux snippets, Makefile/m4 build machinery and test headers, and GPL-2.0+ providers/applespell_checker.mm is a macOS-only provider absent from this Linux payload.",
+        "version": "2.3.3-2build2"
+      }
+    ],
+    "libevdev2": [
+      {
+        "copyright_sha256": "588d64c855381c4f1638f91840c5cbf0a7e771cab4e6298e5b4cf6a909ea1ac7",
+        "decision": "allowed",
+        "reason": "Files: * is MIT, covering the libevdev.so.2 implementation; the GPL-2/GPL-2+ overrides name Linux input/uinput UAPI headers rather than a GPL library implementation. The exact source's input.h and input-event-codes.h carry Linux-syscall-note, and the kernel licensing rules extend that syscall-interface boundary to UAPI header use (including the older uinput.h without an SPDX line), permitting this non-GPL user-space library.",
+        "version": "1.13.4+dfsg-1"
+      },
+      {
+        "copyright_sha256": "01d0da4919f92dd06e7ec73fee6cf5dccac3c6e475917b9dc57cb22800b732de",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 libevdev 1.13.1: Files: * is MIT, covering the libevdev.so.2 implementation; the GPL-2/GPL-2+ overrides name the Linux include/linux/input.h and uinput.h UAPI headers, whose Linux-syscall-note and the kernel's UAPI licensing rules permit use by this non-GPL user-space library.",
+        "version": "1.13.1+dfsg-1build1"
+      }
+    ],
+    "libffi8": [
+      {
+        "copyright_sha256": "25ee86cfccc2b7eb9a156a127f1e1b38c46c231f516ff201912223eaf62ee186",
+        "decision": "allowed",
+        "reason": "Files: * is Expat and src/dlmalloc.c is public-domain, covering libffi.so.8. The copyright Comment expressly excludes building/testing tools from libffi derivation; GPL overrides are libtool-ldflags, make_sunver.pl, testsuite/* and debian/*, while msvcc.sh also offers MPL/LGPL alternatives.",
+        "version": "3.4.8-2"
+      },
+      {
+        "copyright_sha256": "737ff68f0eb104d3b0d96b291c3a8f40a775a3ec2b53f9b2e4bcfe3188bde118",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 libffi 3.4.6: Files: * is Expat and src/dlmalloc.c is public-domain, covering libffi.so.8. The copyright Comment excludes the building/testing tools from libffi derivation; GPL overrides are libtool-ldflags, make_sunver.pl, testsuite/* and debian/*, none shipped.",
+        "version": "3.4.6-1build1"
+      }
+    ],
+    "libflite1": [
+      {
+        "copyright_sha256": "77d13a5e6cbe7277b4721033f9ad15707241c2832baa8c74ec823c9ee5ebf71c",
+        "decision": "allowed",
+        "reason": "The 'All other files' paragraph grants the permissive CMU Flite licence, with the preceding lang/usenglish, Cepstral, regex, rateconv and other source-specific paragraphs also permissive, covering all shipped libflite and language/voice libraries. GPL-2 covers only config.sub, config.guess and missing build scripts, and the final GPL-3 paragraph concerns Debian packaging, not the upstream runtime code.",
+        "version": "2.2-7"
+      }
+    ],
+    "libgcrypt20": [
+      {
+        "copyright_sha256": "4feae258cab1ad4743fb569a77e0b2a5b7a0199520bdbc0a613916291b9aa8a8",
+        "decision": "allowed",
+        "reason": "The explicit 'License (library): LGPLv2.1+' and README/library licensing paragraphs cover libgcrypt.so.20, with additional runtime notices providing permissive/BSD alternatives where GPL is mentioned. GPL-only notices concern manuals and helper/debugging programs not shipped here; the historical Camellia GPL-origin remark does not replace the stated current library licence.",
+        "version": "1.11.0-7+deb13u1"
+      },
+      {
+        "copyright_sha256": "40162167dff80843a4b24aa8d0a4ffc50be5338d004ebe38f86ae3397ba9de3e",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 libgcrypt20 1.10.3: the explicit 'License (library): LGPLv2.1+' line and the README licensing paragraph (LGPL 2.1 or later except helper and debugging programs) cover libgcrypt.so.20; additional runtime notices give permissive/BSD alternatives where GPL is mentioned. 'License (manual and tools): GPLv2+' and the GPL documentation notice concern manuals and helper programs not shipped, and the historical Camellia GPL-origin remark does not replace the stated library licence.",
+        "version": "1.10.3-2ubuntu0.2"
+      }
+    ],
+    "libgdk-pixbuf-2.0-0": [
+      {
+        "copyright_sha256": "2b914b2304e7474aaa8108307b9e95c3f8345e0a4153c7bfa0ca9c48813cb406",
+        "decision": "allowed",
+        "reason": "Files: * is LGPL-2+ and LGPL-2.1+ and CC0-1.0, covering the shipped gdk-pixbuf library, image loaders and its API typelibs. GPL-2+ is restricted to tests/*, gdk-pixbuf/test-gdk-pixbuf.c and thumbnailer/*, none of which is among the shipped implementation files.",
+        "version": "2.42.12+dfsg-4+deb13u1"
+      },
+      {
+        "copyright_sha256": "a0189e53d508d32aeec6462c4740013de70b40f06e507f5e700d3cceb6e8f178",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 gdk-pixbuf 2.42.10: Files: * is LGPL-2+ and LGPL-2.1+ and CC0-1.0, covering the shipped gdk-pixbuf library and image loaders. GPL-2+ is restricted to tests/*, gdk-pixbuf/test-gdk-pixbuf.c and thumbnailer/*, none shipped.",
+        "version": "2.42.10+dfsg-3ubuntu3.3"
+      }
+    ],
+    "libgio-2.0-dev": [
+      {
+        "copyright_sha256": "b9fe78c8a0720c051c9ac8e8c6f25663b54f228e501d24fc0ba89c66cec7f7c1",
+        "decision": "allowed",
+        "reason": "Files: * is LGPL-2.1+, covering gio/gschema.dtd installed as the sole shipped file usr/share/glib-2.0/schemas/gschema.dtd. GPL-2+ entries name Unicode-generation/test scripts, po/po2tbl.sed.in and tools/glib-gettextize.in, not this schema DTD or any shipped program from this package.",
+        "version": "2.84.4-3~deb13u5"
+      }
+    ],
+    "libglib2.0-0t64": [
+      {
+        "copyright_sha256": "b9fe78c8a0720c051c9ac8e8c6f25663b54f228e501d24fc0ba89c66cec7f7c1",
+        "decision": "allowed",
+        "reason": "Files: * is LGPL-2.1+, covering the shipped GLib/GObject/GModule/GIO libraries and their API typelibs; runtime exceptions such as gio/xdgmime/xdgmime* also provide LGPL alternatives. GPL-2+ applies to glib/gen-unicode-tables.pl, glib/tests/gen-case*-txt.py, po/po2tbl.sed.in and tools/glib-gettextize.in, not compiled library implementation or the shipped typelibs.",
+        "version": "2.84.4-3~deb13u5"
+      },
+      {
+        "copyright_sha256": "b52574b109fb876dfa71dea7a98b8aee1bb583f6aa90c327d1e4dc0a1d59f211",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 glib2.0 2.80: Files: * is LGPL-2.1+, covering the shipped GLib/GObject/GModule/GIO libraries and their API typelibs; runtime exceptions such as gio/xdgmime/xdgmime* also offer AFL-2.0 or LGPL-2.1+. GPL-2+ applies only to glib/gen-unicode-tables.pl, glib/tests/gen-case*-txt.py, po/po2tbl.sed.in and tools/glib-gettextize.in, and LGPL-3+ to gio/tests monitor scripts, none of which is compiled library code or a shipped typelib.",
+        "version": "2.80.0-6ubuntu3.10"
+      }
+    ],
+    "libglib2.0-dev": [
+      {
+        "copyright_sha256": "b52574b109fb876dfa71dea7a98b8aee1bb583f6aa90c327d1e4dc0a1d59f211",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 glib2.0 2.80: Files: * is LGPL-2.1+, covering gio/gschema.dtd installed as the sole shipped file usr/share/glib-2.0/schemas/gschema.dtd. GPL-2+ entries name Unicode-generation/test scripts, po/po2tbl.sed.in and tools/glib-gettextize.in, not this schema DTD or any shipped program from this package.",
+        "version": "2.80.0-6ubuntu3.10"
+      }
+    ],
+    "libgnutls30t64": [
+      {
+        "copyright_sha256": "a07e99815cf1998f1dabbc21fe199460bfa09b85ead0d56b49a32cac3d1791b5",
+        "decision": "allowed",
+        "reason": "The main-library licensing paragraph and README explicitly license lib/ and libdane/ under LGPL-2.1+, covering libgnutls.so.30; imported runtime components offer LGPL or permissive terms. GPL-3+ instead covers extra/gnutls-openssl, src/ applications, tests and build machinery, and the GMP/Nettle/libunistring dependency discussion retains an LGPL alternative.",
+        "version": "3.8.9-3+deb13u4"
+      },
+      {
+        "copyright_sha256": "51da5214308b87d6a0a2fbcaea1f7dbd15510be733e5921d9548ff6b88d84dd8",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 gnutls28 3.8.3: the licence paragraph states the main library is LGPL-2.1+ and the README text places it in lib/ and libdane/, covering libgnutls.so.30, with imported runtime components offering LGPL or permissive terms. GPL-3+ covers Gnutls Extra (openssl wrapper), src/ applications, tests/* and fuzz/* paragraphs and build machinery; the GMP/Nettle/libunistring discussion retains the LGPLv3+ alternative.",
+        "version": "3.8.3-1.1ubuntu3.6"
+      }
+    ],
+    "libgssapi-krb5-2": [
+      {
+        "copyright_sha256": "936728f4181718f42951b881c1e8f1386bf6b2723c4fbc533c374d6f42c71816",
+        "decision": "allowed",
+        "reason": "The opening MIT Kerberos redistribution paragraph provides BSD-style source/binary permission, supplemented by permissive source-specific notices for src/lib/gssapi, src/lib/crypto, src/lib/krb5 and src/util/support, covering the shipped Kerberos libraries. The GPL marker is the bundled libev paragraph's optional GPL-2+ alternative to its explicitly retained BSD terms, not a GPL-only requirement.",
+        "version": "1.21.3-5+deb13u1"
+      }
+    ],
+    "libgstreamer1.0-0": [
+      {
+        "copyright_sha256": "cad5fed27a892f5a11d6f2642ff027cf1312b6d3ba42015dcda28b278c7d4eb4",
+        "decision": "allowed",
+        "reason": "Files: * and the gst/gst*.c and libs/gst/base source paragraphs license libgstreamer-1.0.so.0 and libgstbase-1.0.so.0 under LGPL-2+. GPL-2+ entries are coverage/build tools; the GPL-3+ gst/parse/grammar.tab.h entry describes Bison-generated output, whose Bison exception is confirmed by the exact source's gst/parse/meson.build and Debian Bison's output skeleton, permitting this non-parser-generator runtime.",
+        "version": "1.26.2-2"
+      },
+      {
+        "copyright_sha256": "de00f8e299a9ed1bd23e7a0c2fe31051c8f99546359be75f33b98e3f0328d68a",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 gstreamer1.0 1.24.2: the 95 gst/*, libs/gst/* and plugins/* source paragraphs are LGPL-2+ or LGPL-2.1+, covering libgstreamer-1.0.so.0 and libgstbase-1.0.so.0. GPL-2+ entries are common/coverage scripts and ltmain.sh build tools; the GPL-3+ gst/parse/grammar.tab.h entry is Bison-generated parser output, which Bison's output skeleton licenses with its special exception, permitting this non-parser-generator runtime.",
+        "version": "1.24.2-1ubuntu0.1"
+      }
+    ],
+    "libhogweed6t64": [
+      {
+        "copyright_sha256": "344396197142cd506468b20029ea5722d507c980129bb3db4af02424ed6f39c6",
+        "decision": "allowed",
+        "reason": "The overall licensing Comment and Files: * provide LGPL-3+ or GPL-2+ for the Nettle/Hogweed library implementation, and source-specific runtime paragraphs retain that LGPL alternative or permissive/LGPL terms. GPL-only getopt* is command-line support, debian/sexp-conv.1 is an unshipped manual, and config.guess/config.sub have the Autoconf exception, not a GPL-only requirement for these shared libraries.",
+        "version": "3.10.1-1"
+      },
+      {
+        "copyright_sha256": "2cecdc7ac1913beb31299a41a8092fc936d9e6a1d00872fc3bf6e2263aecf842",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 nettle 3.9.1: the overall licensing Comment and Files: * provide LGPL-3+ or GPL-2+ for the Nettle/Hogweed library implementation, and every per-source runtime paragraph keeps that LGPL-3+ alternative or permissive terms. GPL-only getopt* is command-line support, debian/sexp-conv.1 is an unshipped manual, and config.guess/config.sub carry the Autoconf exception, not a GPL-only requirement for these shared libraries.",
+        "version": "3.9.1-2.2build1.1"
+      }
+    ],
+    "libidn2-0": [
+      {
+        "copyright_sha256": "32df8170a3c5e55c553f684576a2911e6a0611320ccd7fd65f7dceae26be61ee",
+        "decision": "allowed",
+        "reason": "Files: lib/*.c, lib/*.h and lib/idn2.h.in explicitly offer LGPL-3+ or GPL-2+, covering libidn2.so.0, while the listed IDNA data files use the permissive Unicode licence. The default GPL-3+, fuzz test, doc/gdoc and debian/* paragraphs do not override the library-specific LGPL option.",
+        "version": "2.3.8-2"
+      },
+      {
+        "copyright_sha256": "41702469f28e8ff406345e3d1dd0c741f11bdfca319264f67036efd6aaa79e4b",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 libidn2 2.3.7: Files: *.c *.h is LGPL-3+ or GPL-2+. The later 'build-aux/* lib/* GNUmakefile maint.mk' GPL-3+ paragraph (FSF 2001-2011) is stale gnulib attribution: in the exact 2.3.7 source (orig tarball sha256 4c21a791...6bfd7d64) every hand-written lib/*.c and lib/*.h header states LGPL-3+ or GPL-2+, lib/data.c and lib/tr46map_data.c are tables generated from the Unicode data files, the linked unistring/*.c are LGPL, and the only GPL gnulib file in gl/ (progname.c) is absent from the shipped libidn2.so.0.4.0 (its 'A NULL argv[0]' message does not occur in the library). The default GPL-3+ covers src/ idn2 and doc/gdoc, which are not shipped.",
+        "version": "2.3.7-2build1.1"
+      }
+    ],
+    "libjavascriptcoregtk-4.1-0": [
+      {
+        "copyright_sha256": "7686662a207e5e99308311916a0385a9d3f6cd2bd753721ecf88a9dbe906ca72",
+        "decision": "allowed",
+        "reason": "Files: * is BSD-2-clause with the extensive Source/WebCore, Source/JavaScriptCore, Source/WTF and Source/WebKit overrides under LGPL-2/LGPL-2+/LGPL-2.1+ or permissive terms, covering the shipped libraries, API typelibs, WebKitNetworkProcess, WebKitWebProcess and injected bundle. GPL-marked JSDateMath/DateMath and GIFImageReader files offer LGPL/MPL alternatives, XPathGrammar and ANGLE generated parser paragraphs explicitly carry Bison exceptions, and the GPL-3+ ANGLE flex-bison skeleton tooling is not shipped as runtime implementation.",
+        "version": "2.54.0-1~deb13u3"
+      },
+      {
+        "copyright_sha256": "1f0568073d22552e2ef947912b9ed1169e5b7132a50d54d520f227e9408c3890",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 webkit2gtk 2.52.6: Files: * is BSD-2-clause with the extensive Source/WebCore, Source/JavaScriptCore, Source/WTF and Source/WebKit overrides under LGPL-2/LGPL-2+/LGPL-2.1+ or permissive terms, covering the shipped libraries, API typelibs, WebKitNetworkProcess, WebKitWebProcess and injected bundle. JSDateMath/DateMath and GIFImageReader paragraphs offer LGPL-2.1+ or MPL-1.1 alternatives, Source/WebCore/xml/XPathGrammar.* and the ANGLE preprocessor_tab_autogen.cpp/compiler/translator/* paragraphs explicitly carry Bison exceptions, and the GPL-3+ ANGLE tools/flex-bison skeletons are build tooling, not shipped runtime implementation.",
+        "version": "2.52.6-0ubuntu0.24.04.1"
+      }
+    ],
+    "libk5crypto3": [
+      {
+        "copyright_sha256": "936728f4181718f42951b881c1e8f1386bf6b2723c4fbc533c374d6f42c71816",
+        "decision": "allowed",
+        "reason": "The opening MIT Kerberos redistribution paragraph provides BSD-style source/binary permission, supplemented by permissive source-specific notices for src/lib/gssapi, src/lib/crypto, src/lib/krb5 and src/util/support, covering the shipped Kerberos libraries. The GPL marker is the bundled libev paragraph's optional GPL-2+ alternative to its explicitly retained BSD terms, not a GPL-only requirement.",
+        "version": "1.21.3-5+deb13u1"
+      }
+    ],
+    "libkeyutils1": [
+      {
+        "copyright_sha256": "73f5682b0466f41cea2b9b7f1ff8a8052464f6c09fb29eeac4490512af09bd50",
+        "decision": "allowed",
+        "reason": "Files: keyutils.* is explicitly LGPL-2+, covering the keyutils.c/keyutils.h library implementation compiled as libkeyutils.so.1. The default Files: * GPL-2+ applies to other keyutils programs, not this more specifically licensed library source.",
+        "version": "1.6.3-6"
+      },
+      {
+        "copyright_sha256": "c62fe37d22203046611112bc10a9e03a39a7f73bec1b061e7c615326166d9ff5",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 keyutils 1.6.3: Files: keyutils.* is explicitly LGPL-2+, covering the keyutils.c/keyutils.h implementation compiled as libkeyutils.so.1. The default Files: * GPL-2+ applies to the other keyutils programs, not this library source.",
+        "version": "1.6.3-3build1"
+      }
+    ],
+    "libkrb5-3": [
+      {
+        "copyright_sha256": "936728f4181718f42951b881c1e8f1386bf6b2723c4fbc533c374d6f42c71816",
+        "decision": "allowed",
+        "reason": "The opening MIT Kerberos redistribution paragraph provides BSD-style source/binary permission, supplemented by permissive source-specific notices for src/lib/gssapi, src/lib/crypto, src/lib/krb5 and src/util/support, covering the shipped Kerberos libraries. The GPL marker is the bundled libev paragraph's optional GPL-2+ alternative to its explicitly retained BSD terms, not a GPL-only requirement.",
+        "version": "1.21.3-5+deb13u1"
+      }
+    ],
+    "libkrb5support0": [
+      {
+        "copyright_sha256": "936728f4181718f42951b881c1e8f1386bf6b2723c4fbc533c374d6f42c71816",
+        "decision": "allowed",
+        "reason": "The opening MIT Kerberos redistribution paragraph provides BSD-style source/binary permission, supplemented by permissive source-specific notices for src/lib/gssapi, src/lib/crypto, src/lib/krb5 and src/util/support, covering the shipped Kerberos libraries. The GPL marker is the bundled libev paragraph's optional GPL-2+ alternative to its explicitly retained BSD terms, not a GPL-only requirement.",
+        "version": "1.21.3-5+deb13u1"
+      }
+    ],
+    "liblcms2-2": [
+      {
+        "copyright_sha256": "420fd2c72204652c08a48548a0d1002edab3d9b180d3c416578c61f74092f460",
+        "decision": "allowed",
+        "reason": "Files: * is MIT, covering the core Little CMS implementation in liblcms2.so.2. GPL-3 is restricted to plugins/fast_float/* and plugins/threaded/*, neither a shipped plugin nor part of the core library, and GPL-2+ debian/* covers packaging only.",
+        "version": "2.16-2+deb13u2"
+      }
+    ],
+    "liblz4-1": [
+      {
+        "copyright_sha256": "d3be0f43fe14da244f97c451bbae789c0acf868612598a69f5f22a289abeca40",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 lz4 1.9.4, newly bundled for Ubuntu's libsystemd0: Files: * and lib/lz4file.c are BSD-2-clause, covering lib/ compiled as liblz4.so.1. GPL-2+ paragraphs name programs/ (lz4 CLI), tests/, ossfuzz, examples and Makefiles including lib/dll/example/Makefile, and debian/*; none is library code or shipped.",
+        "version": "1.9.4-1build1.1"
+      }
+    ],
+    "liblzma5": [
+      {
+        "copyright_sha256": "d755588e2d89d7845d0d4e718ac45d49ae9fc53cec4540af105963c20598f9d7",
+        "decision": "allowed",
+        "reason": "The licensing summary explicitly states liblzma is 0BSD, consistent with Files: * covering its src/liblzma implementation. GPL-2+ src/scripts/*, lib/* compatibility/tooling and extra/scanlzma/scanlzma.c are not that library, and the summary states GPL Autotools files do not affect built-binary licensing (ax_pthread.m4 also carries the Autoconf exception).",
+        "version": "5.8.1-1+deb13u2"
+      },
+      {
+        "copyright_sha256": "a2dc8fac0f496e1c58aff67018cf0c6b88336316afa5642f9335b71642e28aa8",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 xz-utils 5.4.5: the licensing summary states liblzma is in the public domain, consistent with Files: * PD covering src/liblzma. GPL-2+ src/scripts/*, lib/* getopt compatibility and extra/scanlzma/scanlzma.c are tooling, not that library, and Doxyfile.in GPL-2 is documentation build input.",
+        "version": "5.6.1+really5.4.5-1ubuntu0.4"
+      }
+    ],
+    "libmount1": [
+      {
+        "copyright_sha256": "56b67e2eb8bac5a15d91e261d558d73f1f029113cced229753138194997366b6",
+        "decision": "allowed",
+        "reason": "Files: libmount/* and libmount/src/* explicitly license libmount.so.1 under LGPL-2.1+, with shared support-file paragraphs providing LGPL or public-domain terms. The default GPL-2+ CLI programs and GPL-only lib/ismounted.c, lib/logindefs.c and lib/plymouth-ctrl.c are separate implementations, not the shipped libmount library.",
+        "version": "2.41.5-0+deb13u1"
+      },
+      {
+        "copyright_sha256": "3492fb92cb56cf517d9a899828b4f989038421a38736e49e5525ffbd33196eab",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 util-linux 2.39.3: Files: libblkid/* and libblkid/src/* (partitions, superblocks, topology) and Files: libmount/* and libmount/src/* are explicitly LGPL-2.1+. Both libraries link only libcommon.la; in the exact 2.39.3 source (orig tarball sha256 7b6605e4...dfed0f) every libcommon_la_SOURCES file in lib/Makemodule.am carries an LGPL, public-domain, BSD, MIT or permissive header (lib/crc32.c is Gary S. Brown's unrestricted CRC code), and the GPL-headed lib/caputils.c, exec_shell.c, pager.c, plymouth-ctrl.c, shells.c and ismounted.c are only test or command-line programs. The default Files: * GPL-2+ and GPL-2/GPL-3+ overrides name schedutils, disk-utils and sys-utils programs, not this library.",
+        "version": "2.39.3-9ubuntu6.6"
+      }
+    ],
+    "libnettle8t64": [
+      {
+        "copyright_sha256": "344396197142cd506468b20029ea5722d507c980129bb3db4af02424ed6f39c6",
+        "decision": "allowed",
+        "reason": "The overall licensing Comment and Files: * provide LGPL-3+ or GPL-2+ for the Nettle/Hogweed library implementation, and source-specific runtime paragraphs retain that LGPL alternative or permissive/LGPL terms. GPL-only getopt* is command-line support, debian/sexp-conv.1 is an unshipped manual, and config.guess/config.sub have the Autoconf exception, not a GPL-only requirement for these shared libraries.",
+        "version": "3.10.1-1"
+      },
+      {
+        "copyright_sha256": "2cecdc7ac1913beb31299a41a8092fc936d9e6a1d00872fc3bf6e2263aecf842",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 nettle 3.9.1: the overall licensing Comment and Files: * provide LGPL-3+ or GPL-2+ for the Nettle/Hogweed library implementation, and every per-source runtime paragraph keeps that LGPL-3+ alternative or permissive terms. GPL-only getopt* is command-line support, debian/sexp-conv.1 is an unshipped manual, and config.guess/config.sub carry the Autoconf exception, not a GPL-only requirement for these shared libraries.",
+        "version": "3.9.1-2.2build1.1"
+      }
+    ],
+    "libp11-kit0": [
+      {
+        "copyright_sha256": "008107de203c9f89a6c71b625fb47e10074c6b7ccb0e310694014d4551f67b2b",
+        "decision": "allowed",
+        "reason": "Files: * and the detailed p11-kit/* and common/* runtime paragraphs are BSD-3-clause, ISC or other permissive terms, covering libp11-kit.so.0. GPL-2+/GPL-3+ applies only to build/litter/* with explicit Autoconf-data exceptions, not the shipped runtime implementation.",
+        "version": "0.25.5-3"
+      },
+      {
+        "copyright_sha256": "d33af1e069981d1c1b576cb22e4bc260a134ffa2fce6ddd3cbbbb5b181113f0c",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 p11-kit 0.25.3: Files: * and the detailed p11-kit/* and common/* runtime paragraphs are BSD-3-clause, ISC or other permissive terms, covering libp11-kit.so.0. GPL-2+/GPL-3+ applies only to build/litter/* with explicit Autoconf-data exceptions.",
+        "version": "0.25.3-4ubuntu2.2"
+      }
+    ],
+    "libsecret-1-0": [
+      {
+        "copyright_sha256": "37876a66bd0e61debb79c395009cbbeeda792f5a6cb36facd6ed5a8ac047880e",
+        "decision": "allowed",
+        "reason": "Files: * is LGPL-2.1+, covering libsecret-1.so.0 and Secret-1.typelib. The sole GPL-2+ override is libsecret/mock/hkdf.py, a Python mock/test helper not compiled into the shipped library or typelib.",
+        "version": "0.21.7-1"
+      },
+      {
+        "copyright_sha256": "97852db18d3685e2f694adc44414bdbff697d2ead28dffedfa27ade41f862f99",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 libsecret 0.21.4: Files: * is LGPL-2.1+, covering libsecret-1.so.0. The sole GPL-2+ override is libsecret/mock/hkdf.py, a Python mock/test helper not compiled into the shipped library.",
+        "version": "0.21.4-1build3"
+      }
+    ],
+    "libselinux1": [
+      {
+        "copyright_sha256": "864f1bb189f609075d580b8c4aada16d85a44546884f1687989e1cacc8c56751",
+        "decision": "allowed",
+        "reason": "Files: * explicitly identifies libselinux as public-domain software, covering libselinux.so.1. GPL-2 is restricted to utils/avcstat.c and debian/*, neither compiled into this library.",
+        "version": "3.8.1-1"
+      }
+    ],
+    "libsystemd0": [
+      {
+        "copyright_sha256": "a79e4b379cabbd960bb44f6cc1a069081a3778c59a25ee529b68df5a2cb7d27d",
+        "decision": "allowed",
+        "reason": "Files: * is LGPL-2.1+, covering src/libsystemd and src/libudev; src/basic/linux/* explicitly carries GPL-2 with the Linux-syscall-note exception, permitting its kernel-interface use. GPL-2+ overrides enumerate udev daemon/udevadm/device-helper sources, not the shipped libsystemd.so.0 or libudev.so.1 implementation.",
+        "version": "257.13-1~deb13u1"
+      },
+      {
+        "copyright_sha256": "a7d06854714a1ca99f6dbd1a1641dde5bcf28635be149f6554449618f8f427f3",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 systemd 255.4: Files: * is LGPL-2.1+, covering src/libsystemd and src/libudev; src/shared/linux/* and src/basic/linux/* explicitly carry GPL-2 with the Linux-syscall-note exception, permitting kernel-interface header use. GPL-2+ overrides enumerate udev daemon/udevadm/device-helper sources (ata_id, cdrom_id, dmi_memory_id, mtd_probe and similar), not the shipped libsystemd.so.0 or libudev.so.1 implementation.",
+        "version": "255.4-1ubuntu8.18"
+      }
+    ],
+    "libtasn1-6": [
+      {
+        "copyright_sha256": "5f9f7b538d221104bdb561ae80fd794ec5f813eb8fd04650293bddcc0f856e7d",
+        "decision": "allowed",
+        "reason": "The explicit library-versus-tools paragraph licenses the library itself under LGPL-2.1+, covering libtasn1.so.6. GPL-3+ is restricted to the build system, test suite and libtasn1-bin command-line programs, none shipped here.",
+        "version": "4.20.0-2+deb13u1"
+      },
+      {
+        "copyright_sha256": "572ad60ad184d8f52c6dc66d83a61a68f137db560b3452ce00588c9ecf128a65",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 libtasn1-6 4.19.0: the library-versus-tools paragraph licenses the library itself under LGPL-2.1+, covering libtasn1.so.6. GPL-3+ is restricted to the build system, test suite and libtasn1-bin command-line programs, none shipped.",
+        "version": "4.19.0-3ubuntu0.24.04.2"
+      }
+    ],
+    "libudev1": [
+      {
+        "copyright_sha256": "a79e4b379cabbd960bb44f6cc1a069081a3778c59a25ee529b68df5a2cb7d27d",
+        "decision": "allowed",
+        "reason": "Files: * is LGPL-2.1+, covering src/libsystemd and src/libudev; src/basic/linux/* explicitly carries GPL-2 with the Linux-syscall-note exception, permitting its kernel-interface use. GPL-2+ overrides enumerate udev daemon/udevadm/device-helper sources, not the shipped libsystemd.so.0 or libudev.so.1 implementation.",
+        "version": "257.13-1~deb13u1"
+      },
+      {
+        "copyright_sha256": "a7d06854714a1ca99f6dbd1a1641dde5bcf28635be149f6554449618f8f427f3",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 systemd 255.4: Files: * is LGPL-2.1+, covering src/libsystemd and src/libudev; src/shared/linux/* and src/basic/linux/* explicitly carry GPL-2 with the Linux-syscall-note exception, permitting kernel-interface header use. GPL-2+ overrides enumerate udev daemon/udevadm/device-helper sources (ata_id, cdrom_id, dmi_memory_id, mtd_probe and similar), not the shipped libsystemd.so.0 or libudev.so.1 implementation.",
+        "version": "255.4-1ubuntu8.18"
+      }
+    ],
+    "libunistring5": [
+      {
+        "copyright_sha256": "a585cd2cc2a5fcb8e58f12c7a710a35e06e5b897c59cd5ae4a7d835f0b49eae3",
+        "decision": "allowed",
+        "reason": "Files: lib/* is LGPL-3+, with more-specific runtime-source paragraphs under LGPL-2+, LGPL-2.1+ or LGPL-3, covering libunistring.so.5. GPL-3+ overrides within lib/ name only declared.sh, exported.sh.in and Makefile build files; other GPL entries concern tests/*, build-aux/*, m4 and debian/*, not compiled runtime implementation.",
+        "version": "1.3-2"
+      },
+      {
+        "copyright_sha256": "dbbfee567c5eb53ad1c75ce666779e596b5f794b52be7f5834685ddd633185ea",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 libunistring 1.1: Files: * is LGPL-3+ or GPL-2+, covering lib/ compiled as libunistring.so.5. GPL-3+ (or GFDL) applies to doc/*, tests/*, woe32dll/* and autogen.sh, GPL-2+ to build-aux/* tooling and m4, and GPL-3+ to debian/*; none is runtime code.",
+        "version": "1.1-2build1.1"
+      }
+    ],
+    "libwebkit2gtk-4.1-0": [
+      {
+        "copyright_sha256": "7686662a207e5e99308311916a0385a9d3f6cd2bd753721ecf88a9dbe906ca72",
+        "decision": "allowed",
+        "reason": "Files: * is BSD-2-clause with the extensive Source/WebCore, Source/JavaScriptCore, Source/WTF and Source/WebKit overrides under LGPL-2/LGPL-2+/LGPL-2.1+ or permissive terms, covering the shipped libraries, API typelibs, WebKitNetworkProcess, WebKitWebProcess and injected bundle. GPL-marked JSDateMath/DateMath and GIFImageReader files offer LGPL/MPL alternatives, XPathGrammar and ANGLE generated parser paragraphs explicitly carry Bison exceptions, and the GPL-3+ ANGLE flex-bison skeleton tooling is not shipped as runtime implementation.",
+        "version": "2.54.0-1~deb13u3"
+      },
+      {
+        "copyright_sha256": "1f0568073d22552e2ef947912b9ed1169e5b7132a50d54d520f227e9408c3890",
+        "decision": "allowed",
+        "reason": "Ubuntu 24.04 webkit2gtk 2.52.6: Files: * is BSD-2-clause with the extensive Source/WebCore, Source/JavaScriptCore, Source/WTF and Source/WebKit overrides under LGPL-2/LGPL-2+/LGPL-2.1+ or permissive terms, covering the shipped libraries, API typelibs, WebKitNetworkProcess, WebKitWebProcess and injected bundle. JSDateMath/DateMath and GIFImageReader paragraphs offer LGPL-2.1+ or MPL-1.1 alternatives, Source/WebCore/xml/XPathGrammar.* and the ANGLE preprocessor_tab_autogen.cpp/compiler/translator/* paragraphs explicitly carry Bison exceptions, and the GPL-3+ ANGLE tools/flex-bison skeletons are build tooling, not shipped runtime implementation.",
+        "version": "2.52.6-0ubuntu0.24.04.1"
+      }
+    ]
+  },
+  "schema": "telegram-mcp-native-license-review/1"
+}

@@ -1,0 +1,75 @@
+{{define "content" -}}
+<section class="page-hero" aria-labelledby="page-title">
+  <div class="wrap">
+    <p class="eyebrow">Download</p>
+    <h1 id="page-title">Download {{.SiteName}}</h1>
+    <p>Choose the file for your system. We highlight the one that appears to match, but all options remain visible. Check your computer's architecture before downloading.</p>
+{{- if .Release.Version}}
+    <p>Version {{.Release.Version}}{{if .Release.Date}}, released on <time datetime="{{.Release.Date}}">{{.Release.Date}}</time>{{end}}.</p>
+{{- end}}
+  </div>
+</section>
+
+<section class="section" aria-labelledby="files-title">
+  <div class="wrap">
+{{- if .Prelaunch}}
+    <div class="callout callout-warn test-banner">
+      <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg>
+      <div>
+        <p class="callout-title">Pre-launch preview</p>
+        <p>The buttons below download test text files, not installers. The actual files will be available at launch.</p>
+      </div>
+    </div>
+{{- end}}
+    <h2 id="files-title" class="visually-hidden">Files</h2>
+    {{template "download-cards" .}}
+  </div>
+</section>
+
+<section class="section" aria-labelledby="requirements-title">
+  <div class="wrap">
+    <h2 id="requirements-title">Requirements and opening the app</h2>
+    <p>Packages target the systems below; installation has not yet been validated on every platform.</p>
+    <ul>
+      <li><strong>macOS:</strong> macOS 11.0 build target; universal DMG (Apple silicon and Intel). Open the DMG, drag the app to Applications, then open it.</li>
+      <li><strong>Windows:</strong> x64, with Microsoft WebView2. Run the per-user installer, then open the app.</li>
+      <li><strong>Linux:</strong> amd64 or arm64. Install the .deb with your package manager (GTK3 and WebKitGTK 4.1), or make the AppImage executable and open it on a compatible glibc distribution.</li>
+    </ul>
+    <p class="note">If Gatekeeper or SmartScreen blocks a file, stop and verify its source and release evidence; do not disable system protections. SHA-256 checks integrity, not the publisher's identity or notarization.</p>
+  </div>
+</section>
+
+<section class="section section-alt" aria-labelledby="first-title">
+  <div class="wrap grid grid-2">
+    <div>
+      <h2 id="first-title">After installing</h2>
+      <ol>
+        <li>Install and open the app.</li>
+        <li>On first use, enter your own <code>api_id</code> and <code>api_hash</code> from <a href="https://my.telegram.org/apps">my.telegram.org/apps</a> in the form. The app saves both in the local vault (<a href="{{.Href "index"}}#faq-api-id">why?</a>).</li>
+        <li>Sign in by scanning the QR code with Telegram on your phone.</li>
+        <li>Copy your AI client settings from the panel.</li>
+      </ol>
+      <p class="note">A new installation starts in read-only mode. Enable writing in the panel only if you want the AI to prepare messages for sending, always with a preview.</p>
+    </div>
+    <div class="card" id="verify">
+      <h2>Verify your download</h2>
+      <p>Also download the SHA-256 checksum list and run the command in the folder that holds the files. Your file's line must end in “OK”, or the computed hash must match the list.</p>
+      {{with .Group "checksums"}}<ul class="dl-files">{{range .Files}}<li>{{template "download-link" (args $ .)}}</li>{{end}}</ul>{{end}}
+      <h3>Linux</h3>
+      {{template "cmd" (cmd . "sha256sum --ignore-missing -c checksums.txt")}}
+      <h3>macOS</h3>
+      {{template "cmd" (cmd . "shasum -a 256 --ignore-missing -c checksums.txt")}}
+      <h3>Windows (PowerShell)</h3>
+      {{template "cmd" (cmd . "Get-FileHash .\\Telegram-MCP-Setup.exe -Algorithm SHA256")}}
+      <p class="note">On Windows, compare the value shown with the file's line in <code>checksums.txt</code>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="server-title">
+  <div class="wrap">
+    <h2 id="server-title">Running it on a server?</h2>
+    <p>For an always-on machine without a screen, use the command-line binary and follow the <a href="{{.Href "headless"}}">headless server guide</a>.</p>
+  </div>
+</section>
+{{- end}}

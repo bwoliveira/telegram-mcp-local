@@ -1,0 +1,87 @@
+{{define "content" -}}
+<section class="page-hero" aria-labelledby="page-title">
+  <div class="wrap">
+    <p class="eyebrow">Headless server</p>
+    <h1 id="page-title">Run it on a Linux server you control</h1>
+    <p>On an always-on computer, such as a mini PC or a homelab container, Unofficial Telegram MCP runs only from the command line: a user service syncs your chats and serves MCP clients on the same machine.</p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="model-title">
+  <div class="wrap grid grid-2">
+    <div>
+      <h2 id="model-title">What the setup looks like</h2>
+      <ul class="checklist">
+        <li>The <code>telegram-mcp serve</code> daemon runs as a systemd user service and restarts if it stops.</li>
+        <li>It listens only on <code>127.0.0.1:47831</code>, and every request needs the token created at install time.</li>
+        <li>Without a desktop, secrets live in an encrypted file whose key is kept outside the data folder.</li>
+        <li>It starts read-only, just like the app.</li>
+      </ul>
+    </div>
+    <div class="callout callout-warn">
+      <p class="callout-title"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-lock"/></svg>Never expose the port</p>
+      <p>The panel and the MCP endpoint give access to your chats. Do not open the port to the internet, do not put a public proxy in front of it and do not point a domain at it.</p>
+      <p>To use it from another computer, go through an SSH tunnel or a private network of your own, such as Tailscale, always reaching the server's <code>127.0.0.1</code>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" aria-labelledby="install-title">
+  <div class="wrap">
+    <h2 id="install-title">Step by step</h2>
+    <ol class="steps grid">
+      <li class="card">
+        <h3>Install the binary</h3>
+        <p>The installer selects the architecture, checks SHA-256 and installs the CLI in <code>~/.local/bin</code>, without sudo. Use <code>--prefix</code> for a different folder. Add the folder to your <code>PATH</code>.</p>
+        {{template "cmd" (cmd . "curl -fsSL https://raw.githubusercontent.com/bwoliveira/telegram-mcp-local/main/install.sh | sh")}}
+{{- if .Prelaunch}}
+        <p class="note">Works only after launch: the repository is still private. For development, use authorized private artifacts.</p>
+{{- end}}
+      </li>
+      <li class="card">
+        <h3>Enter your credentials and install the service</h3>
+        <p>In Bash, enter your <code>api_id</code> and <code>api_hash</code> from <a href="https://my.telegram.org/apps">my.telegram.org/apps</a>. These variables seed the encrypted vault on first launch; they are not saved in the service file.</p>
+        {{template "cmd" (cmd . "export TELEGRAM_MCP_SECRETS=file\nread -rp 'api_id: ' TELEGRAM_API_ID\nread -rsp 'api_hash: ' TELEGRAM_API_HASH; echo\nexport TELEGRAM_API_ID TELEGRAM_API_HASH\ntelegram-mcp service install --no-open\nunset TELEGRAM_API_ID TELEGRAM_API_HASH\ntelegram-mcp service status")}}
+      </li>
+      <li class="card">
+        <h3>Sign in</h3>
+        <p>Open the panel through the SSH tunnel below and scan the QR code with Telegram on your phone. Without a browser, use the prompts for your phone number, login code and two-step verification password:</p>
+        {{template "cmd" (cmd . "telegram-mcp auth --phone")}}
+      </li>
+      <li class="card">
+        <h3>Connect your AI client</h3>
+        <p>Print the settings for Claude Code and Claude Desktop:</p>
+        {{template "cmd" (cmd . "telegram-mcp config")}}
+        <p>Clients that speak MCP over stdio can use the <code>bridge</code> subcommand, which forwards calls to the daemon. For example, in Hermes Agent:</p>
+        {{template "cmd" (cmd . "hermes mcp add telegram --command \"$HOME/.local/bin/telegram-mcp\" --args bridge")}}
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="remote-title">
+  <div class="wrap grid grid-2">
+    <div>
+      <h2 id="remote-title">Reaching the server from another computer</h2>
+      <p>On your computer, open the SSH tunnel:</p>
+      {{template "cmd" (cmd . "ssh -N -L 47831:127.0.0.1:47831 user@server")}}
+      <p>On the server, run this command, then open the printed URL in your computer’s browser:</p>
+      {{template "cmd" (cmd . "telegram-mcp open --print")}}
+      <p class="note">Anyone with the URL can access the panel. It expires after one minute and can only be used once. Do not share or log it. MCP clients still need the token.</p>
+    </div>
+    <div class="card">
+      <h2>Maintenance</h2>
+      <p>Service commands:</p>
+      {{template "cmd" (cmd . "telegram-mcp service status\ntelegram-mcp service stop\ntelegram-mcp service start\ntelegram-mcp service uninstall")}}
+      <p class="note">Stopping or uninstalling the service does not sign you out or delete the history. The session stays listed in Settings › Devices on your phone until you end it.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" aria-labelledby="scope-title">
+  <div class="wrap">
+    <h2 id="scope-title">What this mode does not do</h2>
+    <p>There is no public endpoint, and no access from claude.ai on the web or from mobile apps. The server only serves clients that reach its <code>127.0.0.1</code>, directly or through a tunnel.</p>
+  </div>
+</section>
+{{- end}}

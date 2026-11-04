@@ -1,0 +1,15 @@
+{
+  "name": "telegram-mcp-site-tools",
+  "private": true,
+  "description": "Deploy and QA tools for the static site. Not shipped in dist/. See site/DESIGN.md §4 and §7.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "wrangler": "4.156.2"
+  },
+  "devDependencies": {
+    "axe-core": "4.14.0"
+  }
+}

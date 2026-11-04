@@ -1,0 +1,68 @@
+{
+  "brand.qualifier": "Não oficial",
+
+  "a11y.skip": "Pular para o conteúdo",
+  "a11y.nav": "Navegação principal",
+  "a11y.langs": "Idioma do site",
+  "a11y.footer_nav": "Links do rodapé",
+
+  "nav.download": "Download",
+  "nav.headless": "Servidor sem tela",
+  "nav.faq": "Perguntas",
+
+  "langhint.text": "Esta página também está disponível em português.",
+  "langhint.link": "Ler em português",
+  "langhint.dismiss": "Fechar aviso",
+
+  "copy.button": "Copiar",
+  "copy.done": "Comando copiado.",
+  "copy.fail": "Não foi possível copiar. Selecione o comando e copie manualmente.",
+
+  "notice.affiliation": "Não oficial: o Telegram MCP é um projeto independente, sem afiliação, patrocínio ou endosso do Telegram. Telegram é marca de seu titular.",
+
+  "footer.credits_title": "Créditos",
+  "footer.links_title": "Links",
+  "footer.source": "Código-fonte",
+  "footer.license": "Licença MIT",
+  "footer.terms": "Termos da API do Telegram",
+  "footer.fonts": "Fontes:",
+  "footer.prelaunch": "Prévia de pré-lançamento, privada e fora dos buscadores. Os downloads são arquivos de teste.",
+
+  "meta.index.title": "Suas conversas nas ferramentas de IA, no seu computador",
+  "meta.index.description": "Use a sua conta do Telegram em clientes MCP como Claude e Codex. Roda no seu computador, começa em modo só leitura e mostra uma prévia antes de qualquer envio.",
+  "meta.download.title": "Download",
+  "meta.download.description": "Instaladores para macOS, Windows e Linux, binários de linha de comando e somas SHA-256 para conferir cada arquivo.",
+  "meta.headless.title": "Servidor sem tela (headless)",
+  "meta.headless.description": "Rode o daemon numa máquina Linux sua, como serviço do usuário, preso ao 127.0.0.1 e protegido por token. Acesso remoto só por túnel SSH ou rede privada.",
+  "meta.404.title": "Página não encontrada",
+  "meta.404.description": "Este endereço não existe no site.",
+
+  "og.tagline": "Suas conversas do Telegram nas suas ferramentas de IA, rodando no seu computador.",
+  "og.notice": "Projeto independente, sem afiliação com o Telegram.",
+  "og.alt": "Logotipo do projeto, um balão de conversa com sinais de código, e o texto: suas conversas do Telegram nas suas ferramentas de IA.",
+
+  "dl.os.macos": "macOS",
+  "dl.os.windows": "Windows",
+  "dl.os.linux": "Linux com área de trabalho",
+  "dl.os.cli": "Só a linha de comando",
+  "dl.note.macos": "Um só app, que roda tanto em processador Intel quanto em Apple Silicon.",
+  "dl.note.windows": "Instalador para Windows de 64 bits.",
+  "dl.note.linux": "O AppImage roda na maioria das distribuições; o .deb é para Ubuntu, Debian e derivados. Escolha a arquitetura do seu computador.",
+  "dl.note.cli": "Apenas o binário telegram-mcp, sem janela. Para servidores e para quem prefere o terminal.",
+  "dl.file.dmg": "App universal",
+  "dl.file.setup": "Instalador x64",
+  "dl.file.appimage_x86_64": "AppImage para x86_64 (Intel/AMD)",
+  "dl.file.appimage_aarch64": "AppImage para aarch64 (ARM)",
+  "dl.file.deb_amd64": "Pacote .deb para amd64",
+  "dl.file.deb_arm64": "Pacote .deb para arm64",
+  "dl.file.cli_linux_amd64": "Linux · amd64",
+  "dl.file.cli_linux_arm64": "Linux · arm64",
+  "dl.file.cli_darwin_arm64": "macOS · Apple Silicon",
+  "dl.file.cli_darwin_amd64": "macOS · Intel",
+  "dl.file.cli_windows_amd64": "Windows · x64",
+  "dl.file.checksums": "Lista de somas SHA-256",
+  "dl.badge.test": "Arquivo de teste",
+  "dl.suggested": "Sugerido para o seu sistema",
+
+  "todo.review": "Todo o texto pt-BR está aprovado por Bruno: textos existentes em 2026-11-02 e trechos de setup de download, credenciais e headless em 2026-11-03."
+}

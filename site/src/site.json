@@ -1,0 +1,14 @@
+{
+  "brand": "Telegram MCP",
+  "baseURL": "https://telegram-mcp.bwoliveira.xyz",
+  "repo": "bwoliveira/telegram-mcp-local",
+  "pagesProject": "bwoliveira-telegram-mcp",
+  "themeColor": "#0c1f4d",
+  "xDefault": "en",
+  "languages": [
+    { "code": "pt-BR", "prefix": "", "ogLocale": "pt_BR", "name": "Português" },
+    { "code": "en", "prefix": "en/", "ogLocale": "en_US", "name": "English" },
+    { "code": "es", "prefix": "es/", "ogLocale": "es_LA", "name": "Español" }
+  ],
+  "pages": ["index", "download", "headless"]
+}

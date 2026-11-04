@@ -1,0 +1,42 @@
+# Development-only agent instructions and archived release coordination.
+AGENTS.md
+CLAUDE.md
+.claude/
+.research/
+docs/RELEASE.md
+
+# Real-account observations, local QA evidence and internal integration journals.
+docs/REAL_ACCOUNT_*
+docs/spikes/
+docs/evidence/
+docs/images/
+docs/E2-INTEGRACAO.md
+docs/E3-INTEGRACAO.md
+docs/E5-SITE.md
+docs/PLANO.md
+docs/PANEL_SEARCH_FIX.md
+docs/PANEL_PARITY.md
+docs/STATUS_READINESS.md
+docs/QR-LOGIN-FIX.md
+docs/roadmap.md
+docs/WINDOWS_FIRST_RUN.md
+docs/S2-CASCA.md
+docs/ACCESS_LOSS_DEDUP.md
+docs/fase0-provas.md
+docs/contratos/PEDIDOS-*
+docs/contratos/EVIDENCIA-*
+docs/contratos/DECISOES.md
+
+# Historical product/commercial plans, not current public support documentation.
+docs/plano-*.md
+
+# Unreviewed legacy screenshots; no synthetic screenshot generator exists.
+docs/assets/*.png
+
+# Site-owned operational files remain private until their owner sanitizes them.
+site/DESIGN.md
+site/tools/deploy.sh
+site/tools/check-preview.sh
+site/tools/test_check_preview.py
+site/tools/README.md
+site/tools/qa.md

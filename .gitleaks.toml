@@ -1,0 +1,56 @@
+title = "telegram-mcp-local: gitleaks com exceções mínimas verificáveis"
+
+[extend]
+useDefault = true
+
+# Estes identificadores são fixtures sintéticas literais. Cada exceção exige
+# simultaneamente o caminho exato e o valor exato; não liberamos o diretório de
+# testes nem o padrão genérico de tokens.
+[[allowlists]]
+description = "URL QR sintética do engine fake, sem credencial Telegram"
+targetRules = ["generic-api-key"]
+condition = "AND"
+regexTarget = "line"
+paths = ['''^internal/engine/fake/fake\.go$''']
+regexes = ['''^\s*f\.login\.QRURL = "tg://login\?token=c3ludGhldGljLW5vdC1hLXJlYWwtY3JlZGVudGlhbA"\s*$''']
+
+[[allowlists]]
+description = "chave API sintética usada apenas pelo teste do daemon"
+targetRules = ["generic-api-key"]
+condition = "AND"
+regexTarget = "line"
+paths = ['''^internal/daemon/apikeys_test\.go$''']
+regexes = ['''^\s*const testAPIKey = "wamcp_key_0123456789abcdef0123456789abcdef"\s*$''']
+
+# Removed fixtures still exist in the private development history. These
+# exceptions are bound to the exact commits and exact synthetic lines, without
+# allowing the deleted paths to reappear in the current tree.
+[[allowlists]]
+description = "synthetic legacy CLI token in its original commit"
+targetRules = ["generic-api-key"]
+condition = "AND"
+regexTarget = "line"
+commits = ["8ce6fbbc8524becc8f66a6a6bfd8611075a70fac"]
+regexes = ['''from-the-environment-0123456789''']
+
+[[allowlists]]
+description = "narration cache SHA-1 identifiers in their original commits"
+targetRules = ["generic-api-key"]
+condition = "AND"
+regexTarget = "line"
+commits = [
+  "ff3c819b7eb098e2504560e45799cef9ffb1a80e",
+  "59d0b604e8865f0e99c4539fa83a2b04725fc3a0",
+]
+regexes = ['''^\s*"key": "[0-9a-f]{40}",?\s*$''']
+
+# Parâmetro público padronizado pelo Telegram para a prova SRP offline. A
+# exceção fica presa ao arquivo e ao primeiro bloco literal do primo; não cobre
+# salts, senhas, hashes de conta nem outros valores do teste.
+[[allowlists]]
+description = "primeiro bloco do primo público Telegram SRP da fixture offline"
+targetRules = ["generic-api-key"]
+condition = "AND"
+regexTarget = "line"
+paths = ['''^internal/engine/gotdengine/login_test\.go$''']
+regexes = ['''^\s*p, err := hex\.DecodeString\("C71CAEB9C6B1C9048E6C522F70F13F73980D40238E3E21C14934D037563D930F" \+\s*$''']

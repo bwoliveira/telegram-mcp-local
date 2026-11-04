@@ -1,0 +1,75 @@
+{{define "content" -}}
+<section class="page-hero" aria-labelledby="page-title">
+  <div class="wrap">
+    <p class="eyebrow">Descargar</p>
+    <h1 id="page-title">Descargar {{.SiteName}}</h1>
+    <p>Elige el archivo de tu sistema. Destacamos el que parece ser el tuyo, pero todas las opciones quedan a la vista; revisa la arquitectura de tu computadora antes de descargar.</p>
+{{- if .Release.Version}}
+    <p>Versión {{.Release.Version}}{{if .Release.Date}}, publicada el <time datetime="{{.Release.Date}}">{{.Release.Date}}</time>{{end}}.</p>
+{{- end}}
+  </div>
+</section>
+
+<section class="section" aria-labelledby="files-title">
+  <div class="wrap">
+{{- if .Prelaunch}}
+    <div class="callout callout-warn test-banner">
+      <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg>
+      <div>
+        <p class="callout-title">Vista previa de prelanzamiento</p>
+        <p>Los botones de abajo descargan pequeños archivos de texto de prueba, no instaladores. Los archivos reales llegan con el lanzamiento.</p>
+      </div>
+    </div>
+{{- end}}
+    <h2 id="files-title" class="visually-hidden">Archivos</h2>
+    {{template "download-cards" .}}
+  </div>
+</section>
+
+<section class="section" aria-labelledby="requirements-title">
+  <div class="wrap">
+    <h2 id="requirements-title">Requisitos y apertura de la app</h2>
+    <p>Los paquetes están destinados a los sistemas indicados; la instalación aún no se ha validado en todas las plataformas.</p>
+    <ul>
+      <li><strong>macOS:</strong> Objetivo de compilación macOS 11.0; DMG universal (Apple silicon e Intel). Abre el DMG, arrastra la app a Aplicaciones y ábrela.</li>
+      <li><strong>Windows:</strong> x64, con Microsoft WebView2. Ejecuta el instalador por usuario y abre la app.</li>
+      <li><strong>Linux:</strong> amd64 o arm64. Instala el .deb con tu gestor de paquetes (GTK3 y WebKitGTK 4.1), o haz ejecutable el AppImage y ábrelo en una distribución glibc compatible.</li>
+    </ul>
+    <p class="note">Si Gatekeeper o SmartScreen bloquea el archivo, detente y verifica su origen y las pruebas de la distribución; no desactives las protecciones del sistema. SHA-256 verifica integridad, no la identidad del editor ni la notarización.</p>
+  </div>
+</section>
+
+<section class="section section-alt" aria-labelledby="first-title">
+  <div class="wrap grid grid-2">
+    <div>
+      <h2 id="first-title">Después de instalar</h2>
+      <ol>
+        <li>Instala y abre la app.</li>
+        <li>En el primer uso, completa el formulario con tu <code>api_id</code> y tu <code>api_hash</code> de <a href="https://my.telegram.org/apps" hreflang="en">my.telegram.org/apps</a>. La app guarda ambos en el almacén local de credenciales (<a href="{{.Href "index"}}#faq-api-id">¿por qué?</a>).</li>
+        <li>Entra a tu cuenta escaneando el código QR con Telegram en el celular.</li>
+        <li>Copia la configuración de tu cliente de IA desde el panel.</li>
+      </ol>
+      <p class="note">Una instalación nueva es de solo lectura. Activa la escritura en el panel solo si quieres que la IA prepare envíos, siempre con vista previa.</p>
+    </div>
+    <div class="card" id="verify">
+      <h2>Verifica el archivo descargado</h2>
+      <p>Descarga también la lista de sumas SHA-256 y ejecuta el comando en la carpeta donde están los archivos. La línea de tu archivo tiene que terminar en “OK”, o el hash calculado tiene que aparecer en la lista.</p>
+      {{with .Group "checksums"}}<ul class="dl-files">{{range .Files}}<li>{{template "download-link" (args $ .)}}</li>{{end}}</ul>{{end}}
+      <h3>Linux</h3>
+      {{template "cmd" (cmd . "sha256sum --ignore-missing -c checksums.txt")}}
+      <h3>macOS</h3>
+      {{template "cmd" (cmd . "shasum -a 256 --ignore-missing -c checksums.txt")}}
+      <h3>Windows (PowerShell)</h3>
+      {{template "cmd" (cmd . "Get-FileHash .\\Telegram-MCP-Setup.exe -Algorithm SHA256")}}
+      <p class="note">En Windows, compara el valor que aparece con la línea del archivo en <code>checksums.txt</code>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="server-title">
+  <div class="wrap">
+    <h2 id="server-title">¿Lo vas a usar en un servidor?</h2>
+    <p>Para una máquina siempre encendida y sin pantalla, usa el binario de línea de comandos y sigue la <a href="{{.Href "headless"}}">guía del servidor sin pantalla</a>.</p>
+  </div>
+</section>
+{{- end}}

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" width="640" height="480">
+  <!-- The .dmg window: the app sits at (180, 185), Applications at (460, 185),
+       both 128 points wide, as build/darwin/dmg-settings.py places them. Finder
+       on macOS 26 keeps its toolbar over the window whatever the settings say,
+       so everything that matters fits the top 380 points and the rest is paper. -->
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="480" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f6f7fd"/>
+      <stop offset="1" stop-color="#e4e8f6"/>
+    </linearGradient>
+    <linearGradient id="arrow" x1="262" y1="0" x2="378" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5b7cfa"/>
+      <stop offset="1" stop-color="#2a3fb0"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="480" fill="url(#paper)"/>
+  <g font-family="System Font, Helvetica Neue, sans-serif" text-anchor="middle">
+    <text x="320" y="60" font-size="22" font-weight="700" fill="#121733">Arraste para instalar</text>
+    <text x="320" y="320" font-size="14" fill="#545c7e">Solte o Telegram MCP na pasta Applications</text>
+    <text x="320" y="342" font-size="11" fill="#7a82a6">Suas mensagens nas suas ferramentas de IA</text>
+  </g>
+  <g fill="none" stroke="url(#arrow)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M266 185h106"/>
+    <path d="M354 167l18 18-18 18"/>
+  </g>
+</svg>

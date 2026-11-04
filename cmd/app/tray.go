@@ -1,0 +1,276 @@
+package main
+
+import (
+	"bytes"
+	_ "embed"
+	"image"
+	"image/color"
+	"image/draw"
+	"image/png"
+	"runtime"
+	"sync"
+
+	"github.com/wailsapp/wails/v3/pkg/application"
+
+	"github.com/bwoliveira/telegram-mcp-local/internal/daemon"
+	"github.com/bwoliveira/telegram-mcp-local/internal/engine"
+	"github.com/bwoliveira/telegram-mcp-local/internal/i18n"
+	"github.com/bwoliveira/telegram-mcp-local/internal/platform"
+)
+
+//go:embed icons/app.png
+var appIcon []byte
+
+//go:embed icons/tray.png
+var trayGlyph []byte
+
+// The tray's colours: connected and receiving, something in progress, and
+// Telegram disconnected or sync stopped. Saturated mid-tones read on a light
+// menu bar and on a dark one.
+var toneColours = map[string]color.NRGBA{
+	"ok":   {0x1f, 0xa8, 0x5c, 0xff},
+	"warn": {0xe0, 0x9a, 0x00, 0xff},
+	"fail": {0xe5, 0x48, 0x4d, 0xff},
+}
+
+type tray struct {
+	app       *App
+	icon      *application.SystemTray
+	menu      *application.Menu
+	open      *application.MenuItem
+	status    *application.MenuItem
+	update    *application.MenuItem
+	autostart *application.MenuItem
+	quit      *application.MenuItem
+
+	mu    sync.Mutex
+	tone  string
+	icons map[string][]byte
+	// rendered is set once a status has replaced "Carregando…"; version is
+	// the one the update line offers.
+	rendered bool
+	version  string
+}
+
+func newTray(a *App) *tray {
+	t := &tray{app: a, icons: map[string][]byte{}}
+	for tone, c := range toneColours {
+		if runtime.GOOS == "darwin" {
+			// The menu bar draws its icons in one colour, white or black to
+			// match it: the state shows in the shape instead.
+			t.icons[tone] = templateIcon(trayGlyph, tone)
+		} else {
+			t.icons[tone] = tint(trayGlyph, c)
+		}
+	}
+	t.menu = a.wails.NewMenu()
+	t.open = t.menu.Add("").OnClick(func(*application.Context) { go a.showWindow("") })
+	t.status = t.menu.Add("").SetEnabled(false)
+	t.update = t.menu.Add("").SetHidden(true).OnClick(func(*application.Context) { go a.showWindow("/configuracoes#atualizacoes") })
+	t.menu.AddSeparator()
+	t.autostart = t.menu.AddCheckbox("", a.Settings().Autostart).OnClick(func(ctx *application.Context) {
+		on := ctx.ClickedMenuItem().Checked()
+		if err := a.SetAutostart(on); err != nil {
+			a.logger.Warn("autostart could not be changed", "error", err)
+			ctx.ClickedMenuItem().SetChecked(!on)
+		}
+	})
+	t.menu.AddSeparator()
+	t.quit = t.menu.Add("").OnClick(func(*application.Context) { a.confirmQuit() })
+
+	t.icon = a.wails.SystemTray.New()
+	t.setIcon("warn")
+	t.icon.SetTooltip(platform.AppName)
+	if runtime.GOOS == "linux" {
+		t.icon.SetLabel(platform.AppName)
+	}
+	t.relabelNow()
+	t.icon.SetMenu(t.menu)
+	if runtime.GOOS != "darwin" {
+		// Windows and Linux open the window on a click and keep the menu for
+		// the right button; the macOS menu bar opens the menu either way.
+		t.icon.OnClick(func() { go a.showWindow("") })
+		t.icon.OnRightClick(func() { t.icon.OpenMenu() })
+	}
+	return t
+}
+
+// relabel sets every label of the menu again in the language in use: once
+// as the tray is made, and again when the person picks another language. The
+// status line comes back from the gateway, which words it as it reports.
+func (t *tray) relabel() {
+	if t != nil {
+		application.InvokeAsync(t.relabelNow)
+	}
+}
+
+func (t *tray) relabelNow() {
+	t.open.SetLabel(i18n.Tf("Abrir o %s", platform.AppName))
+	t.autostart.SetLabel(i18n.T("Iniciar com o sistema"))
+	t.quit.SetLabel(i18n.Tf("Encerrar o %s…", platform.AppName))
+	t.mu.Lock()
+	rendered, version := t.rendered, t.version
+	t.mu.Unlock()
+	if !rendered {
+		t.status.SetLabel(i18n.T("Carregando…"))
+	}
+	if version != "" {
+		t.update.SetLabel(i18n.Tf("Instalar a versão %s…", version))
+	}
+	t.app.relabelMenu()
+	t.icon.SetMenu(t.menu)
+	if d := t.app.current(); d != nil && rendered {
+		// The status reads the database: not on the request that changed
+		// the language.
+		go func() { t.render(d.Status()) }()
+	}
+}
+
+// trayPresentation keeps login-required distinct from a paused connection.
+func trayPresentation(st daemon.Status) (string, string) {
+	tone, label := st.Tone, st.Title
+	if _, ok := toneColours[tone]; !ok {
+		tone = "fail"
+	}
+	switch engine.ConnState(st.Sync) {
+	case engine.StateNotAuthorized, engine.StateLoggedOut, engine.StateRevoked:
+		label += " · " + i18n.T("Entrar")
+	case engine.StatePaused:
+		if st.Title != i18n.T("Conectando o Telegram") {
+			label = i18n.T("Desconectado")
+		}
+	}
+	if st.Detail != "" {
+		label += " · " + st.Detail
+	}
+	return tone, label
+}
+
+// render shows a status: the icon's colour, and the line in the menu.
+func (t *tray) render(st daemon.Status) {
+	application.InvokeAsync(func() { t.renderNow(st) })
+}
+
+func (t *tray) renderNow(st daemon.Status) {
+	tone, label := trayPresentation(st)
+	t.mu.Lock()
+	changed := tone != t.tone
+	t.tone = tone
+	t.rendered = true
+	t.mu.Unlock()
+	if changed {
+		t.setIcon(tone)
+	}
+	t.icon.SetTooltip(platform.AppName + ": " + label)
+	if runtime.GOOS == "linux" {
+		// Wails' Linux tooltip setter is currently a no-op; SNI Title is
+		// the accessible fallback for desktop shells and screen readers.
+		t.icon.SetLabel(platform.AppName + ": " + label)
+	}
+	t.status.SetLabel(label)
+	// Rebind the tray menu, not Menu.Update: on Linux the latter creates a
+	// GTK menubar and replaces the D-Bus menu item implementations.
+	t.icon.SetMenu(t.menu)
+}
+
+func (t *tray) setIcon(tone string) {
+	icon, ok := t.icons[tone]
+	if !ok {
+		return
+	}
+	if runtime.GOOS == "darwin" {
+		t.icon.SetTemplateIcon(icon)
+		return
+	}
+	t.icon.SetIcon(icon)
+}
+
+// offerUpdate adds "install version X" to the menu.
+func (t *tray) offerUpdate(version string) {
+	if t == nil {
+		return
+	}
+	application.InvokeAsync(func() {
+		t.mu.Lock()
+		t.version = version
+		t.mu.Unlock()
+		t.update.SetLabel(i18n.Tf("Instalar a versão %s…", version)).SetHidden(false)
+		t.icon.SetMenu(t.menu)
+	})
+}
+
+// setAutostart keeps the menu's checkbox in step with the panel's.
+func (t *tray) setAutostart(on bool) {
+	if t == nil {
+		return
+	}
+	application.InvokeAsync(func() {
+		t.autostart.SetChecked(on)
+		t.icon.SetMenu(t.menu)
+	})
+}
+
+// templateIcon is the glyph for the macOS menu bar, which colours it:
+// whole when connected, with a dot when something is in progress, and faded
+// with the dot when Telegram is disconnected or sync has stopped.
+func templateIcon(glyph []byte, tone string) []byte {
+	src, err := png.Decode(bytes.NewReader(glyph))
+	if err != nil {
+		return glyph
+	}
+	b := src.Bounds()
+	out := image.NewNRGBA(b)
+	fade := 1.0
+	if tone == "fail" {
+		fade = 0.45
+	}
+	w := float64(b.Dx())
+	cx, cy := w*0.82, w*0.82
+	dot, gap := w*0.15, w*0.24
+	for y := b.Min.Y; y < b.Max.Y; y++ {
+		for x := b.Min.X; x < b.Max.X; x++ {
+			_, _, _, a := src.At(x, y).RGBA()
+			alpha := float64(a>>8) * fade
+			if tone != "ok" {
+				dx, dy := float64(x)+0.5-cx, float64(y)+0.5-cy
+				switch d := dx*dx + dy*dy; {
+				case d <= dot*dot:
+					alpha = 255 // the dot, always solid
+				case d <= gap*gap:
+					alpha = 0 // a clear ring around it
+				}
+			}
+			out.SetNRGBA(x, y, color.NRGBA{0, 0, 0, uint8(alpha)})
+		}
+	}
+	var buf bytes.Buffer
+	if err := png.Encode(&buf, out); err != nil {
+		return glyph
+	}
+	return buf.Bytes()
+}
+
+// tint paints the glyph's shape in one colour.
+func tint(glyph []byte, c color.NRGBA) []byte {
+	src, err := png.Decode(bytes.NewReader(glyph))
+	if err != nil {
+		return glyph
+	}
+	b := src.Bounds()
+	out := image.NewNRGBA(b)
+	draw.Draw(out, b, image.Transparent, image.Point{}, draw.Src)
+	for y := b.Min.Y; y < b.Max.Y; y++ {
+		for x := b.Min.X; x < b.Max.X; x++ {
+			_, _, _, alpha := src.At(x, y).RGBA()
+			if alpha == 0 {
+				continue
+			}
+			out.SetNRGBA(x, y, color.NRGBA{c.R, c.G, c.B, uint8(alpha >> 8)})
+		}
+	}
+	var buf bytes.Buffer
+	if err := png.Encode(&buf, out); err != nil {
+		return glyph
+	}
+	return buf.Bytes()
+}

@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+Name=Telegram MCP
+GenericName=Telegram for AI tools
+GenericName[pt_BR]=Telegram para ferramentas de IA
+GenericName[pt]=Telegram para ferramentas de IA
+GenericName[es]=Telegram para herramientas de IA
+Comment=Your Telegram in your AI tools, on this computer.
+Comment[pt_BR]=Seu Telegram nas suas ferramentas de IA, neste computador.
+Comment[pt]=Seu Telegram nas suas ferramentas de IA, neste computador.
+Comment[es]=Tu Telegram en tus herramientas de IA, en esta computadora.
+Exec=telegram-mcp
+Icon=telegram-mcp
+Terminal=false
+Categories=Network;Utility;
+StartupWMClass=telegram-mcp

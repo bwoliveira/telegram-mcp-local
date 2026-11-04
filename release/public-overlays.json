@@ -1,0 +1,23 @@
+[
+  {
+    "name": "public-hosted-ci",
+    "path": ".github/workflows/ci.yml",
+    "pattern": "(?m)^    runs-on: .*$",
+    "replacement": "    runs-on: ubuntu-latest",
+    "count": 1
+  },
+  {
+    "name": "public-technical-parity",
+    "path": "docs/PARIDADE.md",
+    "pattern": "(?s)\\A.*?(?=## 1\\. Tools \\(40\\))",
+    "replacement": "# Telegram MCP capability matrix\n\nThis technical catalogue is not evidence of real-account acceptance.\nSee README.md and THIRD_PARTY_NOTICES.md for retained upstream attribution.\n\n",
+    "count": 1
+  },
+  {
+    "name": "matching-brand-credit",
+    "path": "scripts/brand_guard.py",
+    "pattern": "`/root/[^`]+`",
+    "replacement": "`<research-checkout>`",
+    "count": 1
+  }
+]

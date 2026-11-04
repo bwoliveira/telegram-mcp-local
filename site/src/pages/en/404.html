@@ -1,0 +1,12 @@
+{{define "content" -}}
+<section class="not-found" aria-labelledby="page-title">
+  <div class="wrap">
+    <p class="code" aria-hidden="true">404</p>
+    <h1 id="page-title">This page does not exist</h1>
+    <p>The address may have changed, or it may contain a typo.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="{{.Href "index"}}"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-home"/></svg>Back to the home page</a>
+    </div>
+  </div>
+</section>
+{{- end}}

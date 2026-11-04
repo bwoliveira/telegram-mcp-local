@@ -1,0 +1,85 @@
+{
+  "version": "sidecars-2",
+  "packages": {
+    "darwin/universal": {
+      "url": "https://github.com/bwoliveira/telegram-mcp-local/releases/download/sidecars-2/transcription_darwin_universal.tar.gz",
+      "sha256": "56c63a1c5ff7615dd25dcc0ac179ab234f95bae46cdf28e83cfa1af956018280",
+      "size": 16852108,
+      "accel": "metal",
+      "sbom": {
+        "url": "https://github.com/bwoliveira/telegram-mcp-local/releases/download/sidecars-2/transcription_darwin_universal.tar.gz.cdx.json",
+        "sha256": "e3aeb19121d11b84c3e97be14b86ef5225512222bae6a6b484dc6b79592c1b78",
+        "size": 5780
+      },
+      "notices": {
+        "url": "https://github.com/bwoliveira/telegram-mcp-local/releases/download/sidecars-2/transcription_darwin_universal.tar.gz.THIRD-PARTY-NOTICES.txt",
+        "sha256": "2646e7d2d65e4a81229ce38de395f4c281fe59f49344ff7c55b9ff70236f212c",
+        "size": 35565
+      }
+    },
+    "linux/amd64": {
+      "url": "https://github.com/bwoliveira/telegram-mcp-local/releases/download/sidecars-2/transcription_linux_amd64.tar.gz",
+      "sha256": "0d80bde5a43fdc0529df462ed51a4e8cdd8ee4cdea1eb26afaf5e037c6853c2e",
+      "size": 14133555,
+      "accel": "cpu",
+      "sbom": {
+        "url": "https://github.com/bwoliveira/telegram-mcp-local/releases/download/sidecars-2/transcription_linux_amd64.tar.gz.cdx.json",
+        "sha256": "9ca1dbe40779065633c095dc152ee211b9325e069c483e43226cb721f99350f6",
+        "size": 5775
+      },
+      "notices": {
+        "url": "https://github.com/bwoliveira/telegram-mcp-local/releases/download/sidecars-2/transcription_linux_amd64.tar.gz.THIRD-PARTY-NOTICES.txt",
+        "sha256": "e4ca0e0c48d224471581de2228e19b05355dacb21095c965b9bca21d677ca7f2",
+        "size": 35560
+      }
+    },
+    "linux/arm64": {
+      "url": "https://github.com/bwoliveira/telegram-mcp-local/releases/download/sidecars-2/transcription_linux_arm64.tar.gz",
+      "sha256": "bcf94008c42ea3a74ee3db5411f3f931cdf6492392130d4d516df905c603f538",
+      "size": 13750190,
+      "accel": "cpu",
+      "sbom": {
+        "url": "https://github.com/bwoliveira/telegram-mcp-local/releases/download/sidecars-2/transcription_linux_arm64.tar.gz.cdx.json",
+        "sha256": "6a3e947e5dd5f1af4a2840843978a68ae1b30cf6bd66c6bc4af11bd587d4dbe8",
+        "size": 5775
+      },
+      "notices": {
+        "url": "https://github.com/bwoliveira/telegram-mcp-local/releases/download/sidecars-2/transcription_linux_arm64.tar.gz.THIRD-PARTY-NOTICES.txt",
+        "sha256": "ccf0deb13f8b4503ed71839c90c58958718160c1f82a64af9044453634f217e1",
+        "size": 35560
+      }
+    },
+    "windows/amd64": {
+      "url": "https://github.com/bwoliveira/telegram-mcp-local/releases/download/sidecars-2/transcription_windows_amd64.zip",
+      "sha256": "da1954e9275b854e851221a6ed6e5b830895625034b2df4dbf00db1528f81f9b",
+      "size": 15832573,
+      "accel": "cpu",
+      "sbom": {
+        "url": "https://github.com/bwoliveira/telegram-mcp-local/releases/download/sidecars-2/transcription_windows_amd64.zip.cdx.json",
+        "sha256": "2b8404f21552fab22830ced8375731065fc6bb6b18a966a6f687ae1aac7a08f7",
+        "size": 11090
+      },
+      "notices": {
+        "url": "https://github.com/bwoliveira/telegram-mcp-local/releases/download/sidecars-2/transcription_windows_amd64.zip.THIRD-PARTY-NOTICES.txt",
+        "sha256": "52da9c736112e97b5ad41c6b9e04b2828493a905b1dd52b7068da3b9e99b8dfd",
+        "size": 35559
+      }
+    },
+    "windows/amd64/cuda": {
+      "url": "https://github.com/bwoliveira/telegram-mcp-local/releases/download/sidecars-2/transcription_windows_amd64_cuda.zip",
+      "sha256": "8f62042cb57c37ab459d047d926f372a94c8cad11929729f0b5196ed4179970f",
+      "size": 680936860,
+      "accel": "cuda",
+      "sbom": {
+        "url": "https://github.com/bwoliveira/telegram-mcp-local/releases/download/sidecars-2/transcription_windows_amd64_cuda.zip.cdx.json",
+        "sha256": "35ac5ae0eb7f0aaf1872b867161cdcbd85fe1538428d006a02f7ccd815fe6ee8",
+        "size": 15106
+      },
+      "notices": {
+        "url": "https://github.com/bwoliveira/telegram-mcp-local/releases/download/sidecars-2/transcription_windows_amd64_cuda.zip.THIRD-PARTY-NOTICES.txt",
+        "sha256": "8500f1d8cec425eb6277ec0f70b6cb08c1e076af252a8935ab2fb32c8ed2f8e0",
+        "size": 35961
+      }
+    }
+  }
+}

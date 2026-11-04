@@ -1,0 +1,4 @@
+# version: 2.0.0
+# source_commit: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+# date: 2026-11-03T12:00:00Z
+14d30ae445f13f9079f9ed12eeabcc8c8458e4f86b33c1fa0f28058f975ed2f4  Telegram-MCP-x86_64.AppImage

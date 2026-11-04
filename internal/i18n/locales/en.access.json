@@ -1,0 +1,18 @@
+{
+  "Acesso ao painel": "Panel access",
+  "Painel local": "Local panel",
+  "Abra o painel pelo computador do serviço": "Open the panel from the service computer",
+  "Este painel só abre com uma sessão do navegador, criada por um link de uso único que o próprio computador onde o Telegram MCP roda gera para você.": "This panel opens only with a browser session, created by a one-use link that the computer running Telegram MCP generates for you.",
+  "No computador do serviço": "On the service computer",
+  "Abra um terminal nesse computador e execute:": "Open a terminal on that computer and run:",
+  "O navegador abre o painel já autorizado.": "The browser opens the panel already authorized.",
+  "Em outro computador, por SSH": "From another computer, over SSH",
+  "No servidor, pelo SSH, peça o link sem abrir um navegador:": "On the server, over SSH, ask for the link without opening a browser:",
+  "No seu computador, abra um túnel SSH para a mesma porta local:": "On your computer, open an SSH tunnel to the same loopback port:",
+  "Abra no seu navegador o link impresso no passo 1, com o túnel aberto.": "With the tunnel open, open the link printed in step 1 in your browser.",
+  "O link vale por um minuto e uma única vez. Se expirar, execute o passo 1 de novo.": "The link works once, for one minute. If it expires, run step 1 again.",
+  "Por que é preciso autorizar?": "Why is authorization required?",
+  "O painel mostra suas conversas e pode agir na sua conta do Telegram. Qualquer site aberto neste computador consegue chamar endereços locais, então o painel só confia em quem já tem acesso ao computador do serviço: quem consegue executar o comando ali.": "The panel shows your conversations and can act on your Telegram account. Any website open on this computer can call local addresses, so the panel trusts only someone who already has access to the service computer: someone who can run the command there.",
+  "O link de uso único troca-se por um cookie de sessão e some da barra de endereços. Ele nunca aparece nesta página nem em logs.": "The one-use link is exchanged for a session cookie and leaves the address bar. It never appears on this page or in logs.",
+  "Esta página não pede senha nem token: não cole o token do MCP em sites nem no navegador.": "This page asks for no password or token: do not paste the token into websites or the browser."
+}

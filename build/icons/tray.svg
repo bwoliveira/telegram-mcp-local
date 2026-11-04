@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- The mark's bubble and nodes in one colour: the app tints it by status. -->
+  <g fill="none" stroke="#000" stroke-width="5.5" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M14 9h36a10 10 0 0 1 10 10v20a10 10 0 0 1-10 10H28l-13 10V49h-1A10 10 0 0 1 4 39V19A10 10 0 0 1 14 9Z"/>
+    <path d="M19 35l13-10 13 10" stroke-width="4.4"/>
+  </g>
+  <g fill="#000"><circle cx="19" cy="35" r="5"/><circle cx="32" cy="25" r="5"/><circle cx="45" cy="35" r="5"/></g>
+</svg>

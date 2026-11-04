@@ -1,0 +1,86 @@
+{{define "header" -}}
+<header class="site-header">
+{{- range .OtherAlts}}
+  <div class="lang-hint" lang="{{.Lang.Code}}" data-lang-hint="{{.Lang.Code}}" hidden>
+    <div class="wrap lang-hint-inner">
+      <p>{{$.TL .Lang.Code "langhint.text"}} <a href="{{.Path}}" hreflang="{{.Lang.Code}}">{{$.TL .Lang.Code "langhint.link"}}</a></p>
+      <button type="button" class="btn-plain" data-lang-hint-close>{{$.TL .Lang.Code "langhint.dismiss"}}</button>
+    </div>
+  </div>
+{{- end}}
+  <div class="wrap header-inner">
+    <a class="lockup" href="{{.Href "index"}}">{{template "lockup" .}}</a>
+    <nav class="main-nav" aria-label="{{.T "a11y.nav"}}">
+      <ul>
+        <li><a href="{{.Href "download"}}"{{if eq .Page "download"}} aria-current="page"{{end}}>{{.T "nav.download"}}</a></li>
+        <li><a href="{{.Href "headless"}}"{{if eq .Page "headless"}} aria-current="page"{{end}}>{{.T "nav.headless"}}</a></li>
+        <li><a href="{{.Href "index"}}#faq">{{.T "nav.faq"}}</a></li>
+      </ul>
+    </nav>
+    <nav class="lang-switch" aria-label="{{.T "a11y.langs"}}">
+      <ul>
+{{- range .Alts}}
+        <li><a href="{{.Path}}" hreflang="{{.Lang.Code}}" lang="{{.Lang.Code}}"{{if .Current}} aria-current="true"{{end}}>{{.Lang.Name}}</a></li>
+{{- end}}
+      </ul>
+    </nav>
+  </div>
+</header>
+{{- end}}
+
+{{define "footer" -}}
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-about">
+      <p class="lockup lockup-footer">{{template "lockup" .}}</p>
+      <p class="notice" data-notice>{{.T "notice.affiliation"}}</p>
+    </div>
+    <div class="footer-credits">
+      <h2 class="footer-title">{{.T "footer.credits_title"}}</h2>
+      {{template "credits" .}}
+    </div>
+    <nav class="footer-nav" aria-label="{{.T "a11y.footer_nav"}}">
+      <h2 class="footer-title">{{.T "footer.links_title"}}</h2>
+      <ul>
+        <li><a href="{{.Href "download"}}">{{.T "nav.download"}}</a></li>
+        <li><a href="{{.Href "headless"}}">{{.T "nav.headless"}}</a></li>
+        <li><a href="{{.Href "index"}}#faq">{{.T "nav.faq"}}</a></li>
+        <li><a href="https://github.com/{{.Site.Repo}}">{{.T "footer.source"}}</a></li>
+        <li><a href="https://github.com/{{.Site.Repo}}/blob/main/LICENSE">{{.T "footer.license"}}</a></li>
+        <li><a href="https://core.telegram.org/api/terms" hreflang="en">{{.T "footer.terms"}}</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap footer-meta">
+    <p>{{.T "footer.fonts"}} <a href="{{.Asset "fonts/OFL-AtkinsonHyperlegibleNext.txt"}}" hreflang="en">Atkinson Hyperlegible Next</a>, <a href="{{.Asset "fonts/OFL-AtkinsonHyperlegibleMono.txt"}}" hreflang="en">Atkinson Hyperlegible Mono</a> (SIL OFL 1.1).</p>
+{{- if .Prelaunch}}
+    <p class="preview-tag">{{.T "footer.prelaunch"}}</p>
+{{- end}}
+  </div>
+</footer>
+{{- end}}
+
+{{define "download-cards" -}}
+<div class="dl-grid">
+{{- range .Release.Groups}}{{if ne .ID "checksums"}}
+  <article class="card dl-card" id="dl-{{.ID}}" data-os="{{.ID}}">
+    <p class="dl-suggested" data-suggested hidden>{{$.T "dl.suggested"}}</p>
+    <h3>{{$.T (printf "dl.os.%s" .ID)}}</h3>
+    <p class="dl-note">{{$.T (printf "dl.note.%s" .ID)}}</p>
+    <ul class="dl-files">
+{{- range .Files}}
+      <li>{{template "download-link" (args $ .)}}</li>
+{{- end}}
+    </ul>
+  </article>
+{{- end}}{{end}}
+</div>
+{{- end}}
+
+{{define "download-link" -}}
+{{with .File}}<a class="dl-link" href="{{.Href}}"{{if $.P.Prelaunch}} download{{end}}><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-download"/></svg><span class="dl-label">{{$.P.T .Label}}</span><code class="dl-name">{{.Name}}</code>{{if $.P.Prelaunch}}<span class="badge badge-test">{{$.P.T "dl.badge.test"}}</span>{{end}}</a>{{end}}
+{{- end}}
+
+{{define "cmd" -}}
+<div class="cmd"><pre tabindex="0"><code>{{.Text}}</code></pre><button type="button" class="copy" data-copy hidden><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-copy"/></svg><span>{{.P.T "copy.button"}}</span></button></div>
+{{- end}}

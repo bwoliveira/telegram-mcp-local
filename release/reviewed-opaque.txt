@@ -1,0 +1,7 @@
+# path<TAB>sha256<TAB>justification
+build/darwin/icon.icns	80b72eed31f94bff99df1d5b33504ac82a1264b0df44ea29b07c9f28bb4537cd	Reviewed application icon container; visual variants contain branding only.
+build/windows/icon.ico	9c72d758029521e9dd6772823f673d4d65714b7dbdb96a5dfdd4aa0343a051ae	Reviewed application icon container; visual variants contain branding only.
+internal/brand/favicon.ico	000fc77cb875df3321818887b730974fac0ce5b4c78c30590acc8d2174512629	Reviewed favicon container; visual variants contain branding only.
+internal/panel/assets/favicon.ico	000fc77cb875df3321818887b730974fac0ce5b4c78c30590acc8d2174512629	Reviewed favicon container; visual variants contain branding only.
+site/src/static/assets/fonts/atkinson-hyperlegible-mono.woff2	4246d448c7720620693e64dfaff5a335c2599ebde0d5cae23d44b4be0915ee79	Pinned site font binary reviewed as an opaque redistributable asset.
+site/src/static/assets/fonts/atkinson-hyperlegible-next.woff2	39821cc64b5e43745f058f95dd95d9733afb8c5de005cdd190fdf67ea4976742	Pinned site font binary reviewed as an opaque redistributable asset.

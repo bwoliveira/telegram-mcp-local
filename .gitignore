@@ -1,0 +1,52 @@
+bin/
+*.log
+dist/
+.vercel
+/.wrangler/
+.env*
+/video/
+# The paid part, laid over the tree from the private repository
+# (docs/plano-multiplas-contas.md).
+internal/pro/
+cmd/*/zz_pro.go
+
+# Local state and credentials (never commit real sessions or downloaded data).
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+*.session
+*.session.*
+session*.json
+sessions/
+secrets/
+!/internal/secrets/
+!/internal/secrets/**
+keys/
+token.json
+token.txt
+tokens.json
+tokens.txt
+*.token
+node_modules/
+models/
+*.bin
+media/
+downloads/
+exports/
+*.dmg
+*.AppImage
+*.deb
+*.exe
+*.zip
+*.tar.gz
+# .env*, dist/ and /video/ are already excluded above.
+# Private research notes are archived outside the repository.
+/.research/
+__pycache__/
+*.pyc

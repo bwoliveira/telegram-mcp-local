@@ -1,0 +1,16 @@
+# path<TAB>sha256<TAB>reviewed-on<TAB>reviewer
+build/darwin/dmg-background.png	b2c6e35c83b7e014deb584ba6b8b484ca6843a617bdcd34641352e7ca554a029	2026-11-03	Hermes security review
+build/darwin/dmg-background@2x.png	bab7f186c4f65d3741db18fb77833737915c09f1e75282a03373af99c5e25900	2026-11-03	Hermes security review
+build/darwin/icon.icns	80b72eed31f94bff99df1d5b33504ac82a1264b0df44ea29b07c9f28bb4537cd	2026-11-03	Hermes security review
+build/linux/telegram-mcp.png	137dca98d8a5a4e2e0f5befbab58bcbb4ba789ed7f82e14ac4129673ded90bb0	2026-11-03	Hermes security review
+build/windows/icon.ico	9c72d758029521e9dd6772823f673d4d65714b7dbdb96a5dfdd4aa0343a051ae	2026-11-03	Hermes security review
+cmd/app/icons/app.png	f8d245acda81ad35e8b6d604e4486ed57b104f25e3ba41d17cdb9e98b3e84e2c	2026-11-03	Hermes security review
+cmd/app/icons/tray.png	5d6877ee0349035f379f41ec1c8b1b7d659ad7fccb38d7fd7ac10411a5225716	2026-11-03	Hermes security review
+internal/brand/apple-touch-icon.png	7f726127e00b1d3e2083a96c02a694510b160356c4af1d165ad88ea26b26e737	2026-11-03	Hermes security review
+internal/brand/favicon.ico	000fc77cb875df3321818887b730974fac0ce5b4c78c30590acc8d2174512629	2026-11-03	Hermes security review
+internal/panel/assets/apple-touch-icon.png	7f726127e00b1d3e2083a96c02a694510b160356c4af1d165ad88ea26b26e737	2026-11-03	Hermes security review
+internal/panel/assets/favicon.ico	000fc77cb875df3321818887b730974fac0ce5b4c78c30590acc8d2174512629	2026-11-03	Hermes security review
+site/src/static/apple-touch-icon.png	c1fb7650aa6db0e85505b853b19c5b55b4e9ac43bcf859f0a538d0ba5bcac287	2026-11-03	Hermes security review
+site/src/static/assets/og/og-en.png	a32bff7ee6a71e3509364292d2e2aa4cf6766ea01b9c0d7dafe6ec1256b41474	2026-11-03	Hermes security review
+site/src/static/assets/og/og-es.png	58fbb7dcea01e83674a40964a99f8adba5c50f2e1077b1be22a4fd4170682a7a	2026-11-03	Hermes security review
+site/src/static/assets/og/og-pt-BR.png	2d030cd3ac8f09eb92e13b2a27cbea64e25efd41fa966758e4bc522faf7c93ee	2026-11-03	Hermes security review

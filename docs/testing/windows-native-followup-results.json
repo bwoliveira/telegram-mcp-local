@@ -1,0 +1,336 @@
+{
+  "base": "afdc06c",
+  "host": "Windows 11 amd64",
+  "native_execution": "interactive scheduled task, session 1",
+  "counting": "top-level tests; subtest skips listed separately",
+  "credential_cleanup": {
+    "syntheticCredentialTargets": 0,
+    "sessionId": 1
+  },
+  "claude_desktop_config_proof": {
+    "test": "TestIntegrationOneClickDesktopKeepsABackup",
+    "exit": 0
+  },
+  "binary_sha256": {
+    "cmd__app.exe": "2f454bf3190171e5840cd5a2562b73dc373472e0b83b594ffc468d3e8028edb5",
+    "cmd__telegram-mcp-bridge.exe": "e31f4bd1374c391e1976db20ef7b3d619872a9c21379a1039a6099a427d55188",
+    "internal__cli.exe": "61b0455aa7d2fab71adaa2b4e5b4227632d60f87db54154a782d416272393ccd",
+    "internal__daemon.exe": "7289f2d85dece844d69e569284b119a5044a92ed2cc14861a261a3ec7e985f16",
+    "internal__httpserver.exe": "4403b843d1af872b546a0a702b38b63fd089947bb594636e185f03d5ec2a296f",
+    "internal__mcp.exe": "70be14d3fc44f2e07649445b7a4842fe327c9a95f498261bb071779dd394ad3f",
+    "internal__service.exe": "3224f102ab62d8a581fb50270020f97d7242258f2112aa335fde031ff91e3ccd",
+    "panel-proof.exe": "61e95b7519b9b3b1bb6d7b3c178c1411c48e7aa1f0217da8bda0dc8addba9432"
+  },
+  "phases": {
+    "baseline": {
+      "cmd/app": {
+        "pass": 9,
+        "fail": 3,
+        "skip": 2,
+        "failing_tests": [
+          "TestDesktopStartsWithPersistedCredential",
+          "TestDesktopFirstRunCredentialRetryAndQR",
+          "TestWindowsFirstRunCredentialSetup"
+        ],
+        "skipped_tests": [
+          "TestCredentialSetupGUI",
+          "TestTerminalSubcommandsRunHeadless"
+        ],
+        "skipped_subtests": []
+      },
+      "cmd/telegram-mcp-bridge": {
+        "pass": 1,
+        "fail": 1,
+        "skip": 0,
+        "failing_tests": [
+          "TestBridgeLoadsPersistedTokenWithoutEnvironmentSecret"
+        ],
+        "skipped_tests": [],
+        "skipped_subtests": []
+      },
+      "internal/cli": {
+        "pass": 27,
+        "fail": 3,
+        "skip": 2,
+        "failing_tests": [
+          "TestConfigModeUsesEphemeralSessionCSRFAndExplicitConfirmation",
+          "TestInstallUsesAuthenticatedOpenExactlyOnce",
+          "TestTranscriptionInstallEnglish"
+        ],
+        "skipped_tests": [
+          "TestQRAuthPagePermissionsWithOpenUmask",
+          "TestServe"
+        ],
+        "skipped_subtests": []
+      },
+      "internal/daemon": {
+        "pass": 24,
+        "fail": 2,
+        "skip": 0,
+        "failing_tests": [
+          "TestSaveAccountCredentialsFirstRun",
+          "TestProductionCredentialsPersistWithoutEnvironmentOrUnitSecrets"
+        ],
+        "skipped_tests": [],
+        "skipped_subtests": []
+      },
+      "internal/httpserver": {
+        "pass": 59,
+        "fail": 1,
+        "skip": 1,
+        "failing_tests": [
+          "TestMediaAPILocalTranscribeAndNativeExplicitOnly"
+        ],
+        "skipped_tests": [
+          "TestContractSEC_F01_RuntimeFilesAndHostileUmask"
+        ],
+        "skipped_subtests": [
+          "TestPersistentSessionRejectsUnsafeFiles/file-mode",
+          "TestPersistentSessionRejectsUnsafeFiles/directory-mode",
+          "TestContractSEC_P01_L01_MarkedLoginAndLifecycle/blocked_full_L01"
+        ]
+      },
+      "internal/mcp": {
+        "pass": 191,
+        "fail": 1,
+        "skip": 2,
+        "failing_tests": [
+          "TestDownloadMediaTightensExistingRootPermissions"
+        ],
+        "skipped_tests": [
+          "TestMediaLocalTranscriptionFakeBinaryAndFTS",
+          "TestChatMigrationReadOnlySnapshot"
+        ],
+        "skipped_subtests": []
+      },
+      "internal/service": {
+        "pass": 16,
+        "fail": 9,
+        "skip": 9,
+        "failing_tests": [
+          "TestServicePathsRejectInvalidConfiguration",
+          "TestLaunchdUsesInjectedRunnerAndEscapesXML",
+          "TestLaunchdPropagatesCommandFailure",
+          "TestSecretBackendValidation",
+          "TestLaunchdLifecycleHandlesAlreadyStoppedAndStarted",
+          "TestManagerInstall",
+          "TestInstallSystemdQuoting",
+          "TestManagerInstallCommandErrors",
+          "TestSystemdConfigFallback"
+        ],
+        "skipped_tests": [
+          "TestSEC_F02_DataCopyDoesNotIncludeDecryptionKey",
+          "TestPrepareDataFilesArePrivateAndRejectLinks",
+          "TestPackageLifecycleWithIsolatedSystemctl",
+          "TestSystemdUnitOfflineSyntax",
+          "TestInstallUsesXDGConfigHome",
+          "TestTokenGeneratedPersistedAndPrivate",
+          "TestTokenMissingInvalidAndConflictingSeedFailClosed",
+          "TestTokenBackendSelectionIsPersistedAndConflictsFailClosed",
+          "TestConcurrentTokenCreationReturnsOneCredential"
+        ],
+        "skipped_subtests": []
+      }
+    },
+    "before-interactive": {
+      "cmd/app": {
+        "pass": 10,
+        "fail": 2,
+        "skip": 2,
+        "failing_tests": [
+          "TestDesktopStartsWithPersistedCredential",
+          "TestDesktopFirstRunCredentialRetryAndQR"
+        ],
+        "skipped_tests": [
+          "TestCredentialSetupGUI",
+          "TestTerminalSubcommandsRunHeadless"
+        ],
+        "skipped_subtests": []
+      },
+      "cmd/telegram-mcp-bridge": {
+        "pass": 1,
+        "fail": 1,
+        "skip": 0,
+        "failing_tests": [
+          "TestBridgeLoadsPersistedTokenWithoutEnvironmentSecret"
+        ],
+        "skipped_tests": [],
+        "skipped_subtests": []
+      },
+      "internal/cli": {
+        "pass": 27,
+        "fail": 3,
+        "skip": 2,
+        "failing_tests": [
+          "TestConfigModeUsesEphemeralSessionCSRFAndExplicitConfirmation",
+          "TestInstallUsesAuthenticatedOpenExactlyOnce",
+          "TestTranscriptionInstallEnglish"
+        ],
+        "skipped_tests": [
+          "TestQRAuthPagePermissionsWithOpenUmask",
+          "TestServe"
+        ],
+        "skipped_subtests": []
+      },
+      "internal/daemon": {
+        "pass": 24,
+        "fail": 2,
+        "skip": 0,
+        "failing_tests": [
+          "TestSaveAccountCredentialsFirstRun",
+          "TestProductionCredentialsPersistWithoutEnvironmentOrUnitSecrets"
+        ],
+        "skipped_tests": [],
+        "skipped_subtests": []
+      },
+      "internal/httpserver": {
+        "pass": 59,
+        "fail": 1,
+        "skip": 1,
+        "failing_tests": [
+          "TestMediaAPILocalTranscribeAndNativeExplicitOnly"
+        ],
+        "skipped_tests": [
+          "TestContractSEC_F01_RuntimeFilesAndHostileUmask"
+        ],
+        "skipped_subtests": [
+          "TestPersistentSessionRejectsUnsafeFiles/file-mode",
+          "TestPersistentSessionRejectsUnsafeFiles/directory-mode",
+          "TestContractSEC_P01_L01_MarkedLoginAndLifecycle/blocked_full_L01"
+        ]
+      },
+      "internal/mcp": {
+        "pass": 191,
+        "fail": 1,
+        "skip": 2,
+        "failing_tests": [
+          "TestDownloadMediaTightensExistingRootPermissions"
+        ],
+        "skipped_tests": [
+          "TestMediaLocalTranscriptionFakeBinaryAndFTS",
+          "TestChatMigrationReadOnlySnapshot"
+        ],
+        "skipped_subtests": []
+      },
+      "internal/service": {
+        "pass": 16,
+        "fail": 9,
+        "skip": 9,
+        "failing_tests": [
+          "TestServicePathsRejectInvalidConfiguration",
+          "TestLaunchdUsesInjectedRunnerAndEscapesXML",
+          "TestLaunchdPropagatesCommandFailure",
+          "TestSecretBackendValidation",
+          "TestLaunchdLifecycleHandlesAlreadyStoppedAndStarted",
+          "TestManagerInstall",
+          "TestInstallSystemdQuoting",
+          "TestManagerInstallCommandErrors",
+          "TestSystemdConfigFallback"
+        ],
+        "skipped_tests": [
+          "TestSEC_F02_DataCopyDoesNotIncludeDecryptionKey",
+          "TestPrepareDataFilesArePrivateAndRejectLinks",
+          "TestPackageLifecycleWithIsolatedSystemctl",
+          "TestSystemdUnitOfflineSyntax",
+          "TestInstallUsesXDGConfigHome",
+          "TestTokenGeneratedPersistedAndPrivate",
+          "TestTokenMissingInvalidAndConflictingSeedFailClosed",
+          "TestTokenBackendSelectionIsPersistedAndConflictsFailClosed",
+          "TestConcurrentTokenCreationReturnsOneCredential"
+        ],
+        "skipped_subtests": []
+      }
+    },
+    "final": {
+      "cmd/app": {
+        "pass": 12,
+        "fail": 0,
+        "skip": 2,
+        "failing_tests": [],
+        "skipped_tests": [
+          "TestCredentialSetupGUI",
+          "TestTerminalSubcommandsRunHeadless"
+        ],
+        "skipped_subtests": []
+      },
+      "cmd/telegram-mcp-bridge": {
+        "pass": 2,
+        "fail": 0,
+        "skip": 0,
+        "failing_tests": [],
+        "skipped_tests": [],
+        "skipped_subtests": []
+      },
+      "internal/cli": {
+        "pass": 30,
+        "fail": 0,
+        "skip": 2,
+        "failing_tests": [],
+        "skipped_tests": [
+          "TestQRAuthPagePermissionsWithOpenUmask",
+          "TestServe"
+        ],
+        "skipped_subtests": []
+      },
+      "internal/daemon": {
+        "pass": 26,
+        "fail": 0,
+        "skip": 0,
+        "failing_tests": [],
+        "skipped_tests": [],
+        "skipped_subtests": []
+      },
+      "internal/httpserver": {
+        "pass": 60,
+        "fail": 0,
+        "skip": 1,
+        "failing_tests": [],
+        "skipped_tests": [
+          "TestContractSEC_F01_RuntimeFilesAndHostileUmask"
+        ],
+        "skipped_subtests": [
+          "TestPersistentSessionRejectsUnsafeFiles/file-mode",
+          "TestPersistentSessionRejectsUnsafeFiles/directory-mode",
+          "TestContractSEC_P01_L01_MarkedLoginAndLifecycle/blocked_full_L01"
+        ]
+      },
+      "internal/mcp": {
+        "pass": 196,
+        "fail": 0,
+        "skip": 1,
+        "failing_tests": [],
+        "skipped_tests": [
+          "TestChatMigrationReadOnlySnapshot"
+        ],
+        "skipped_subtests": []
+      },
+      "internal/service": {
+        "pass": 25,
+        "fail": 0,
+        "skip": 9,
+        "failing_tests": [],
+        "skipped_tests": [
+          "TestSEC_F02_DataCopyDoesNotIncludeDecryptionKey",
+          "TestPrepareDataFilesArePrivateAndRejectLinks",
+          "TestPackageLifecycleWithIsolatedSystemctl",
+          "TestSystemdUnitOfflineSyntax",
+          "TestInstallUsesXDGConfigHome",
+          "TestTokenGeneratedPersistedAndPrivate",
+          "TestTokenMissingInvalidAndConflictingSeedFailClosed",
+          "TestTokenBackendSelectionIsPersistedAndConflictsFailClosed",
+          "TestConcurrentTokenCreationReturnsOneCredential"
+        ],
+        "skipped_subtests": []
+      }
+    }
+  },
+  "cleanup": {
+    "workspaceExists": false,
+    "activeExecutables": 0,
+    "syntheticCredentialTargets": 0,
+    "taskExists": false,
+    "dataRootExists": false
+  },
+  "remote_binary_hashes_match": true,
+  "real_claude_config_inventory_and_hashes_unchanged": true
+}

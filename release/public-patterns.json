@@ -1,0 +1,197 @@
+{
+  "patterns": {
+    "private-agent-home": "/root[/]\\.hermes",
+    "personal-macos-home": "/Users[/][^/\\s<>`\"\\']+",
+    "private-runner-label": "home[l]ab-ci",
+    "private-container-host": "\\bCT[0-9]{3}\\b",
+    "internal-hostname": "\\b[a-z0-9][a-z0-9-]*\\.(?:internal|lan|home\\.arpa)\\b",
+    "private-ipv4": "(?<![\\d.])10(?:\\.\\d{1,3}){3}(?![\\d.])",
+    "shared-ipv4": "(?<![\\d.])100\\.(?:6[4-9]|[7-9]\\d|1[01]\\d|12[0-7])(?:\\.\\d{1,3}){2}(?![\\d.])",
+    "rfc1918-ipv4": "(?<![\\d.])(?:172\\.(?:1[6-9]|2\\d|3[01])|192\\.168)(?:\\.\\d{1,3}){2}(?![\\d.])"
+  },
+  "public_emails": [
+    "git@github.com"
+  ],
+  "approved_synthetic_lines": {
+    "internal/panel/brand_test.go": {
+      "a92daae59f28402f730620eb28ef87213cc6361e4d532fbc753af3d0039445b9": [
+        "unreviewed-email"
+      ]
+    },
+    "cmd/app/credentials.go": {
+      "2dacaa772bc53f047ab6dd4abe03f2eb531aa743d9720c9068655c961230a040": [
+        "internal-hostname"
+      ]
+    },
+    "docs/contratos/security.md": {
+      "6d5c24b1435eab3aba681d7b8e041e2984740a440b8edf69405fa1b3bf7755b9": [
+        "internal-hostname"
+      ]
+    },
+    "internal/daemon/daemon.go": {
+      "5bab4adb7ebc9e33bc1a89c9fc65e0f6cc33716aeb23556dfe8ecb918534be14": [
+        "internal-hostname"
+      ]
+    },
+    "internal/httpserver/guard_test.go": {
+      "3f7a53fb1c2297b1cd5be8fdfa7eedc40ee1aa3a0ba5a9a78c61451ed604d0bd": [
+        "internal-hostname"
+      ],
+      "61f6b0d5323cddddd75039563df832b3d7a8fa8ea30716ee98a9b5b01e30b2c4": [
+        "internal-hostname"
+      ]
+    },
+    "site/gen/serve_test.go": {
+      "d23b6a7519428e91c5bfae514668e111ca632c112aed70ae5db89a75ff34b55b": [
+        "rfc1918-ipv4"
+      ]
+    },
+    "docs/PUBLIC-SNAPSHOT.md": {
+      "cd4ae8d0121a8297bf37b07d7f4158399567bef4a2e00149039021607665c8bb": [
+        "private-runner-label"
+      ]
+    },
+    "docs/SECURITY-INTEGRATION.md": {
+      "b32e74d3242df9ad03dae8e0adafa2969e47c319110e5f13ef04bccbca78d6e6": [
+        "private-agent-home"
+      ]
+    },
+    "internal/panel/security_regression_test.go": {
+      "9c348b1e51d74efa86653e674d1905ce2830e0cc95d7a2e3ec54d0beba7a3eb4": [
+        "unreviewed-email"
+      ],
+      "ce63f458f8f97415a502c81633df7dfa7c9f4f3f0264c0a71e2ba2826c81bb9d": [
+        "unreviewed-email"
+      ]
+    },
+    "internal/webhook/security_test.go": {
+      "8ecfa0e4dccdbaa245bc29485d982632ecdfe33db1321d439223a748ad59b177": [
+        "shared-ipv4"
+      ]
+    },
+    "internal/webhook/transport.go": {
+      "247552592b5e0f13ea18ff6dc6e4c8e763a4784d0b1b226fb0a6c701129ab598": [
+        "shared-ipv4"
+      ],
+      "368408860af020b43af43078a614abfa8aef41554d3428ab361fd3479d98956f": [
+        "shared-ipv4"
+      ]
+    },
+    "internal/webhook/transport_test.go": {
+      "0282c950767739db5bad8d4cca5967987fc3d0dd89018aa2b244809a121c0bf3": [
+        "private-ipv4"
+      ],
+      "ab436f7fb43fa52ebcefd3c1c79a5726354970ee45e9ebb3036b82f0d62773b9": [
+        "private-ipv4"
+      ],
+      "ee5790c03e80aef790bcab343f86e4cd7ca06867d724cf84a153baefa4830c06": [
+        "shared-ipv4"
+      ],
+      "863cd078fe113d3a34878d20b81b6fee887564d844f722fc92151051788e7988": [
+        "shared-ipv4"
+      ],
+      "f808210c946dba458f325833e4b0277b85c6506e19aa517c9c24c1524a3fbb32": [
+        "private-ipv4"
+      ],
+      "a1f776bc7c537fba951d582f8f29dc4d7ee9596b9dd547bad07dc4726fc1ff3c": [
+        "private-ipv4"
+      ],
+      "12f16925bb7f4df0ef4987986dca879d0fbf513a64025ab8356f979ecec28044": [
+        "private-ipv4"
+      ],
+      "7ac42899cc46a8ec4445519d27163d1da1efb60106fd0e1f848dfd3868110cb8": [
+        "private-ipv4"
+      ],
+      "310ed6dac632d684e1a512a9c8e9233debc352cbbed624b8f77a007f92657717": [
+        "private-ipv4"
+      ],
+      "364faef87efb093c015b2b95d710f4ee24021ee6e19d03538506adf490dd5d15": [
+        "private-ipv4"
+      ],
+      "8d28fc534325ac784610ce3d79e6c73efeff5a530ad4317bb764ee5c10bd017e": [
+        "private-ipv4"
+      ],
+      "7da8470906c598e545a81028aa801bc26a1e7dc41370793015dc20a53d652b21": [
+        "private-ipv4"
+      ],
+      "71cd30d008bc356211c2e9820d64947fe75c8e3c32f9e9774ac8ae4e38ac4b00": [
+        "private-ipv4"
+      ],
+      "2375267fdb955918312707055fd74c858c8669ee487273c60a1e19f6d0997be7": [
+        "private-ipv4"
+      ]
+    },
+    "scripts/public-snapshot.py": {
+      "18bedb77ab6d979414b0a32943a740635d84440159014eb8983f3cd61e81178c": [
+        "private-runner-label"
+      ]
+    },
+    "scripts/test-public-snapshot.py": {
+      "37be9e3077fd41771e8e18ac10fe2d4be2c5b81c1717a01f9061e0a5c1035525": [
+        "unreviewed-email"
+      ],
+      "6f3c9a801194b434ed3d28aea63de121b4071e209c71d6a6d402a5ff19f7c7f8": [
+        "unreviewed-email"
+      ],
+      "3aa1a99029261e506dd2abe70074e68672d3400a42ecc0ed1a8147ab82ddc496": [
+        "unreviewed-email"
+      ]
+    },
+    "scripts/test-release.py": {
+      "aced466d16600610af672ba9be72d42da24bacec092e70bf54dc6c1a1b48a4c6": [
+        "private-agent-home"
+      ]
+    },
+    "docs/E4-DISTRIBUTION.md": {
+      "c7e5e7b19fdf342b6f9916042852f574aba566d894d6d16c017f0d77509f3b73": [
+        "shared-ipv4"
+      ]
+    },
+    "docs/security/release-signing.md": {
+      "2077cd98cf3bafe01479990b28a74d2736348ab85c8d97d62a43d8b14f54a97a": [
+        "shared-ipv4"
+      ]
+    },
+    "internal/updater/devfeed.go": {
+      "32ebc77bda9989ce3437f542f30171ce90c791043ee9607b03f8656e2fbadecb": [
+        "shared-ipv4"
+      ],
+      "d6c768d0bf06f18f9474c9b889a8aac1b1e2bbb20830186e57fda18fabe5536d": [
+        "shared-ipv4"
+      ],
+      "8c663e9b093b84293d3d8a08023be4b1618c7429cbc0a48722e5f309cb5cdb97": [
+        "shared-ipv4"
+      ]
+    },
+    "internal/updater/devfeed_test.go": {
+      "7a71969644ba0da265b38859c0d8ba2a480608ff688b3bc0d18d5fac7ca385d2": [
+        "rfc1918-ipv4"
+      ],
+      "7b05a8cffadfb4b09d25bb02672cfb58eafaeb9aedddc5312e2212770b6237f8": [
+        "shared-ipv4"
+      ],
+      "5ad3f8ba6d3424c4d3d0b3093e84eab34e2b2b6e2bdf76f68e9f668a75cfbfd4": [
+        "shared-ipv4"
+      ],
+      "a078070ff224abbf7cb65f7dd8db302b49a6d0b6d6b28250fb5823ff6a4a57ce": [
+        "shared-ipv4"
+      ],
+      "d80fee8d90dfa001e6990b4c8cccbd76310804b89c1eae527d28264d579d824f": [
+        "private-ipv4"
+      ]
+    },
+    "scripts/linux-native/legal/squashfuse-LICENSE": {
+      "62019d8a9c06e11f7155f43393ea4b7a59dcc4f6ca0ced9b9f212e127f566a44": [
+        "unreviewed-email"
+      ],
+      "45465e2011630b8b7d2f170d16bd37954ca4e9f89f1b890360b1f475e1f8a181": [
+        "unreviewed-email"
+      ]
+    },
+    "scripts/linux-native/legal/zlib-LICENSE": {
+      "c19ca4a05774b5a08d7185c687700ab7786af666a21569cbf501d7603ebb8f41": [
+        "unreviewed-email"
+      ]
+    }
+  }
+}

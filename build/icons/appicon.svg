@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- The panel's own mark (internal/panel/brandmark.go) on Apple's icon grid: an
+       824-point tile, centred, with room for its shadow. Its own blue; never the
+       Telegram logo, the paper plane or Telegram's colours. -->
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5b7cfa"/>
+      <stop offset="1" stop-color="#2a3fb0"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="0.8" stdDeviation="1" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g transform="translate(100 100) scale(12.875)">
+    <rect width="64" height="64" rx="14.4" fill="url(#tile)" filter="url(#shadow)"/>
+    <g transform="translate(-4 -4) scale(1.125)">
+      <path d="M19 17h26a7 7 0 0 1 7 7v13a7 7 0 0 1-7 7H29l-9 7v-7h-1a7 7 0 0 1-7-7V24a7 7 0 0 1 7-7Z" fill="none" stroke="#fff" stroke-width="3.4" stroke-linejoin="round"/>
+      <path d="M23 34l9-7 9 7" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="23" cy="34" r="3.2" fill="#fff"/><circle cx="32" cy="27" r="3.2" fill="#fff"/><circle cx="41" cy="34" r="3.2" fill="#fff"/>
+    </g>
+  </g>
+</svg>
