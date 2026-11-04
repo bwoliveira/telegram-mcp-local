@@ -34,7 +34,9 @@ func TestServe(t *testing.T) {
 	wantTools, oldTools := serveParityTools(t)
 	root := t.TempDir()
 	binary := filepath.Join(root, "telegram-mcp")
-	buildCtx, cancelBuild := context.WithTimeout(context.Background(), 2*time.Minute)
+	// A cold CGO_ENABLED=0 build on a small hosted runner, in parallel with the
+	// race suite, can take several minutes; the limit only bounds a hung build.
+	buildCtx, cancelBuild := context.WithTimeout(context.Background(), 10*time.Minute)
 	defer cancelBuild()
 	build := exec.CommandContext(buildCtx, "go", "build", "-o", binary, "../../cmd/telegram-mcp")
 	// Prove the headless CLI builds without GTK/cgo; build only once.
