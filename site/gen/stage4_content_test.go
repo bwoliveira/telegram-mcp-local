@@ -135,8 +135,8 @@ func TestStage6ParityGateResolved(t *testing.T) {
 	for _, lang := range site.Languages {
 		approval := strs[lang.Code]["todo.review"]
 		if lang.Code == "pt-BR" {
-			if strings.Contains(approval, "TODO(") || !strings.Contains(approval, "Todo o texto pt-BR está aprovado por Bruno") || !strings.Contains(approval, "2026-11-02") || !strings.Contains(approval, "2026-11-03") || !strings.Contains(approval, "download, credenciais e headless") || strings.Contains(approval, "precisam de nova aprovação") {
-				t.Errorf("pt-BR must record owner approval of all copy, with both existing and setup approval dates")
+			if strings.Contains(approval, "TODO(") || !strings.Contains(approval, "2026-11-02") || !strings.Contains(approval, "2026-11-03") || !strings.Contains(approval, "download, credenciais e headless") || !strings.Contains(approval, "Todo o texto pt-BR da 1.0.0 está aprovado por Bruno em 2026-11-04") || strings.Contains(approval, "precisam de nova aprovação") || strings.Contains(approval, "aguardam o OK") {
+				t.Errorf("pt-BR must record owner approval of all 1.0.0 copy on 2026-11-04, with the earlier approval dates")
 			}
 		} else if strings.Contains(approval, "TODO(") || !strings.Contains(approval, "2026-11-02") || (!strings.Contains(approval, "pending owner approval") && !strings.Contains(approval, "pendientes de aprobación")) {
 			t.Errorf("%s: must retain the prior review date and record pending source approval", lang.Code)

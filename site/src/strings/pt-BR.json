@@ -72,5 +72,5 @@
   "dl.badge.test": "Arquivo de teste",
   "dl.suggested": "Sugerido para o seu sistema",
 
-  "todo.review": "Todo o texto pt-BR está aprovado por Bruno: textos existentes em 2026-11-02 e trechos de setup de download, credenciais e headless em 2026-11-03. Aviso de beta aprovado e ordem da marca decidida em 2026-11-04; os ajustes de requisitos e paridade da 1.0.0 aguardam o OK do Bruno."
+  "todo.review": "Todo o texto pt-BR da 1.0.0 está aprovado por Bruno em 2026-11-04: textos existentes aprovados em 2026-11-02, trechos de setup de download, credenciais e headless em 2026-11-03, e aviso de beta, ordem da marca, requisitos, paridade e FAQ do item 2.3 (mantida como está) em 2026-11-04."
 }
