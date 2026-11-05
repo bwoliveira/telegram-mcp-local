@@ -20,12 +20,13 @@ body{background:#0c1f4d;color:#eef2fb;font-family:"AHN",sans-serif;display:flex;
 .row{display:flex;align-items:center;gap:28px}
 svg{width:132px;height:132px}
 .q{font-size:30px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#b8c5e6}
+.q-after{margin-top:14px}
 .n{font-size:92px;font-weight:780;line-height:1;letter-spacing:-.01em}
 .t{font-size:44px;font-weight:600;line-height:1.25;max-width:1000px;margin:0}
 .f{font-size:26px;color:#b8c5e6;margin:0}
 .bar{position:absolute;left:0;bottom:0;width:1200px;height:14px;background:#2346c8}
 </style></head><body>
-<div class="row">{{.Mark}}<div><div class="q">{{.Qualifier}}</div><div class="n">{{.Brand}}</div></div></div>
+<div class="row">{{.Mark}}<div>{{if .QualifierFirst}}<div class="q">{{.Qualifier}}</div><div class="n">{{.Brand}}</div>{{else}}<div class="n">{{.Brand}}</div><div class="q q-after">{{.Qualifier}}</div>{{end}}</div></div>
 <p class="t">{{.Tagline}}</p>
 <p class="f">{{.Notice}}</p>
 <div class="bar"></div>
@@ -67,7 +68,7 @@ func WriteImageSources(src, dir string) error {
 		}
 		err = og.Execute(f, map[string]any{
 			"Lang": l.Code, "FontURL": template.URL("file://" + font), "Mark": template.HTML(markSVG),
-			"Qualifier": s["brand.qualifier"], "Brand": site.Brand, "Tagline": s["og.tagline"], "Notice": s["og.notice"],
+			"Qualifier": s["brand.qualifier"], "QualifierFirst": s["brand.order"] == "qualifier-first", "Brand": site.Brand, "Tagline": s["og.tagline"], "Notice": s["og.notice"],
 		})
 		if cerr := f.Close(); err == nil {
 			err = cerr

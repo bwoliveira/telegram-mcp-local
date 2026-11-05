@@ -30,8 +30,6 @@
   --on-deep-soft: #b8c5e6;
   --accent: #8fb4ff;
   --accent-ink: #06132e;
-  --warn: #8a5a00;
-  --warn-bg: #fff7e6;
   --line: #d5dde9;
 
   --font: "Atkinson Hyperlegible Next", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -414,9 +412,58 @@ main:focus {
 }
 
 .badge-test {
-  background: var(--warn-bg);
-  color: var(--warn);
-  border: 1px solid var(--warn);
+  background: var(--brand-strong);
+  color: var(--on-deep);
+  border: 1px solid var(--brand-strong);
+}
+
+/* Beta badge (header lockup, release line) and beta banner. Colors come from
+   the blue palette: accent-ink on accent passes WCAG AA; on the brand-strong
+   banner, on-deep text is 8.96:1, white links 10.04:1 and the accent icon and
+   focus ring 4.85:1. */
+.badge-beta {
+  align-self: center;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lockup .badge-beta {
+  margin-left: 0.1rem;
+}
+
+.beta-banner {
+  background: var(--brand-strong);
+  color: var(--on-deep);
+  border-bottom: 2px solid var(--accent);
+}
+
+.beta-inner {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  padding-block: 0.75rem;
+}
+
+.beta-inner p {
+  margin: 0;
+}
+
+.beta-inner .icon {
+  color: var(--accent);
+  margin-top: 0.2em;
+}
+
+.beta-banner a {
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.beta-banner :focus-visible {
+  outline-color: var(--accent);
 }
 
 /* ---- Hero -------------------------------------------------------------- */
@@ -429,6 +476,7 @@ main:focus {
 
 .hero-grid {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: clamp(2rem, 5vw, 3.5rem);
   align-items: center;
 }
@@ -592,17 +640,23 @@ main:focus {
 .turn-preview {
   justify-self: stretch;
   max-width: none;
-  background: var(--warn-bg);
-  border: 1px solid var(--warn);
-  color: var(--ink);
+  background: var(--brand-strong);
+  border: 1px solid var(--accent);
+  color: var(--on-deep);
 }
 
 .turn-preview .preview-head {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  color: var(--warn);
+  color: var(--accent);
   font-weight: 750;
+}
+
+.turn-preview .fake-btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .preview-actions {
@@ -675,8 +729,12 @@ main:focus {
   font-size: 1.1rem;
 }
 
+/* minmax(0, 1fr): without it the implicit single mobile column grows to the
+   min-content width of wide children (long <pre> commands), and the whole
+   page scrolls sideways on phones. */
 .grid {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1.25rem;
 }
 
@@ -790,15 +848,37 @@ main:focus {
   margin-bottom: 0;
 }
 
+/* Warning callouts, the test badge and the composer preview use the beta
+   banner colors instead of a cream background: on-deep text on brand-strong
+   is 8.96:1, white links 10.04:1, accent titles, icons, bullets and focus
+   ring 4.85:1; code chips keep brand-strong on brand-soft (8.2:1). */
 .callout-warn {
-  background: var(--warn-bg);
-  border-color: var(--warn);
+  background: var(--brand-strong);
+  border-color: var(--accent);
+  color: var(--on-deep);
 }
 
 .callout-warn h2,
 .callout-warn h3,
 .callout-warn .callout-title {
-  color: var(--warn);
+  color: var(--accent);
+}
+
+.callout-warn a {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.callout-warn a:hover {
+  color: var(--on-deep);
+}
+
+.callout-warn .checklist li::before {
+  background: var(--accent);
+}
+
+.callout-warn :focus-visible {
+  outline-color: var(--accent);
 }
 
 .callout-title {
@@ -942,6 +1022,7 @@ main:focus {
 
 .dl-grid {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1.25rem;
 }
 
@@ -1030,7 +1111,7 @@ main:focus {
 }
 
 .test-banner .icon {
-  color: var(--warn);
+  color: var(--accent);
   width: 1.5rem;
   height: 1.5rem;
   margin-top: 0.1rem;
@@ -1047,6 +1128,7 @@ main:focus {
 
 .footer-grid {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 2rem;
 }
 

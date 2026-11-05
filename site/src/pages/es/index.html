@@ -1,14 +1,13 @@
 {{define "content" -}}
-{{- /* TODO(stage6): before launch, re-check every feature below against docs/PARIDADE.md (fake and real columns). */ -}}
 <section class="hero" aria-labelledby="hero-title">
   <div class="wrap hero-grid">
     <div>
       <p class="eyebrow">Proyecto no oficial · código abierto · MIT</p>
       <h1 id="hero-title">Tus chats de Telegram, dentro de tus herramientas de IA</h1>
-      <p class="hero-lead">No oficial Telegram MCP conecta tu cuenta personal con Claude, Codex, Cursor y otros clientes MCP. Se ejecuta en tu computadora, guarda el historial en una base de datos local y habla directamente con Telegram.</p>
+      <p class="hero-lead">Telegram MCP no oficial conecta tu cuenta personal con Claude, Codex, Cursor y otros clientes MCP. Se ejecuta en tu computadora, guarda el historial en una base de datos local y habla directamente con Telegram.</p>
       <ul class="hero-points">
         <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-eye"/></svg><span>Empieza en modo solo lectura.</span></li>
-        <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>Cada escritura exige vista previa; la aprobación humana depende del cliente MCP.</span></li>
+        <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>Cada acción que cambia Telegram exige vista previa; la aprobación humana depende del cliente MCP.</span></li>
         <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-home"/></svg><span>Ningún servidor del proyecto en el medio.</span></li>
       </ul>
       <div class="actions">
@@ -61,7 +60,7 @@
     <div class="section-head">
       <p class="eyebrow">Qué puedes hacer</p>
       <h2 id="features-title">Pide a la IA lo que te llevaría horas revisar</h2>
-      <p>Hoy el proyecto cubre lectura, búsqueda y envío de texto con vista previa. Hay más en desarrollo, y solo aparecerá aquí cuando esté probado.</p>
+      <p>Los ejemplos de aquí son de lectura, búsqueda y respuestas con vista previa. Editar, reaccionar, encuestas, ubicación y acciones de grupo también se verificaron con una cuenta real en un grupo de prueba, siempre con vista previa.</p>
     </div>
     <div class="grid grid-3">
       <article class="card">
@@ -89,7 +88,7 @@
       <p class="eyebrow">Datos y privacidad</p>
       <h2 id="data-title">Qué se queda contigo y qué sale</h2>
       <p>Los mensajes se guardan en una base de datos en tu computadora. La app habla directamente con Telegram y el proyecto no recibe nada: no hay cuenta con nosotros, ni servidor nuestro, ni telemetría.</p>
-      <p>La sesión de Telegram, el <code>api_hash</code> y el token del panel van al almacén de credenciales del sistema (Keychain, Administrador de credenciales o Secret Service) o, en un Linux sin escritorio, a un archivo cifrado.</p>
+      <p>En Mac y Windows, la sesión de Telegram, el <code>api_hash</code> y el token del panel se guardan en el almacén de credenciales del sistema (Keychain o Administrador de credenciales). En Linux, van por defecto a un archivo cifrado cuya clave se guarda fuera de la carpeta de datos; se puede elegir Secret Service en su lugar.</p>
     </div>
     <div class="callout">
       <p class="callout-title"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg>Ojo con tu cliente de IA</p>
@@ -112,7 +111,7 @@
           <li>Usa tu cuenta de usuario. No es un bot.</li>
           <li>Empieza en solo lectura. Tú activas la escritura en el panel; cada envío exige vista previa y confirmación técnica. El cliente MCP debe pedir tu aprobación humana antes de confirmar.</li>
           <li>Leer un chat no lo marca como leído. El aviso de lectura solo se envía cuando pides marcarlo como leído de forma explícita.</li>
-          <li>Los mensajes que se autodestruyen también se borran de la base de datos local en su plazo.</li>
+          <li>Los mensajes que se autodestruyen también se borran de la base de datos local cuando vencen, o la próxima vez que se abra la app.</li>
         </ul>
       </div>
       <div class="callout callout-warn">
@@ -121,7 +120,7 @@
           <li>Es un cliente no oficial. Telegram puede limitar o restringir cuentas cuyo uso de la API considere abusivo, y ningún nivel de uso está garantizado como seguro.</li>
           <li>Cuando Telegram pide una pausa (FloodWait), la app espera en lugar de insistir.</li>
           <li>Los chats secretos no están disponibles: solo existen en los dispositivos donde se iniciaron.</li>
-          <li>El proyecto sigue en desarrollo. Revisa lo que propone la IA antes de aprobar.</li>
+          <li>Esta es una versión beta y puede tener errores. Revisa lo que propone la IA antes de aprobar.</li>
         </ul>
       </div>
     </div>
@@ -132,13 +131,13 @@
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">Preguntas frecuentes</p>
-      <h2 id="faq-title">Preguntas sobre {{.SiteName}}</h2>
+      <h2 id="faq-title">Preguntas sobre {{.BrandName}}</h2>
     </div>
     <div class="faq">
       <details id="faq-official">
         <summary>¿Es una app oficial de Telegram?</summary>
         <div>
-          <p>No. No oficial Telegram MCP es un proyecto independiente y no oficial. No tiene afiliación, patrocinio ni respaldo de Telegram. Telegram es una marca de su titular.</p>
+          <p>No. Es un cliente de terceros, no oficial; el aviso de independencia está en el pie de todas las páginas.</p>
           <p>Usa la API pública de Telegram (el protocolo MTProto, mediante la biblioteca gotd), la misma que usan otros clientes de terceros.</p>
         </div>
       </details>
@@ -148,7 +147,7 @@
           <p>Quien usa la API de Telegram tiene que cumplir sus <a href="https://core.telegram.org/api/terms" hreflang="en">Términos de servicio de la API</a>. Aquí importan tres puntos:</p>
           <ul>
             <li>El punto 1.5 prohíbe usar datos obtenidos de Telegram para entrenar, ajustar, desarrollar, mejorar o hacer el “deployment” de IA. Su redacción es amplia y puede abarcar enviar mensajes a un LLM o audio a Whisper local, incluso sin entrenamiento. El uso privado, el consentimiento del titular de la cuenta, un modelo local y un <code>api_id</code> propio no crean una excepción automática: los chats también contienen datos de otras personas. El proyecto no recopila datos para entrenar, pero eso no elimina el riesgo contractual de estos flujos. No hay confirmación de Telegram de que este uso esté permitido. El proyecto no ha consultado a Telegram. Tú decides si utilizas estas funciones y asumes el riesgo; si Telegram notifica al proyecto, la función podrá ajustarse o retirarse.</li>
-            <li>El punto 2.3 solo permite “Telegram” en el nombre de una app si va después de “Unofficial” (no oficial). Por eso el nombre aparece siempre como “No oficial Telegram MCP”. Esa excepción queda a criterio de Telegram; el proyecto no tiene su aprobación.</li>
+            <li>El punto 2.3 solo permite “Telegram” en el nombre de una app si va después de la palabra “Unofficial” (no oficial). Por eso el nombre siempre lleva ese calificativo. En inglés va antes de “Telegram”, como pide la regla: “Unofficial Telegram MCP”. En español y portugués sigue el orden natural de cada idioma: “Telegram MCP no oficial” y “Telegram MCP não oficial”. Esa excepción queda a criterio de Telegram; el proyecto no tiene su aprobación.</li>
             <li>El punto 2.1 pide que cada aplicación tenga su propio <code>api_id</code>. Aquí, cada persona usa el suyo (mira la siguiente pregunta).</li>
           </ul>
         </div>
@@ -179,7 +178,7 @@
         <div>
           <p>Depende de cómo esté configurado tu cliente MCP. Una instalación nueva empieza en modo solo lectura. Al activar la escritura en el panel, el servidor exige una vista previa vinculada a la misma acción (<code>preview_fingerprint</code>) y <code>confirm=true</code> para ejecutar. El mismo cliente MCP puede pedir la vista previa y confirmar: el servidor no autentica una aprobación humana separada.</p>
           <p>Configura el cliente para pedir tu OK explícito antes de cada escritura; no autorices confirmación automática. Sin ese control en el cliente, la IA puede confirmar y enviar sin una nueva aprobación tuya.</p>
-          <p>Los mensajes que llegan se tratan como contenido de terceros, nunca como instrucciones. Un texto que diga “envía esto a alguien” no dispara ningún envío.</p>
+          <p>Los mensajes que llegan se tratan como contenido de terceros, nunca como instrucciones. Un texto que diga “envía esto a alguien” no dispara ningún envío por parte del servidor. Tu cliente MCP también debe tratar ese contenido como dato no confiable.</p>
         </div>
       </details>
       <details id="faq-read">
@@ -197,13 +196,13 @@
       <details id="faq-bot">
         <summary>¿Es un bot?</summary>
         <div>
-          <p>No. Un bot es una cuenta aparte que solo ve lo que le envían. No oficial Telegram MCP entra con tu propia cuenta, como un dispositivo nuevo, y ve los chats que ya tienes. Puedes cerrar esa sesión cuando quieras en Ajustes › Dispositivos, en el celular.</p>
+          <p>No. Un bot es una cuenta aparte que solo ve lo que le envían. Telegram MCP no oficial entra con tu propia cuenta, como un dispositivo nuevo, y ve los chats que ya tienes. Puedes cerrar esa sesión cuando quieras en Ajustes › Dispositivos, en el celular.</p>
         </div>
       </details>
       <details id="faq-clients">
         <summary>¿Qué clientes de IA funcionan?</summary>
         <div>
-          <p>El panel incluye la configuración para Claude Code, Claude Desktop, Codex y Cursor. Cualquier otro cliente compatible con MCP puede usar la dirección local <code>http://127.0.0.1:47831/mcp</code> con el token del panel. Esa dirección solo acepta conexiones desde la misma computadora.</p>
+          <p>El panel incluye la configuración para Claude Code, Claude Desktop, Codex y Cursor. Cualquier otro cliente compatible con MCP puede usar la dirección local predeterminada <code>http://127.0.0.1:47831/mcp</code> con el token del panel. Esa dirección solo acepta conexiones desde la misma computadora.</p>
         </div>
       </details>
       <details id="faq-price">

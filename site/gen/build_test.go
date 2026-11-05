@@ -207,29 +207,49 @@ func TestCanonicalAndHreflang(t *testing.T) {
 	})
 }
 
-func TestQualifierBeforeTelegram(t *testing.T) {
+// TestBrandQualifiedPerLanguage enforces the brand rule (site/DESIGN.md §0):
+// the name always carries the localized "unofficial" qualifier, before
+// "Telegram" in English and after the name in pt-BR and es.
+func TestBrandQualifiedPerLanguage(t *testing.T) {
+	order := map[string]string{"pt-BR": "name-first", "en": "qualifier-first", "es": "name-first"}
+	wantTitle := map[string]string{"pt-BR": "Telegram MCP (não oficial)", "en": "Unofficial Telegram MCP", "es": "Telegram MCP (no oficial)"}
+	wantName := map[string]string{"pt-BR": "Telegram MCP não oficial", "en": "Unofficial Telegram MCP", "es": "Telegram MCP no oficial"}
 	both(t, func(t *testing.T, b built, _ string) {
+		for _, l := range b.site.Languages {
+			s := b.strs[l.Code]
+			if s["brand.order"] != order[l.Code] || s["brand.title"] != wantTitle[l.Code] || s["brand.name"] != wantName[l.Code] {
+				t.Errorf("%s: brand strings %q/%q/%q", l.Code, s["brand.order"], s["brand.title"], s["brand.name"])
+			}
+		}
 		for file, p := range b.pages {
 			lang := langOf(b.site, file)
-			q := b.strs[lang]["brand.qualifier"]
-			want := q + " " + b.site.Brand
+			s := b.strs[lang]
+			q := s["brand.qualifier"]
 			titles := []string{html.UnescapeString(reTitle.FindStringSubmatch(p)[1])}
 			if !strings.HasSuffix(file, "404.html") {
 				titles = append(titles, meta(p, "og:title"), meta(p, "og:site_name"), meta(p, "twitter:title"))
 			}
 			for _, title := range titles {
-				i := strings.Index(title, "Telegram")
-				if !strings.HasPrefix(title, want) || i != len(q)+1 {
-					t.Errorf("%s: title %q must start with %q", file, title, want)
+				if !strings.HasPrefix(title, s["brand.title"]) || strings.Count(title, b.site.Brand) != 1 {
+					t.Errorf("%s: title %q must start with %q", file, title, s["brand.title"])
 				}
 			}
-			// Lockups in header and footer.
+			// Lockups in header and footer, in the language's order.
 			lock := `<span class="lockup-qualifier">` + q + `</span> <span class="lockup-name">` + b.site.Brand + `</span>`
-			if strings.Count(p, lock) != 2 {
-				t.Errorf("%s: want 2 lockups with the qualifier, got %d", file, strings.Count(p, lock))
+			if s["brand.order"] == "name-first" {
+				lock = `<span class="lockup-name">` + b.site.Brand + `</span> <span class="lockup-qualifier">` + q + `</span>`
 			}
-			// Every visible "Telegram MCP" in prose is preceded by the qualifier
-			// in titles only; prose may say "Telegram MCP" after the brand is introduced.
+			if strings.Count(p, lock) != 2 {
+				t.Errorf("%s: want 2 lockups %q, got %d", file, lock, strings.Count(p, lock))
+			}
+			// The old pt-BR/es order ("Não oficial Telegram MCP") must not
+			// come back anywhere in the visible text.
+			if lang != "en" {
+				text := strings.ToLower(reviewContentText(p))
+				if strings.Contains(text, strings.ToLower(q)+" "+strings.ToLower(b.site.Brand)) {
+					t.Errorf("%s: qualifier placed before the brand in %s", file, lang)
+				}
+			}
 		}
 	})
 }
@@ -259,7 +279,14 @@ func TestNoticeAndCreditsOnEveryPage(t *testing.T) {
 				t.Errorf("%s: missing credits", file)
 			}
 		}
-		// The FAQ repeats the notice in every language.
+		// The notice appears exactly once per page; the FAQ answers the
+		// question and points to it instead of repeating it.
+		for file, p := range b.pages {
+			lang := langOf(b.site, file)
+			if n := strings.Count(reviewContentText(p), b.strs[lang]["notice.affiliation"]); n != 1 {
+				t.Errorf("%s: non-affiliation notice appears %d times, want 1", file, n)
+			}
+		}
 		for _, l := range b.site.Languages {
 			if !strings.Contains(b.pages[outFile(l, "index")], `id="faq-official"`) {
 				t.Errorf("%s: FAQ lacks the non-affiliation entry", l.Code)
@@ -515,8 +542,8 @@ func TestPrelaunchMode(t *testing.T) {
 		p := b.pages[outFile(l, "download")]
 		links := strings.Count(p, `class="dl-link"`)
 		badges := strings.Count(p, `class="badge badge-test">`+b.strs[l.Code]["dl.badge.test"]+`<`)
-		if links != 12 || badges != links {
-			t.Errorf("%s: %d download links, %d test badges; want 12 each", l.Code, links, badges)
+		if links != 13 || badges != links {
+			t.Errorf("%s: %d download links, %d test badges; want 13 each", l.Code, links, badges)
 		}
 	}
 	if string(b.files["robots.txt"]) != "User-agent: *\nDisallow: /\n" {
@@ -554,7 +581,7 @@ func TestReleaseMode(t *testing.T) {
 	for _, l := range b.site.Languages {
 		p := b.pages[outFile(l, "download")]
 		links := regexp.MustCompile(`<a class="dl-link" href="([^"]+)"`).FindAllStringSubmatch(p, -1)
-		if len(links) != 12 {
+		if len(links) != 13 {
 			t.Errorf("%s: %d links", l.Code, len(links))
 		}
 		for _, m := range links {
@@ -562,7 +589,7 @@ func TestReleaseMode(t *testing.T) {
 				t.Errorf("%s: link %s is not versioned", l.Code, m[1])
 			}
 		}
-		for _, want := range []string{base + "telegram-mcp_1.2.3_amd64.deb", base + "checksums.txt", "v1.2.3", `datetime="2026-12-01"`} {
+		for _, want := range []string{base + "telegram-mcp_1.2.3_amd64.deb", base + "checksums.txt", base + "checksums.txt.minisig", "v1.2.3", `datetime="2026-12-01"`} {
 			if !strings.Contains(p, want) {
 				t.Errorf("%s: missing %s", l.Code, want)
 			}
@@ -709,7 +736,7 @@ func TestDownloadCardsMatchRelease(t *testing.T) {
 		"telegram-mcp_{version}_amd64.deb": true, "telegram-mcp_{version}_arm64.deb": true,
 		"telegram-mcp_linux_amd64.tar.gz": true, "telegram-mcp_linux_arm64.tar.gz": true,
 		"telegram-mcp_darwin_amd64.tar.gz": true, "telegram-mcp_darwin_arm64.tar.gz": true,
-		"telegram-mcp_windows_amd64.zip": true, "checksums.txt": true,
+		"telegram-mcp_windows_amd64.zip": true, "checksums.txt": true, "checksums.txt.minisig": true,
 	}
 	got := map[string]bool{}
 	for _, g := range spec.Groups {

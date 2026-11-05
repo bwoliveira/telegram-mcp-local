@@ -1,5 +1,8 @@
 {
-  "brand.qualifier": "Não oficial",
+  "brand.qualifier": "não oficial",
+  "brand.name": "Telegram MCP não oficial",
+  "brand.title": "Telegram MCP (não oficial)",
+  "brand.order": "name-first",
 
   "a11y.skip": "Pular para o conteúdo",
   "a11y.nav": "Navegação principal",
@@ -18,7 +21,7 @@
   "copy.done": "Comando copiado.",
   "copy.fail": "Não foi possível copiar. Selecione o comando e copie manualmente.",
 
-  "notice.affiliation": "Não oficial: o Telegram MCP é um projeto independente, sem afiliação, patrocínio ou endosso do Telegram. Telegram é marca de seu titular.",
+  "notice.affiliation": "Projeto independente; não é uma ferramenta do Telegram nem tem endosso dele. Telegram é marca dos seus donos.",
 
   "footer.credits_title": "Créditos",
   "footer.links_title": "Links",
@@ -45,9 +48,9 @@
   "dl.os.windows": "Windows",
   "dl.os.linux": "Linux com área de trabalho",
   "dl.os.cli": "Só a linha de comando",
-  "dl.note.macos": "Um só app, que roda tanto em processador Intel quanto em Apple Silicon.",
-  "dl.note.windows": "Instalador para Windows de 64 bits.",
-  "dl.note.linux": "O AppImage roda na maioria das distribuições; o .deb é para Ubuntu, Debian e derivados. Escolha a arquitetura do seu computador.",
+  "dl.note.macos": "Um só app, assinado e notarizado pela Apple, que roda tanto em processador Intel quanto em Apple Silicon.",
+  "dl.note.windows": "Instalador para Windows 10 e 11 de 64 bits, sem assinatura Authenticode: veja abaixo como abrir.",
+  "dl.note.linux": "Para Ubuntu 24.04 ou mais novo e Debian 13 ou mais novo. Escolha o AppImage ou o .deb na arquitetura do seu computador.",
   "dl.note.cli": "Apenas o binário telegram-mcp, sem janela. Para servidores e para quem prefere o terminal.",
   "dl.file.dmg": "App universal",
   "dl.file.setup": "Instalador x64",
@@ -61,8 +64,13 @@
   "dl.file.cli_darwin_amd64": "macOS · Intel",
   "dl.file.cli_windows_amd64": "Windows · x64",
   "dl.file.checksums": "Lista de somas SHA-256",
+  "dl.file.minisig": "Assinatura da lista (minisign)",
+  "beta.badge": "Beta",
+  "beta.lead": "Versão beta.",
+  "beta.body": "O Telegram MCP 1.0.0 é novo e ainda pode ter erros. Use por sua conta e risco, mantenha o Telegram oficial instalado e",
+  "beta.link": "relate problemas no GitHub",
   "dl.badge.test": "Arquivo de teste",
   "dl.suggested": "Sugerido para o seu sistema",
 
-  "todo.review": "Todo o texto pt-BR está aprovado por Bruno: textos existentes em 2026-11-02 e trechos de setup de download, credenciais e headless em 2026-11-03."
+  "todo.review": "Todo o texto pt-BR da 1.0.0 está aprovado por Bruno em 2026-11-04: textos existentes aprovados em 2026-11-02, trechos de setup de download, credenciais e headless em 2026-11-03, e aviso de beta, ordem da marca, requisitos, paridade e FAQ do item 2.3 (mantida como está) em 2026-11-04."
 }

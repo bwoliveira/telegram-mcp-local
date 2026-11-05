@@ -169,10 +169,12 @@ func (p PageData) OtherAlts() []Alt {
 	return out
 }
 
-// Title is the document title: qualifier and brand first (Telegram API
-// Terms §2.3), then the page title.
+// Title is the document title: the qualified brand first, then the page
+// title. The brand always carries the localized "unofficial" qualifier
+// (Telegram API Terms §2.3): before the name in English, after it in pt-BR
+// and es, following each language's natural order (site/DESIGN.md §0).
 func (p PageData) Title() (string, error) {
-	q, err := p.T("brand.qualifier")
+	n, err := p.SiteName()
 	if err != nil {
 		return "", err
 	}
@@ -180,16 +182,31 @@ func (p PageData) Title() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return q + " " + p.Site.Brand + " · " + t, nil
+	return n + " · " + t, nil
 }
 
-// SiteName is og:site_name: qualifier and brand.
-func (p PageData) SiteName() (string, error) {
-	q, err := p.T("brand.qualifier")
+// SiteName is the qualified brand used in titles, og:site_name and the
+// social images, for example "Telegram MCP (não oficial)".
+func (p PageData) SiteName() (string, error) { return p.T("brand.title") }
+
+// BrandName is the qualified brand used in running text and headings, for
+// example "Telegram MCP não oficial".
+func (p PageData) BrandName() (string, error) { return p.T("brand.name") }
+
+// QualifierFirst reports whether the qualifier precedes the brand in this
+// language (English) or follows it (pt-BR, es).
+func (p PageData) QualifierFirst() (bool, error) {
+	o, err := p.T("brand.order")
 	if err != nil {
-		return "", err
+		return false, err
 	}
-	return q + " " + p.Site.Brand, nil
+	switch o {
+	case "qualifier-first":
+		return true, nil
+	case "name-first":
+		return false, nil
+	}
+	return false, fmt.Errorf("brand.order %q for %s: want qualifier-first or name-first", o, p.Lang.Code)
 }
 
 // LinkArgs and CmdArgs carry the page context into partials that need a
@@ -294,6 +311,9 @@ func Build(opts Options) (Result, error) {
 
 	strs, err := loadStrings(opts.Src, site)
 	if err != nil {
+		return res, err
+	}
+	if err := checkBrand(site, strs); err != nil {
 		return res, err
 	}
 	if release && !opts.allowTODO {
@@ -446,6 +466,39 @@ func loadStrings(src string, site Site) (map[string]map[string]string, error) {
 		all[l.Code] = m
 	}
 	return all, nil
+}
+
+// checkBrand enforces the brand rule of site/DESIGN.md §0 on the strings:
+// brand.name and brand.title always contain the brand and the qualifier, in
+// the order that brand.order declares (qualifier first only in English).
+func checkBrand(site Site, strs map[string]map[string]string) error {
+	for _, l := range site.Languages {
+		s := strs[l.Code]
+		q := strings.ToLower(s["brand.qualifier"])
+		if q == "" {
+			return fmt.Errorf("strings/%s.json: empty brand.qualifier", l.Code)
+		}
+		for _, key := range []string{"brand.name", "brand.title"} {
+			v := strings.ToLower(s[key])
+			bi, qi := strings.Index(v, strings.ToLower(site.Brand)), strings.Index(v, q)
+			if bi < 0 || qi < 0 || strings.Count(v, strings.ToLower(site.Brand)) != 1 {
+				return fmt.Errorf("strings/%s.json: %s %q must contain %q and the qualifier %q once", l.Code, key, s[key], site.Brand, s["brand.qualifier"])
+			}
+			switch s["brand.order"] {
+			case "qualifier-first":
+				if qi > bi {
+					return fmt.Errorf("strings/%s.json: %s %q must put the qualifier first", l.Code, key, s[key])
+				}
+			case "name-first":
+				if qi < bi {
+					return fmt.Errorf("strings/%s.json: %s %q must put the brand first", l.Code, key, s[key])
+				}
+			default:
+				return fmt.Errorf("strings/%s.json: brand.order %q: want qualifier-first or name-first", l.Code, s["brand.order"])
+			}
+		}
+	}
+	return nil
 }
 
 // refuseTODO blocks release builds while any TODO( marker remains in the

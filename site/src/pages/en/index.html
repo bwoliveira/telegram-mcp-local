@@ -1,5 +1,4 @@
 {{define "content" -}}
-{{- /* TODO(stage6): before launch, re-check every feature below against docs/PARIDADE.md (fake and real columns). */ -}}
 <section class="hero" aria-labelledby="hero-title">
   <div class="wrap hero-grid">
     <div>
@@ -8,7 +7,7 @@
       <p class="hero-lead">Unofficial Telegram MCP connects your personal account to MCP clients such as Claude, Codex and Cursor. It runs on your computer, stores your history in a local database and connects directly to Telegram.</p>
       <ul class="hero-points">
         <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-eye"/></svg><span>Starts in read-only mode.</span></li>
-        <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>Every write needs a preview; human approval depends on the MCP client.</span></li>
+        <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>Every action that changes Telegram needs a preview; human approval depends on the MCP client.</span></li>
         <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-home"/></svg><span>No project server in between.</span></li>
       </ul>
       <div class="actions">
@@ -61,7 +60,7 @@
     <div class="section-head">
       <p class="eyebrow">What you can do</p>
       <h2 id="features-title">Ask AI for what would take hours of scrolling</h2>
-      <p>Today the project covers reading, search and sending text with a preview. More is in development and will only be listed here once it is tested.</p>
+      <p>The examples here cover reading, search and replies with a preview. Editing, reactions, polls, location and group actions have also been verified with a real account in a test group, always with a preview.</p>
     </div>
     <div class="grid grid-3">
       <article class="card">
@@ -89,7 +88,7 @@
       <p class="eyebrow">Data and privacy</p>
       <h2 id="data-title">What stays with you, and what leaves</h2>
       <p>Messages are stored in a database on your computer. The app talks to Telegram directly and the project receives nothing: there is no account with us, no server of ours and no telemetry.</p>
-      <p>The Telegram session, the <code>api_hash</code> and the panel token go into the system vault (Keychain, Credential Manager or Secret Service) or, on Linux without a desktop, into an encrypted file.</p>
+      <p>On Mac and Windows, the Telegram session, the <code>api_hash</code> and the panel token are kept in the system vault (Keychain or Credential Manager). On Linux, they go by default into an encrypted file whose key is kept outside the data folder; Secret Service can be chosen instead.</p>
     </div>
     <div class="callout">
       <p class="callout-title"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg>Be aware of your AI client</p>
@@ -112,7 +111,7 @@
           <li>It uses your user account. It is not a bot.</li>
           <li>It starts read-only. You turn on writing in the panel; every send needs a preview and technical confirmation. The MCP client must ask for your human approval before confirming.</li>
           <li>Reading a chat does not mark it as read. A read receipt goes out only when you explicitly ask to mark it as read.</li>
-          <li>Self-destructing messages are also deleted from the local database on schedule.</li>
+          <li>Self-destructing messages are also deleted from the local database when they expire, or the next time the app starts.</li>
         </ul>
       </div>
       <div class="callout callout-warn">
@@ -121,7 +120,7 @@
           <li>This is an unofficial client. Telegram may limit or restrict accounts whose API use it considers abusive, and no usage level is guaranteed to be safe.</li>
           <li>When Telegram asks for a pause (FloodWait), the app waits instead of repeatedly retrying.</li>
           <li>Secret Chats are not available: they only exist on the devices where they were started.</li>
-          <li>The project is still in development. Review what the AI proposes before you approve.</li>
+          <li>This is a beta release and may have bugs. Review what the AI proposes before you approve.</li>
         </ul>
       </div>
     </div>
@@ -132,13 +131,13 @@
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">FAQ</p>
-      <h2 id="faq-title">Questions about {{.SiteName}}</h2>
+      <h2 id="faq-title">Questions about {{.BrandName}}</h2>
     </div>
     <div class="faq">
       <details id="faq-official">
         <summary>Is this an official Telegram app?</summary>
         <div>
-          <p>No. Unofficial Telegram MCP is an independent, unofficial project. It is not affiliated with, sponsored or endorsed by Telegram. Telegram is a trademark of its owner.</p>
+          <p>No. It is an unofficial third-party client; the independence notice is in the footer of every page.</p>
           <p>It uses Telegram's public API (the MTProto protocol, through the gotd library), the same one other third-party clients use.</p>
         </div>
       </details>
@@ -148,7 +147,7 @@
           <p>Anyone using the Telegram API has to follow its <a href="https://core.telegram.org/api/terms">API Terms of Service</a>. Three points matter here:</p>
           <ul>
             <li>Section 1.5 forbids using data obtained from Telegram for AI training, fine-tuning, development, enhancement or “deployment”. Its wording is broad and may cover sending messages to an LLM or audio to local Whisper, even without training. Private use, the account holder's consent, a local model and your own <code>api_id</code> do not create an automatic exception: chats also contain other people's data. The project does not collect data for training, but that does not remove the contractual risk of these flows. There is no confirmation from Telegram that this use is permitted. The project has not consulted Telegram. You decide whether to use these features and accept the risk; if Telegram notifies the project, the feature may be adjusted or removed.</li>
-            <li>Section 2.3 only allows “Telegram” in an app's name when it follows the word “Unofficial”. That is why the name always reads “Unofficial Telegram MCP”. The exception is at Telegram's discretion; the project has no approval from Telegram.</li>
+            <li>Section 2.3 only allows “Telegram” in an app's name when it follows the word “Unofficial”. That is why the name always carries that qualifier. In English it comes before “Telegram”, as the rule asks: “Unofficial Telegram MCP”. In Portuguese and Spanish it follows each language's natural word order: “Telegram MCP não oficial” and “Telegram MCP no oficial”. The exception is at Telegram's discretion; the project has no approval from Telegram.</li>
             <li>Section 2.1 asks each application to have its own <code>api_id</code>. Here, every user brings their own (see the next question).</li>
           </ul>
         </div>
@@ -179,7 +178,7 @@
         <div>
           <p>It depends on how your MCP client is configured. A new install starts in read-only mode. Once you turn on writing in the panel, the server requires a bound preview for the same action (<code>preview_fingerprint</code>) and <code>confirm=true</code> to execute. The same MCP client can request the preview and confirm: the server does not authenticate separate human approval.</p>
           <p>Configure the client to ask for your explicit OK before every write; do not allow automatic confirmation. Without that control in the client, the AI can confirm and send without fresh approval from you.</p>
-          <p>Incoming messages are treated as third-party content, never as instructions. A text saying “send this to someone” does not trigger any send.</p>
+          <p>Incoming messages are treated as third-party content, never as instructions. A text saying “send this to someone” does not trigger any send by the server. Your MCP client must also treat that content as untrusted data.</p>
         </div>
       </details>
       <details id="faq-read">
@@ -203,7 +202,7 @@
       <details id="faq-clients">
         <summary>Which AI clients work?</summary>
         <div>
-          <p>The panel includes settings for Claude Code, Claude Desktop, Codex and Cursor. Any other MCP-compatible client can use the local address <code>http://127.0.0.1:47831/mcp</code> with the panel token. That address only accepts connections from the same computer.</p>
+          <p>The panel includes settings for Claude Code, Claude Desktop, Codex and Cursor. Any other MCP-compatible client can use the default local address <code>http://127.0.0.1:47831/mcp</code> with the panel token. That address only accepts connections from the same computer.</p>
         </div>
       </details>
       <details id="faq-price">

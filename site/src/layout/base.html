@@ -9,6 +9,9 @@
 {{template "sprite" .}}
 {{template "header" .}}
 <main id="main" tabindex="-1">
+{{- if or (eq .Page "index") (eq .Page "download")}}
+{{template "beta-banner" .}}
+{{- end}}
 {{template "content" .}}
 </main>
 {{template "footer" .}}
@@ -78,5 +81,5 @@
 {{- end}}
 
 {{define "lockup" -}}
-{{template "mark" .}}<span class="lockup-text"><span class="lockup-qualifier">{{.T "brand.qualifier"}}</span> <span class="lockup-name">{{.Site.Brand}}</span></span>
+{{template "mark" .}}<span class="lockup-text">{{if .QualifierFirst}}<span class="lockup-qualifier">{{.T "brand.qualifier"}}</span> <span class="lockup-name">{{.Site.Brand}}</span>{{else}}<span class="lockup-name">{{.Site.Brand}}</span> <span class="lockup-qualifier">{{.T "brand.qualifier"}}</span>{{end}}</span>
 {{- end}}
