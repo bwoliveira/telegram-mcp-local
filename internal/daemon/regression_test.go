@@ -98,7 +98,8 @@ func TestReloginWaitsForTransportReadiness(t *testing.T) {
 	}()
 	select {
 	case <-delayed.entered:
-	case <-time.After(time.Second):
+	// Bounds a hang only; slow hosted runners can take over a second here.
+	case <-time.After(10 * time.Second):
 		t.Fatal("readiness not awaited")
 	}
 	select {

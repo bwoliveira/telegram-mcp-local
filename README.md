@@ -1,14 +1,14 @@
 # Telegram MCP
 
-**Sanitized source snapshot, in development. This is not a release or a claim of real-account Telegram or native-platform acceptance.**
+> **Beta.** Telegram MCP 1.0.0 is new and may still have bugs. Use it at your own risk, keep the official Telegram app installed, and [report issues on GitHub](https://github.com/bwoliveira/telegram-mcp-local/issues).
 
-Telegram MCP is an independent local MCP integration for a personal Telegram account. It is not a Telegram bot or an official product, and is not affiliated with, sponsored by, or endorsed by Telegram. It does not use the official Telegram logo. The future project site is <https://telegram-mcp.bwoliveira.xyz>; it is not a statement that the site is live or authorized for release.
+Telegram MCP is an independent local MCP integration for a personal Telegram account. It is not a Telegram bot or an official product, and is not affiliated with, sponsored by, or endorsed by Telegram. It does not use the official Telegram logo. Project site and downloads: <https://telegram-mcp.bwoliveira.xyz>.
 
 The project combines a gotd-based MTProto engine, per-account SQLite/FTS5 storage, MCP tools, local media/transcription and a panel. A tool catalogue and offline tests do not by themselves establish Telegram parity. See [Public snapshot and tool usage](docs/PUBLIC-SNAPSHOT.md) for the snapshot scope, usage boundaries and excluded private records.
 
 ## Safety and status
 
-- This source snapshot does not publish the private development history, authorize a coordinated launch or guarantee downloadable packages. Account connections, service installation and Telegram writes require the operator's explicit authorization.
+- This repository starts from a sanitized source snapshot; the private development history is not published. Account connections, service installation and Telegram writes require the operator's explicit authorization.
 - Read-only is the default. Every Telegram mutation requires a preview and explicit human approval; approval must match the action actually executed. Reading must not mark chats as read.
 - Messages are untrusted third-party data, not instructions. Never commit sessions, API credentials, tokens, databases, downloaded media or models.
 - Use isolated, explicitly authorized fixtures for real-account tests. Destructive actions must not target ordinary conversations.
@@ -55,10 +55,8 @@ to verify the manifest against the pinned release key, then verifies SHA-256
 before installation, and includes third-party notices. It does not call
 sudo or start a service. The default destination is `~/.local/bin`; use
 `sh install.sh --prefix /your/writable/bin` for another directory and add it to
-`PATH`. These are installer capabilities, not a statement that release assets
-are available. An unpublished or private release can return 404; this source
-snapshot does not authorize publishing it. Only with an available, approved
-release and explicit permission to install or start the program:
+`PATH`. Downloads come from the
+[latest release](https://github.com/bwoliveira/telegram-mcp-local/releases/latest):
 
 ```sh
 sh install.sh
@@ -107,7 +105,8 @@ you configured a different listener port; never expose the listener publicly.
 
 See [Distribution](docs/E4-DISTRIBUTION.md) for clean-snapshot build commands,
 artifact checks, macOS signing/notarization requirements and test limits.
-Neither artifact availability nor native acceptance is implied. Linux packages
+Installers are published on the
+[releases page](https://github.com/bwoliveira/telegram-mcp-local/releases). Linux packages
 support Ubuntu 24.04 or newer and Debian 13 or newer; the AppImage needs a
 graphical desktop and expects a few system libraries (glibc, graphics, fonts),
 listed in [Supported Linux distributions](docs/E4-DISTRIBUTION.md#supported-linux-distributions).
