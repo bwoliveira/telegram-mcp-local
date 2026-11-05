@@ -151,9 +151,9 @@ func TestStage6ParityGateResolved(t *testing.T) {
 	}
 	// Parity corrections from the Stage 6 review, per language.
 	parity := map[string][]string{
-		"pt-BR": {"Toda ação que muda o Telegram exige prévia", "cobertas por testes automatizados", "conta real ainda está pendente", "por padrão", "não confiável"},
-		"en":    {"Every action that changes Telegram needs a preview", "covered by automated tests", "real account is still pending", "by default", "untrusted data"},
-		"es":    {"Cada acción que cambia Telegram exige vista previa", "cubiertas por pruebas automatizadas", "cuenta real sigue pendiente", "por defecto", "no confiable"},
+		"pt-BR": {"Toda ação que muda o Telegram exige prévia", "verificados com uma conta real em um grupo de teste", "por padrão", "não confiável"},
+		"en":    {"Every action that changes Telegram needs a preview", "verified with a real account in a test group", "by default", "untrusted data"},
+		"es":    {"Cada acción que cambia Telegram exige vista previa", "verificaron con una cuenta real en un grupo de prueba", "por defecto", "no confiable"},
 	}
 	for _, lang := range site.Languages {
 		index, err := os.ReadFile(filepath.Join(out, outFile(lang, "index")))
@@ -161,7 +161,7 @@ func TestStage6ParityGateResolved(t *testing.T) {
 			t.Fatal(err)
 		}
 		reviewRequire(t, reviewContentText(string(index)), parity[lang.Code])
-		for _, stale := range []string{"um envio de texto com prévia. Outras funções estão em desenvolvimento", "More is in development and will only be listed here", "Hay más en desarrollo"} {
+		for _, stale := range []string{"um envio de texto com prévia. Outras funções estão em desenvolvimento", "More is in development and will only be listed here", "Hay más en desarrollo", "conta real ainda está pendente", "real account is still pending", "cuenta real sigue pendiente"} {
 			if strings.Contains(string(index), stale) {
 				t.Errorf("%s: stale parity claim %q", lang.Code, stale)
 			}

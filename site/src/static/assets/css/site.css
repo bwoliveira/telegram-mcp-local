@@ -420,7 +420,9 @@ main:focus {
 }
 
 /* Beta badge (header lockup, release line) and beta banner. Colors come from
-   the palette: accent-ink on accent and ink on warn-bg pass WCAG AA. */
+   the blue palette: accent-ink on accent passes WCAG AA; on the brand-strong
+   banner, on-deep text is 8.96:1, white links 10.04:1 and the accent icon and
+   focus ring 4.85:1. */
 .badge-beta {
   align-self: center;
   background: var(--accent);
@@ -435,9 +437,9 @@ main:focus {
 }
 
 .beta-banner {
-  background: var(--warn-bg);
-  color: var(--ink);
-  border-bottom: 2px solid var(--warn);
+  background: var(--brand-strong);
+  color: var(--on-deep);
+  border-bottom: 2px solid var(--accent);
 }
 
 .beta-inner {
@@ -452,13 +454,18 @@ main:focus {
 }
 
 .beta-inner .icon {
-  color: var(--warn);
+  color: var(--accent);
   margin-top: 0.2em;
 }
 
 .beta-banner a {
-  color: var(--brand-strong);
+  color: #ffffff;
   font-weight: 700;
+  text-decoration: underline;
+}
+
+.beta-banner :focus-visible {
+  outline-color: var(--accent);
 }
 
 /* ---- Hero -------------------------------------------------------------- */
