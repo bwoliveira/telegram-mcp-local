@@ -419,6 +419,48 @@ main:focus {
   border: 1px solid var(--warn);
 }
 
+/* Beta badge (header lockup, release line) and beta banner. Colors come from
+   the palette: accent-ink on accent and ink on warn-bg pass WCAG AA. */
+.badge-beta {
+  align-self: center;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lockup .badge-beta {
+  margin-left: 0.1rem;
+}
+
+.beta-banner {
+  background: var(--warn-bg);
+  color: var(--ink);
+  border-bottom: 2px solid var(--warn);
+}
+
+.beta-inner {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  padding-block: 0.75rem;
+}
+
+.beta-inner p {
+  margin: 0;
+}
+
+.beta-inner .icon {
+  color: var(--warn);
+  margin-top: 0.2em;
+}
+
+.beta-banner a {
+  color: var(--brand-strong);
+  font-weight: 700;
+}
+
 /* ---- Hero -------------------------------------------------------------- */
 
 .hero {
@@ -429,6 +471,7 @@ main:focus {
 
 .hero-grid {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: clamp(2rem, 5vw, 3.5rem);
   align-items: center;
 }
@@ -675,8 +718,12 @@ main:focus {
   font-size: 1.1rem;
 }
 
+/* minmax(0, 1fr): without it the implicit single mobile column grows to the
+   min-content width of wide children (long <pre> commands), and the whole
+   page scrolls sideways on phones. */
 .grid {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1.25rem;
 }
 
@@ -942,6 +989,7 @@ main:focus {
 
 .dl-grid {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1.25rem;
 }
 
@@ -1047,6 +1095,7 @@ main:focus {
 
 .footer-grid {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 2rem;
 }
 

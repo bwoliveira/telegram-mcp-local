@@ -85,6 +85,11 @@
           "id": "checksums",
           "label": "dl.file.checksums",
           "name": "checksums.txt"
+        },
+        {
+          "id": "checksums-minisig",
+          "label": "dl.file.minisig",
+          "name": "checksums.txt.minisig"
         }
       ]
     }

@@ -73,15 +73,19 @@ func TestReviewC2ApprovalIsAClientResponsibility(t *testing.T) {
 func TestReviewC3BrandQualifiedInTitlesAndHeadings(t *testing.T) {
 	both(t, func(t *testing.T, b built, _ string) {
 		for file, markup := range b.pages {
-			qualified := b.strs[langOf(b.site, file)]["brand.qualifier"] + " " + b.site.Brand
+			s := b.strs[langOf(b.site, file)]
 			for _, tag := range []string{"title", "h1", "h2"} {
 				re := regexp.MustCompile(`(?s)<` + tag + `(?:\s[^>]*)?>(.*?)</` + tag + `>`)
 				for _, match := range re.FindAllStringSubmatch(markup, -1) {
 					text := reviewContentText(match[1])
 					// Descriptive mentions of Telegram chats are not the app brand.
 					// Count every occurrence, so one qualifier cannot mask a second name.
-					if strings.Count(text, b.site.Brand) != strings.Count(text, qualified) {
-						t.Errorf("%s: <%s> %q must qualify every %q as %q", file, tag, text, b.site.Brand, qualified)
+					qualified := strings.Count(text, s["brand.name"])
+					if s["brand.title"] != s["brand.name"] {
+						qualified += strings.Count(text, s["brand.title"])
+					}
+					if strings.Count(text, b.site.Brand) != qualified {
+						t.Errorf("%s: <%s> %q must qualify every %q as %q or %q", file, tag, text, b.site.Brand, s["brand.name"], s["brand.title"])
 					}
 				}
 			}

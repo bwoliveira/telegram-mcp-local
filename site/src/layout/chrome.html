@@ -9,7 +9,7 @@
   </div>
 {{- end}}
   <div class="wrap header-inner">
-    <a class="lockup" href="{{.Href "index"}}">{{template "lockup" .}}</a>
+    <a class="lockup" href="{{.Href "index"}}">{{template "lockup" .}}<span class="badge badge-beta" data-beta>{{.T "beta.badge"}}</span></a>
     <nav class="main-nav" aria-label="{{.T "a11y.nav"}}">
       <ul>
         <li><a href="{{.Href "download"}}"{{if eq .Page "download"}} aria-current="page"{{end}}>{{.T "nav.download"}}</a></li>
@@ -83,4 +83,14 @@
 
 {{define "cmd" -}}
 <div class="cmd"><pre tabindex="0"><code>{{.Text}}</code></pre><button type="button" class="copy" data-copy hidden><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-copy"/></svg><span>{{.P.T "copy.button"}}</span></button></div>
+{{- end}}
+
+
+{{define "beta-banner" -}}
+<div class="beta-banner" role="note" aria-labelledby="beta-lead" data-beta>
+  <div class="wrap beta-inner">
+    <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg>
+    <p><strong id="beta-lead">{{.T "beta.lead"}}</strong> {{.T "beta.body"}} <a href="https://github.com/{{.Site.Repo}}/issues">{{.T "beta.link"}}</a>.</p>
+  </div>
+</div>
 {{- end}}

@@ -2,10 +2,10 @@
 <section class="page-hero" aria-labelledby="page-title">
   <div class="wrap">
     <p class="eyebrow">Download</p>
-    <h1 id="page-title">Download {{.SiteName}}</h1>
+    <h1 id="page-title">Download {{.BrandName}}</h1>
     <p>Choose the file for your system. We highlight the one that appears to match, but all options remain visible. Check your computer's architecture before downloading.</p>
 {{- if .Release.Version}}
-    <p>Version {{.Release.Version}}{{if .Release.Date}}, released on <time datetime="{{.Release.Date}}">{{.Release.Date}}</time>{{end}}.</p>
+    <p class="release-line">Version {{.Release.Version}}{{if .Release.Date}}, released on <time datetime="{{.Release.Date}}">{{.Release.Date}}</time>{{end}}. <span class="badge badge-beta" data-beta>{{.T "beta.badge"}}</span></p>
 {{- end}}
   </div>
 </section>
@@ -29,13 +29,14 @@
 <section class="section" aria-labelledby="requirements-title">
   <div class="wrap">
     <h2 id="requirements-title">Requirements and opening the app</h2>
-    <p>Packages target the systems below; installation has not yet been validated on every platform.</p>
+    <p>This is a beta release: installation has not yet been validated on every combination of system and architecture.</p>
     <ul>
-      <li><strong>macOS:</strong> macOS 11.0 build target; universal DMG (Apple silicon and Intel). Open the DMG, drag the app to Applications, then open it.</li>
-      <li><strong>Windows:</strong> x64, with Microsoft WebView2. Run the per-user installer, then open the app.</li>
-      <li><strong>Linux:</strong> amd64 or arm64. Install the .deb with your package manager (GTK3 and WebKitGTK 4.1), or make the AppImage executable and open it on a compatible glibc distribution.</li>
+      <li><strong>macOS:</strong> macOS 11.0 build target; universal DMG (Apple silicon and Intel), signed with a Developer ID and notarized by Apple, so it opens without a Gatekeeper warning. Open the DMG, drag the app to Applications, then open it.</li>
+      <li><strong>Windows:</strong> Windows 10 or 11, x64, with Microsoft WebView2. The installer is per-user and has no Authenticode signature, so SmartScreen shows “Windows protected your PC”. Check the SHA-256 (below), click “More info”, then “Run anyway”.</li>
+      <li><strong>Linux:</strong> Ubuntu 24.04 or newer, or Debian 13 or newer, on amd64 (x86_64) or arm64. Install the .deb with your package manager (it pulls in GTK3 and WebKitGTK 4.1), or make the AppImage executable and open it; the AppImage also runs on other glibc distributions at least as new.</li>
+      <li><strong>Command line:</strong> <code>telegram-mcp serve</code>, without a window, works from the .deb, the AppImage and the .tar.gz archives.</li>
     </ul>
-    <p class="note">If Gatekeeper or SmartScreen blocks a file, stop and verify its source and release evidence; do not disable system protections. SHA-256 checks integrity, not the publisher's identity or notarization.</p>
+    <p class="note">If Gatekeeper blocks the DMG, or SmartScreen shows anything beyond the unknown-publisher warning, stop and verify where the file came from; do not disable system protections. SHA-256 checks integrity, not the publisher's identity or notarization; the minisign signature below shows that the checksum list came from the project.</p>
   </div>
 </section>
 
@@ -53,8 +54,11 @@
     </div>
     <div class="card" id="verify">
       <h2>Verify your download</h2>
-      <p>Also download the SHA-256 checksum list and run the command in the folder that holds the files. Your file's line must end in “OK”, or the computed hash must match the list.</p>
+      <p>Also download the SHA-256 checksum list and its signature. In the folder that holds the files, check the signature first and the checksum second: the signature must verify, and your file's line must end in “OK”.</p>
       {{with .Group "checksums"}}<ul class="dl-files">{{range .Files}}<li>{{template "download-link" (args $ .)}}</li>{{end}}</ul>{{end}}
+      <h3>Signature (minisign)</h3>
+      <p>The project's public key, ID <code>CF15D44BF3EA0B47</code>, also published in the repository README:</p>
+      {{template "cmd" (cmd . "minisign -V -P RWRHC+rzS9QVzybIt8aMwMD9cNnK4ju6/vyLeATd+6FBuoDzRG6pk0yB -m checksums.txt -x checksums.txt.minisig")}}
       <h3>Linux</h3>
       {{template "cmd" (cmd . "sha256sum --ignore-missing -c checksums.txt")}}
       <h3>macOS</h3>

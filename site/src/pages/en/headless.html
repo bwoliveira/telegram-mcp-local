@@ -13,7 +13,7 @@
       <h2 id="model-title">What the setup looks like</h2>
       <ul class="checklist">
         <li>The <code>telegram-mcp serve</code> daemon runs as a systemd user service and restarts if it stops.</li>
-        <li>It listens only on <code>127.0.0.1:47831</code>, and every request needs the token created at install time.</li>
+        <li>By default it listens only on <code>127.0.0.1:47831</code>. MCP clients need the service token; the browser panel opens through a single-use link.</li>
         <li>Without a desktop, secrets live in an encrypted file whose key is kept outside the data folder.</li>
         <li>It starts read-only, just like the app.</li>
       </ul>
@@ -32,7 +32,7 @@
     <ol class="steps grid">
       <li class="card">
         <h3>Install the binary</h3>
-        <p>The installer selects the architecture, checks SHA-256 and installs the CLI in <code>~/.local/bin</code>, without sudo. Use <code>--prefix</code> for a different folder. Add the folder to your <code>PATH</code>.</p>
+        <p>The installer selects the architecture, checks the minisign signature and SHA-256, and installs the CLI in <code>~/.local/bin</code>, without sudo. Use <code>--prefix</code> for a different folder. Add the folder to your <code>PATH</code>. It needs <code>curl</code>, <code>tar</code> and <code>minisign</code>.</p>
         {{template "cmd" (cmd . "curl -fsSL https://raw.githubusercontent.com/bwoliveira/telegram-mcp-local/main/install.sh | sh")}}
 {{- if .Prelaunch}}
         <p class="note">Works only after launch: the repository is still private. For development, use authorized private artifacts.</p>

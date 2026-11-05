@@ -3,7 +3,7 @@
   <div class="wrap">
     <p class="eyebrow">Servidor sin pantalla</p>
     <h1 id="page-title">Ejecutarlo en un servidor Linux tuyo</h1>
-    <p>En una computadora que queda siempre encendida, como un mini PC o un contenedor del homelab, No oficial Telegram MCP funciona solo como línea de comandos: un servicio de usuario que sincroniza tus chats y atiende a los clientes MCP de la misma máquina.</p>
+    <p>En una computadora que queda siempre encendida, como un mini PC o un contenedor del homelab, Telegram MCP no oficial funciona solo como línea de comandos: un servicio de usuario que sincroniza tus chats y atiende a los clientes MCP de la misma máquina.</p>
   </div>
 </section>
 
@@ -13,7 +13,7 @@
       <h2 id="model-title">Cómo queda la instalación</h2>
       <ul class="checklist">
         <li>El daemon <code>telegram-mcp serve</code> funciona como servicio de systemd de tu usuario y se reinicia si se detiene.</li>
-        <li>Escucha solo en <code>127.0.0.1:47831</code>, y cada acceso exige el token creado en la instalación.</li>
+        <li>Por defecto, escucha solo en <code>127.0.0.1:47831</code>. Los clientes MCP necesitan el token del servicio; el panel en el navegador se abre con un enlace de un solo uso.</li>
         <li>Sin escritorio, los secretos quedan en un archivo cifrado, con la clave guardada fuera de la carpeta de datos.</li>
         <li>Empieza en solo lectura, igual que la app.</li>
       </ul>
@@ -32,7 +32,7 @@
     <ol class="steps grid">
       <li class="card">
         <h3>Instala el binario</h3>
-        <p>El instalador elige la arquitectura, comprueba SHA-256 e instala la CLI en <code>~/.local/bin</code>, sin sudo. Usa <code>--prefix</code> para otra carpeta. Añade la carpeta al <code>PATH</code>.</p>
+        <p>El instalador elige la arquitectura, comprueba la firma minisign y SHA-256, e instala la CLI en <code>~/.local/bin</code>, sin sudo. Usa <code>--prefix</code> para otra carpeta. Añade la carpeta al <code>PATH</code>. Necesita <code>curl</code>, <code>tar</code> y <code>minisign</code>.</p>
         {{template "cmd" (cmd . "curl -fsSL https://raw.githubusercontent.com/bwoliveira/telegram-mcp-local/main/install.sh | sh")}}
 {{- if .Prelaunch}}
         <p class="note">Funciona solo después del lanzamiento: el repositorio sigue siendo privado. Para desarrollo, usa los artefactos privados autorizados.</p>

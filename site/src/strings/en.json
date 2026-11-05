@@ -1,5 +1,8 @@
 {
   "brand.qualifier": "Unofficial",
+  "brand.name": "Unofficial Telegram MCP",
+  "brand.title": "Unofficial Telegram MCP",
+  "brand.order": "qualifier-first",
 
   "a11y.skip": "Skip to content",
   "a11y.nav": "Main navigation",
@@ -18,7 +21,7 @@
   "copy.done": "Command copied.",
   "copy.fail": "Could not copy. Select the command and copy it by hand.",
 
-  "notice.affiliation": "Unofficial Telegram MCP is an independent project. It is not affiliated with, sponsored or endorsed by Telegram. Telegram is a trademark of its owner.",
+  "notice.affiliation": "Independent project; it is not a Telegram tool or endorsed by Telegram. Telegram is a trademark of its owners.",
 
   "footer.credits_title": "Credits",
   "footer.links_title": "Links",
@@ -45,9 +48,9 @@
   "dl.os.windows": "Windows",
   "dl.os.linux": "Linux desktop",
   "dl.os.cli": "Command line only",
-  "dl.note.macos": "A single app that runs on both Intel and Apple silicon processors.",
-  "dl.note.windows": "Installer for 64-bit Windows.",
-  "dl.note.linux": "The AppImage runs on most distributions; the .deb is for Ubuntu, Debian and their derivatives. Pick your computer's architecture.",
+  "dl.note.macos": "A single app, signed and notarized by Apple, that runs on both Intel and Apple silicon processors.",
+  "dl.note.windows": "Installer for 64-bit Windows 10 and 11, without Authenticode signing: see below for how to open it.",
+  "dl.note.linux": "For Ubuntu 24.04 or newer and Debian 13 or newer. Pick the AppImage or the .deb for your computer's architecture.",
   "dl.note.cli": "Just the telegram-mcp binary, no window. For servers and for people who prefer the terminal.",
   "dl.file.dmg": "Universal app",
   "dl.file.setup": "x64 installer",
@@ -61,6 +64,11 @@
   "dl.file.cli_darwin_amd64": "macOS · Intel",
   "dl.file.cli_windows_amd64": "Windows · x64",
   "dl.file.checksums": "SHA-256 checksum list",
+  "dl.file.minisig": "Checksum list signature (minisign)",
+  "beta.badge": "Beta",
+  "beta.lead": "Beta.",
+  "beta.body": "Telegram MCP 1.0.0 is new and may still have bugs. Use it at your own risk, keep the official Telegram app installed, and",
+  "beta.link": "report issues on GitHub",
   "dl.badge.test": "Test file",
   "dl.suggested": "Suggested for your system",
 

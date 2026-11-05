@@ -2,10 +2,10 @@
 <section class="page-hero" aria-labelledby="page-title">
   <div class="wrap">
     <p class="eyebrow">Download</p>
-    <h1 id="page-title">Baixar o {{.SiteName}}</h1>
+    <h1 id="page-title">Baixe o {{.BrandName}}</h1>
     <p>Escolha o arquivo do seu sistema. Destacamos o que parece ser o seu, mas todas as opções ficam à mostra; confira a arquitetura do computador antes de baixar.</p>
 {{- if .Release.Version}}
-    <p>Versão {{.Release.Version}}{{if .Release.Date}}, publicada em <time datetime="{{.Release.Date}}">{{.Release.Date}}</time>{{end}}.</p>
+    <p class="release-line">Versão {{.Release.Version}}{{if .Release.Date}}, publicada em <time datetime="{{.Release.Date}}">{{.Release.Date}}</time>{{end}}. <span class="badge badge-beta" data-beta>{{.T "beta.badge"}}</span></p>
 {{- end}}
   </div>
 </section>
@@ -29,13 +29,14 @@
 <section class="section" aria-labelledby="requirements-title">
   <div class="wrap">
     <h2 id="requirements-title">Requisitos e abertura do app</h2>
-    <p>Pacotes para os sistemas abaixo; a instalação ainda não foi validada em todas as plataformas.</p>
+    <p>Esta é uma versão beta: a instalação ainda não foi validada em todas as combinações de sistema e arquitetura.</p>
     <ul>
-      <li><strong>macOS:</strong> macOS 11.0 como alvo de build; DMG universal (Apple silicon e Intel). Abra o DMG, arraste o app para Aplicativos e abra-o.</li>
-      <li><strong>Windows:</strong> x64, com Microsoft WebView2. Execute o instalador por usuário e abra o app.</li>
-      <li><strong>Linux:</strong> amd64 ou arm64. Instale o .deb pelo gerenciador de pacotes (GTK3 e WebKitGTK 4.1) ou torne o AppImage executável e abra-o numa distribuição glibc compatível.</li>
+      <li><strong>macOS:</strong> macOS 11.0 como alvo de build; DMG universal (Apple silicon e Intel), assinado com Developer ID e notarizado pela Apple, que abre sem aviso do Gatekeeper. Abra o DMG, arraste o app para Aplicativos e abra-o.</li>
+      <li><strong>Windows:</strong> Windows 10 ou 11, x64, com Microsoft WebView2. O instalador é por usuário e não tem assinatura Authenticode, então o SmartScreen mostra “O Windows protegeu o computador”. Confira o SHA-256 (abaixo), clique em “Mais informações” e depois em “Executar assim mesmo”.</li>
+      <li><strong>Linux:</strong> Ubuntu 24.04 ou mais novo, ou Debian 13 ou mais novo, em amd64 (x86_64) ou arm64. Instale o .deb pelo gerenciador de pacotes (ele traz GTK3 e WebKitGTK 4.1) ou torne o AppImage executável e abra-o; o AppImage também roda em outras distribuições glibc tão novas quanto essas.</li>
+      <li><strong>Linha de comando:</strong> o <code>telegram-mcp serve</code>, sem janela, funciona pelo .deb, pelo AppImage e pelos .tar.gz.</li>
     </ul>
-    <p class="note">Se Gatekeeper ou SmartScreen bloquear o arquivo, pare e confira a origem e as evidências da distribuição; não desative as proteções do sistema. SHA-256 verifica integridade, não a identidade do publicador ou a notarização.</p>
+    <p class="note">Se o Gatekeeper bloquear o DMG, ou se o SmartScreen mostrar algo além do aviso de editor desconhecido, pare e confira a origem do arquivo; não desative as proteções do sistema. SHA-256 verifica integridade, não a identidade do publicador ou a notarização; a assinatura minisign, abaixo, mostra que a lista de somas veio do projeto.</p>
   </div>
 </section>
 
@@ -53,8 +54,11 @@
     </div>
     <div class="card" id="verify">
       <h2>Confira o arquivo baixado</h2>
-      <p>Baixe também a lista de somas SHA-256 e rode o comando na pasta onde estão os arquivos. A linha do seu arquivo precisa terminar em “OK”, ou o hash calculado tem que aparecer na lista.</p>
+      <p>Baixe também a lista de somas SHA-256 e a assinatura dela. Na pasta onde estão os arquivos, confira primeiro a assinatura e depois a soma: a assinatura tem que ser verificada, e a linha do seu arquivo precisa terminar em “OK”.</p>
       {{with .Group "checksums"}}<ul class="dl-files">{{range .Files}}<li>{{template "download-link" (args $ .)}}</li>{{end}}</ul>{{end}}
+      <h3>Assinatura (minisign)</h3>
+      <p>Chave pública do projeto, ID <code>CF15D44BF3EA0B47</code>, também publicada no README do repositório:</p>
+      {{template "cmd" (cmd . "minisign -V -P RWRHC+rzS9QVzybIt8aMwMD9cNnK4ju6/vyLeATd+6FBuoDzRG6pk0yB -m checksums.txt -x checksums.txt.minisig")}}
       <h3>Linux</h3>
       {{template "cmd" (cmd . "sha256sum --ignore-missing -c checksums.txt")}}
       <h3>macOS</h3>

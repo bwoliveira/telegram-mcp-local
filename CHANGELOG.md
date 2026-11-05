@@ -75,6 +75,10 @@ Changes to Telegram MCP, with upstream history preserved. Based on [Keep a Chang
 - Static site in Portuguese, English and Spanish with overview, download and
   headless pages; the preview is protected by Cloudflare Access and is not a
   public launch.
+- Site for the 1.0.0 beta: beta badge and banner with the issue tracker link,
+  v1.0.0 platform support (Ubuntu 24.04+/Debian 13+, notarized macOS DMG,
+  unsigned Windows installer steps), minisign verification, parity-checked
+  feature copy, natural pt-BR/es brand order and a mobile horizontal-overflow fix.
 - Local Account conversation preview with SQL-paginated name/unread/type filters,
   message history and FTS5 text/transcript search, preserving the inherited JSON
   contract without Telegram reads or read receipts while browsing. Background
