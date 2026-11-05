@@ -1,12 +1,12 @@
 # Telegram MCP
 
+> **Beta.** Telegram MCP 1.0.0 is new and may still have bugs. Use it at your own risk, keep the official Telegram app installed, and [report issues on GitHub](https://github.com/bwoliveira/telegram-mcp-local/issues).
+
 The maintained project documentation is in English in [README.md](README.md).
 The panel continues to support Portuguese, English and Spanish.
 
 This independent project is not affiliated with, sponsored by, or endorsed by
-Telegram. It uses its own logo. Public installation and release remain pending
-owner authorization. This sanitized source snapshot is not a release or evidence
-of real-account Telegram or native-platform acceptance.
+Telegram. It uses its own logo. Downloads: <https://telegram-mcp.bwoliveira.xyz>.
 
 - [Public snapshot and tool usage](docs/PUBLIC-SNAPSHOT.md)
 - [Distribution and acceptance limits](docs/E4-DISTRIBUTION.md)
